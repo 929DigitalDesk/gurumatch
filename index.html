@@ -3,679 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuruMatch Mumbai - Premier Tutor & Coaching Directory</title>
-    <!-- Tailwind CSS -->
+    <title>GuruMatch - Find Your Perfect Tutor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1e3a8a',
+                            lightBlue: '#2563eb',
+                            sky: '#eff6ff',
+                            orange: '#f97316',
+                            brightOrange: '#ff6b00',
+                            orangeLight: '#fff7ed',
+                        }
+                    }
+                }
+            }
         }
-    </style>
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-amber-500 selection:text-white">
+<body class="bg-slate-50 font-sans text-slate-800">
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="resetSearchAndFilters(); switchMainView('tutors');">
-                <div class="w-11 h-11 bg-gradient-to-tr from-amber-600 to-amber-500 rounded-2xl flex items-center justify-center text-white text-xl font-extrabold shadow-md shadow-amber-500/20">
-                    <i class="fa-solid fa-graduation-cap"></i>
+    <!-- Header Navigation -->
+    <header class="bg-brand-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('student')">
+                <div class="bg-brand-orange p-2 rounded-lg text-white font-bold text-xl shadow">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-xl text-slate-900 tracking-tight flex items-center gap-1.5">
-                        Guru<span class="text-amber-600">Match</span>
-                        <span class="text-[10px] uppercase tracking-wider bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Mumbai</span>
-                    </h1>
-                    <p class="text-xs text-slate-500 font-medium">Verified Tutors & Plan-Based Access</p>
-                </div>
+                <span class="text-2xl font-extrabold tracking-tight">Guru<span class="text-brand-orange">Match</span></span>
             </div>
+            
+            <nav class="hidden md:flex space-x-6 font-medium text-sm">
+                <a href="#" onclick="showPage('student')" class="hover:text-brand-orange transition-colors">Find Tutors</a>
+                <a href="#" class="hover:text-brand-orange transition-colors">How It Works</a>
+                <a href="#" class="hover:text-brand-orange transition-colors">Become a Tutor</a>
+            </nav>
 
-            <!-- Navigation Actions -->
-            <div class="flex items-center gap-3">
-                <!-- Learning Requirements Button -->
-                <button onclick="switchMainView('requirements')" id="navReqBtn" class="text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-book-open-reader text-amber-600"></i>
-                    <span class="hidden sm:inline">Learning Board</span>
-                    <span id="reqNavBadge" class="bg-amber-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">0</span>
-                </button>
-
-                <!-- Admin Dashboard Button -->
-                <button onclick="promptAdminLogin()" class="text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span class="hidden sm:inline" id="adminNavButtonLabel">Admin Login</span>
-                </button>
-
-                <!-- Student Register CTA -->
-                <button onclick="openPostRequirementModal()" class="text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="hidden md:inline">Post Doubt (Free)</span>
-                </button>
-
-                <!-- Tutor Registration CTA Button -->
-                <button onclick="openTutorModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-bold px-4 sm:px-5 py-2.5 rounded-xl text-sm shadow-md shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                    <span>Register Tutor (₹200/30d)</span>
-                </button>
+            <div class="flex items-center space-x-3">
+                <button class="text-sm font-semibold hover:text-brand-orange transition-colors px-3 py-2">Sign In</button>
+                <button class="bg-gradient-to-r from-brand-orange to-brand-brightOrange hover:opacity-90 text-white text-sm font-bold px-4 py-2 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5">Get Started</button>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white py-12 px-4 sm:px-6 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 mb-4">
-                <i class="fa-solid fa-circle-check"></i> Strict 30-Day Subscription Verification (₹200 / 30 Days)
-            </span>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-                Find Expert Tutors & Classes in <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">Mumbai</span>
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto font-medium">
-                Browse active subscription tutors, connect instantly over WhatsApp, or post your learning doubts on the board.
-            </p>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Hero Banner with Blue & Orange Aesthetic -->
+        <div class="bg-gradient-to-r from-brand-blue via-blue-900 to-indigo-900 rounded-3xl p-8 md:p-12 text-white shadow-xl mb-10 relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-orange opacity-20 rounded-full blur-3xl"></div>
+            <div class="absolute right-1/3 -top-10 w-48 h-48 bg-blue-400 opacity-20 rounded-full blur-2xl"></div>
+            
+            <div class="relative z-10 max-w-2xl">
+                <span class="bg-brand-orange/20 text-brand-orange border border-brand-orange/40 font-bold text-xs uppercase px-3 py-1 rounded-full inline-block mb-4">
+                    🔥 Sponsored Tutor Spotlight
+                </span>
+                <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+                    Connect with Top Tutors <span class="text-brand-orange">Instantly</span>
+                </h1>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Personalized 1-on-1 learning with verified subject experts tailored to your goals.
+                </p>
+
+                <!-- Search / Filter Bar -->
+                <div class="bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2 text-slate-800">
+                    <div class="flex-1 flex items-center px-3 w-full">
+                        <i class="fas fa-search text-brand-lightBlue mr-2"></i>
+                        <input type="text" placeholder="Subject or skill (e.g. Physics, Python)" class="w-full py-2 bg-transparent focus:outline-none text-sm">
+                    </div>
+                    <div class="w-full md:w-auto border-t md:border-t-0 md:border-l border-slate-200 pl-0 md:pl-2">
+                        <select class="w-full py-2 px-3 bg-transparent text-sm focus:outline-none text-slate-600">
+                            <option>All Levels</option>
+                            <option>High School</option>
+                            <option>Undergraduate</option>
+                            <option>Professional</option>
+                        </select>
+                    </div>
+                    <button class="w-full md:w-auto bg-brand-orange hover:bg-brand-brightOrange text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-all text-sm flex items-center justify-center space-x-2">
+                        <span>Search</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-        <!-- NAVIGATION TABS -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 border-b border-slate-200 pb-5">
-            <div class="flex items-center gap-3">
-                <button onclick="switchMainView('tutors')" id="mainTabTutors" class="px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-amber-600 text-white shadow-md shadow-amber-600/20 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                    <span>Verified Active Tutors</span>
-                </button>
-                <button onclick="switchMainView('requirements')" id="mainTabReqs" class="px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-book-open-reader text-amber-600"></i>
-                    <span>Learning Requirement Board</span>
-                </button>
+        <!-- Featured Tutors Header -->
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-extrabold text-brand-blue">Top Verified Tutors</h2>
+                <p class="text-slate-500 text-sm">Hand-picked educators available for instant bookings</p>
             </div>
-            <div id="headerActionArea"></div>
-        </div>
-
-        <!-- VIEW 1: TUTORS DIRECTORY -->
-        <div id="tutorsViewContainer" class="space-y-6">
-            <!-- Search & Filters Bar -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 mb-6">
-                <div class="flex-1 relative flex items-center">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 text-slate-400"></i>
-                    <input type="text" id="searchInput" oninput="filterTutors()" placeholder="Search by subject (e.g. Mathematics, Physics, Chemistry)..." class="w-full bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="w-full md:w-48 relative flex items-center">
-                    <i class="fa-solid fa-location-dot absolute left-4 text-slate-400"></i>
-                    <select id="locationFilter" onchange="filterTutors()" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-8 py-3 focus:outline-none focus:border-amber-500 appearance-none cursor-pointer">
-                        <option value="">All Localities</option>
-                        <option value="Andheri">Andheri</option>
-                        <option value="Bandra">Bandra</option>
-                        <option value="Borivali">Borivali</option>
-                        <option value="Dadar">Dadar</option>
-                        <option value="Ghatkopar">Ghatkopar</option>
-                        <option value="Malad">Malad</option>
-                        <option value="Thane">Thane</option>
-                        <option value="Powai">Powai</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 text-slate-400 text-xs pointer-events-none"></i>
-                </div>
-                <div class="w-full md:w-48 relative flex items-center">
-                    <i class="fa-solid fa-laptop-code absolute left-4 text-slate-400"></i>
-                    <select id="modeFilter" onchange="filterTutors()" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-8 py-3 focus:outline-none focus:border-amber-500 appearance-none cursor-pointer">
-                        <option value="">All Modes</option>
-                        <option value="Online">Online Learning</option>
-                        <option value="Home Tuition">Home Tuition</option>
-                        <option value="Both">Both Modes</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 text-slate-400 text-xs pointer-events-none"></i>
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-slate-900">Active Plan-Verified Tutors</h3>
-                <div id="activeCountBadge" class="text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="tutorCountText">Loading tutors...</span>
-                </div>
-            </div>
-
-            <!-- Tutor Cards Grid -->
-            <div id="tutorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <!-- Empty State -->
-            <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
-                <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-                <h4 class="text-lg font-bold text-slate-800 mb-1">No Active Tutors Found</h4>
-                <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">No active tutors match your search parameters or their 30-day plans have expired.</p>
-                <button onclick="resetSearchAndFilters()" class="bg-slate-900 text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-slate-800 transition-colors">
-                    Reset Search Filters
+            <div class="flex space-x-2">
+                <button class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-600 hover:border-brand-orange hover:text-brand-orange transition-colors">
+                    <i class="fas fa-filter mr-1"></i> Filter
                 </button>
             </div>
         </div>
 
-        <!-- VIEW 2: LEARNING REQUIREMENT BOARD -->
-        <div id="requirementsViewContainer" class="hidden space-y-6">
-            <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-6 sm:p-8 rounded-3xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <!-- Tutor Grid (Blue & Orange Sponsored Card Aesthetic) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Tutor Card 1 -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all border border-slate-100 overflow-hidden flex flex-col justify-between group">
                 <div>
-                    <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">
-                        <i class="fa-solid fa-bullhorn mr-1"></i> Student Doubt & Topic Board
-                    </span>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Learning Requirements & Doubt Clearing</h3>
-                    <p class="text-amber-100 text-sm max-w-2xl mt-1 font-medium">Verified tutors with an active plan can directly review requirements and reach out to students.</p>
+                    <!-- Card Top Accent Banner -->
+                    <div class="bg-gradient-to-r from-brand-blue to-brand-lightBlue h-20 p-4 relative">
+                        <span class="bg-brand-orange text-white text-xs font-bold px-2.5 py-1 rounded-full shadow absolute top-3 right-3 flex items-center space-x-1">
+                            <i class="fas fa-bolt text-yellow-300"></i>
+                            <span>FEATURED</span>
+                        </span>
+                    </div>
+                    <!-- Profile Info -->
+                    <div class="px-5 pb-4 relative">
+                        <div class="flex justify-between items-end -mt-10 mb-3">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Tutor" class="w-20 h-20 rounded-2xl border-4 border-white shadow-md object-cover">
+                            <div class="text-right">
+                                <span class="text-2xl font-extrabold text-brand-blue">$45</span>
+                                <span class="text-xs text-slate-400 block font-medium">/ hour</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-brand-lightBlue transition-colors">Dr. Sarah Jenkins</h3>
+                            <i class="fas fa-check-circle text-brand-lightBlue text-sm" title="Verified Tutor"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-brand-orange mb-2">Ph.D. in Applied Mathematics</p>
+                        
+                        <p class="text-slate-600 text-xs leading-relaxed line-clamp-2 mb-4">
+                            10+ years helping college and high school students master Calculus, Statistics, and Data Science concepts with ease.
+                        </p>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">Calculus</span>
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">Linear Algebra</span>
+                            <span class="bg-brand-orangeLight text-brand-orange text-xs font-bold px-2.5 py-1 rounded-md">Python</span>
+                        </div>
+                    </div>
                 </div>
-                <button onclick="openPostRequirementModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-extrabold px-6 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 flex-shrink-0">
-                    <i class="fa-solid fa-plus text-amber-400"></i>
-                    <span>Post Requirement</span>
-                </button>
+
+                <!-- Card Footer / Actions -->
+                <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center space-x-1 text-sm font-bold text-slate-700">
+                        <i class="fas fa-star text-amber-400"></i>
+                        <span>4.9</span>
+                        <span class="text-slate-400 text-xs font-normal">(128 reviews)</span>
+                    </div>
+                    <button class="bg-brand-blue hover:bg-brand-orange text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shadow">
+                        Book Session
+                    </button>
+                </div>
             </div>
 
-            <div id="requirementsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <div id="requirementsEmptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
-                <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
-                    <i class="fa-solid fa-book-open"></i>
-                </div>
-                <h4 class="text-lg font-bold text-slate-800 mb-1">No Requirements Posted Yet</h4>
-                <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">Be the first student to post a learning requirement or topic doubt!</p>
-                <button onclick="openPostRequirementModal()" class="bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-amber-700 transition-colors">
-                    Post Learning Requirement
-                </button>
-            </div>
-        </div>
-
-        <!-- VIEW 3: ADMIN PANEL -->
-        <div id="adminViewContainer" class="hidden space-y-6">
-            <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-md flex justify-between items-center">
+            <!-- Tutor Card 2 -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all border border-slate-100 overflow-hidden flex flex-col justify-between group">
                 <div>
-                    <h3 class="text-xl font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved text-amber-500"></i> Admin Panel: Plan Approvals
-                    </h3>
-                    <p class="text-xs text-slate-400 mt-1">Verify payment UTR numbers to approve tutor 30-day subscriptions (₹200).</p>
+                    <div class="bg-gradient-to-r from-brand-blue to-brand-lightBlue h-20 p-4 relative">
+                        <span class="bg-brand-orange text-white text-xs font-bold px-2.5 py-1 rounded-full shadow absolute top-3 right-3 flex items-center space-x-1">
+                            <i class="fas fa-bolt text-yellow-300"></i>
+                            <span>POPULAR</span>
+                        </span>
+                    </div>
+                    <div class="px-5 pb-4 relative">
+                        <div class="flex justify-between items-end -mt-10 mb-3">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Tutor" class="w-20 h-20 rounded-2xl border-4 border-white shadow-md object-cover">
+                            <div class="text-right">
+                                <span class="text-2xl font-extrabold text-brand-blue">$38</span>
+                                <span class="text-xs text-slate-400 block font-medium">/ hour</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-brand-lightBlue transition-colors">Alex Rivera</h3>
+                            <i class="fas fa-check-circle text-brand-lightBlue text-sm" title="Verified Tutor"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-brand-orange mb-2">Senior Full-Stack Engineer</p>
+                        
+                        <p class="text-slate-600 text-xs leading-relaxed line-clamp-2 mb-4">
+                            Learn web development, JavaScript, React, and algorithm prep directly from an active tech industry lead.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">JavaScript</span>
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">React</span>
+                            <span class="bg-brand-orangeLight text-brand-orange text-xs font-bold px-2.5 py-1 rounded-md">Web Dev</span>
+                        </div>
+                    </div>
                 </div>
-                <button onclick="switchMainView('tutors')" class="bg-slate-800 hover:bg-slate-700 text-xs px-3.5 py-2 rounded-xl text-slate-300">Exit Admin</button>
+
+                <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center space-x-1 text-sm font-bold text-slate-700">
+                        <i class="fas fa-star text-amber-400"></i>
+                        <span>5.0</span>
+                        <span class="text-slate-400 text-xs font-normal">(94 reviews)</span>
+                    </div>
+                    <button class="bg-brand-blue hover:bg-brand-orange text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shadow">
+                        Book Session
+                    </button>
+                </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                <div class="p-4 border-b border-slate-200 font-bold text-sm text-slate-700 flex justify-between items-center">
-                    <span>Pending & Active Registrations</span>
-                    <span id="pendingAdminBadge" class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">0 Pending</span>
+            <!-- Tutor Card 3 -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all border border-slate-100 overflow-hidden flex flex-col justify-between group">
+                <div>
+                    <div class="bg-gradient-to-r from-brand-blue to-brand-lightBlue h-20 p-4 relative">
+                    </div>
+                    <div class="px-5 pb-4 relative">
+                        <div class="flex justify-between items-end -mt-10 mb-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Tutor" class="w-20 h-20 rounded-2xl border-4 border-white shadow-md object-cover">
+                            <div class="text-right">
+                                <span class="text-2xl font-extrabold text-brand-blue">$50</span>
+                                <span class="text-xs text-slate-400 block font-medium">/ hour</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-brand-lightBlue transition-colors">Prof. David Chen</h3>
+                            <i class="fas fa-check-circle text-brand-lightBlue text-sm" title="Verified Tutor"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-brand-orange mb-2">Physics Specialist & Researcher</p>
+                        
+                        <p class="text-slate-600 text-xs leading-relaxed line-clamp-2 mb-4">
+                            Specializing in AP Physics, Quantum Mechanics, and MCAT prep. Interactive problem-solving approach.
+                        </p>
+
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">AP Physics</span>
+                            <span class="bg-brand-sky text-brand-lightBlue text-xs font-bold px-2.5 py-1 rounded-md">Mechanics</span>
+                            <span class="bg-brand-orangeLight text-brand-orange text-xs font-bold px-2.5 py-1 rounded-md">MCAT Prep</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-slate-600">
-                        <thead class="bg-slate-50 text-xs uppercase text-slate-400 border-b border-slate-200">
-                            <tr>
-                                <th class="p-4">Tutor Name</th>
-                                <th class="p-4">Subjects & Locality</th>
-                                <th class="p-4">Contact Phone</th>
-                                <th class="p-4">Payment UTR</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
+
+                <div class="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center space-x-1 text-sm font-bold text-slate-700">
+                        <i class="fas fa-star text-amber-400"></i>
+                        <span>4.8</span>
+                        <span class="text-slate-400 text-xs font-normal">(76 reviews)</span>
+                    </div>
+                    <button class="bg-brand-blue hover:bg-brand-orange text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shadow">
+                        Book Session
+                    </button>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-500 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 bg-amber-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
-                    <i class="fa-solid fa-graduation-cap"></i>
+    <!-- Footer -->
+    <footer class="bg-brand-blue text-slate-300 mt-16 border-t border-blue-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <div class="bg-brand-orange p-1.5 rounded text-white font-bold text-sm">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <span class="font-bold text-slate-700">GuruMatch Mumbai © 2026</span>
+                <span class="text-lg font-bold text-white">Guru<span class="text-brand-orange">Match</span></span>
             </div>
-            <p>Strict Plan-Based Tutoring Directory (₹200 / 30 Days). Expired tutors are automatically hidden.</p>
-            <div>
-                <button onclick="promptAdminLogin()" class="text-amber-700 font-semibold hover:underline">Admin Login</button>
-            </div>
+            <p class="text-xs text-blue-200">© 2026 GuruMatch Learning Platform. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- MODAL 1: TUTOR REGISTRATION -->
-    <div id="tutorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
-        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8 fade-in max-h-[90vh] overflow-y-auto">
-            <button onclick="closeTutorModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl font-bold">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <div>
-                    <h3 class="text-xl font-extrabold text-slate-900">Tutor Registration (₹200 / 30 Days)</h3>
-                    <p class="text-xs text-slate-500">Subscription plan active for 30 days upon admin approval.</p>
-                </div>
-            </div>
-
-            <form onsubmit="handleTutorRegistration(event)" class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name</label>
-                        <input type="text" id="tutorName" required placeholder="Prof. Rajesh Sharma" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Phone No.</label>
-                        <input type="text" id="tutorPhone" required placeholder="9876543210" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Main Subjects</label>
-                        <input type="text" id="tutorSubjects" required placeholder="Physics, Mathematics" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Locality (Mumbai)</label>
-                        <select id="tutorLocality" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="Andheri">Andheri</option>
-                            <option value="Bandra">Bandra</option>
-                            <option value="Borivali">Borivali</option>
-                            <option value="Dadar">Dadar</option>
-                            <option value="Ghatkopar">Ghatkopar</option>
-                            <option value="Malad">Malad</option>
-                            <option value="Thane">Thane</option>
-                            <option value="Powai">Powai</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Teaching Mode</label>
-                    <select id="tutorMode" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                        <option value="Both">Both Online & Home Tuition</option>
-                        <option value="Online">Online Classes Only</option>
-                        <option value="Home Tuition">Private Home Tuition Only</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Bio & Qualifications</label>
-                    <textarea id="tutorBio" rows="3" required placeholder="M.Sc Physics, 10+ years experience coaching Class 10-12 students..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500"></textarea>
-                </div>
-
-                <div class="border-t border-slate-200 pt-4 mt-4">
-                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-center mb-4">
-                        <p class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">Pay ₹200 for 30 Days Access</p>
-                        <p class="text-xs text-amber-700 mb-3">Pay to UPI ID: <strong class="font-extrabold text-amber-900">verizon@upi</strong></p>
-                        <div class="inline-block bg-white p-2 border border-amber-300 rounded-xl shadow-sm mb-2">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dverizon%40upi%26pn%3DGuruMatch%26am%3D200%26cu%3DINR" alt="UPI QR Code" class="w-32 h-32 mx-auto">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">12-Digit Payment UTR / Ref Number</label>
-                        <input type="text" id="tutorUtr" required maxlength="12" pattern="\d{12}" placeholder="e.g. 423456789012" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-mono focus:outline-none focus:border-amber-500">
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition-colors mt-2">
-                    Submit Registration
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL 2: POST LEARNING REQUIREMENT -->
-    <div id="reqModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8 fade-in">
-            <button onclick="closeReqModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl font-bold">
-                    <i class="fa-solid fa-book-open-reader"></i>
-                </div>
-                <div>
-                    <h3 class="text-xl font-extrabold text-slate-900">Post Learning Requirement</h3>
-                    <p class="text-xs text-slate-500">Free for students. Active plan tutors will contact you.</p>
-                </div>
-            </div>
-
-            <form onsubmit="handlePostRequirement(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Student Name</label>
-                    <input type="text" id="reqStudentName" required placeholder="Aarav Mehta" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Number</label>
-                    <input type="text" id="reqStudentPhone" required placeholder="9820012345" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject / Topic</label>
-                        <input type="text" id="reqSubject" required placeholder="Class 10 Trigonometry" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Locality</label>
-                        <select id="reqLocality" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="Andheri">Andheri</option>
-                            <option value="Bandra">Bandra</option>
-                            <option value="Borivali">Borivali</option>
-                            <option value="Dadar">Dadar</option>
-                            <option value="Ghatkopar">Ghatkopar</option>
-                            <option value="Malad">Malad</option>
-                            <option value="Thane">Thane</option>
-                            <option value="Powai">Powai</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Details of Requirement</label>
-                    <textarea id="reqDetails" rows="3" required placeholder="Need crash-course sessions to cover Trigonometric identities before prelims..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-amber-500"></textarea>
-                </div>
-
-                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition-colors mt-2">
-                    Post Learning Requirement
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- APPLICATION LOGIC -->
-    <script>
-        const ADMIN_PASSWORD = "verizonadmin";
-        let isAdminLoggedIn = false;
-
-        // Unified Initial Data
-        let tutors = [
-            {
-                id: 't1',
-                name: 'Prof. Rajesh Sharma',
-                phone: '9876543210',
-                subjects: 'Physics, Mathematics',
-                locality: 'Andheri',
-                mode: 'Both',
-                bio: 'M.Sc Physics with 10+ years teaching experience for Class 10-12 CBSE/ICSE students.',
-                utr: '423456789012',
-                status: 'Active',
-                planStartDate: Date.now() - (5 * 24 * 60 * 60 * 1000)
-            },
-            {
-                id: 't2',
-                name: 'Neha Kulkarni',
-                phone: '9820112233',
-                subjects: 'Chemistry, Biology',
-                locality: 'Bandra',
-                mode: 'Home Tuition',
-                bio: 'Specialized in NEET prep and high school Chemistry with custom learning modules.',
-                utr: '987654321098',
-                status: 'Active',
-                planStartDate: Date.now() - (12 * 24 * 60 * 60 * 1000)
-            }
-        ];
-
-        let requirements = [
-            {
-                id: 'r1',
-                studentName: 'Aarav Mehta',
-                studentPhone: '9820012345',
-                subject: 'Class 10 Trigonometry',
-                locality: 'Andheri',
-                details: 'Need help solving NCERT Class 10 chapter 8 questions before board prelims.',
-                date: '2 hours ago'
-            }
-        ];
-
-        // App Initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTutors();
-            renderRequirements();
-            renderAdminTable();
-        });
-
-        // Main Navigation
-        function switchMainView(view) {
-            document.getElementById('tutorsViewContainer').classList.add('hidden');
-            document.getElementById('requirementsViewContainer').classList.add('hidden');
-            document.getElementById('adminViewContainer').classList.add('hidden');
-
-            document.getElementById('mainTabTutors').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-2";
-            document.getElementById('mainTabReqs').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-2";
-
-            if (view === 'tutors') {
-                document.getElementById('tutorsViewContainer').classList.remove('hidden');
-                document.getElementById('mainTabTutors').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-amber-600 text-white shadow-md shadow-amber-600/20 transition-all flex items-center gap-2";
-            } else if (view === 'requirements') {
-                document.getElementById('requirementsViewContainer').classList.remove('hidden');
-                document.getElementById('mainTabReqs').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-amber-600 text-white shadow-md shadow-amber-600/20 transition-all flex items-center gap-2";
-            } else if (view === 'admin') {
-                document.getElementById('adminViewContainer').classList.remove('hidden');
-            }
-        }
-
-        // Active 30-Day Check
-        function isTutorPlanActive(tutor) {
-            if (tutor.status !== 'Active' || !tutor.planStartDate) return false;
-            const daysDiff = (Date.now() - tutor.planStartDate) / (1000 * 60 * 60 * 24);
-            return daysDiff <= 30;
-        }
-
-        // Render Active Tutors Directory
-        function renderTutors() {
-            const grid = document.getElementById('tutorsGrid');
-            const empty = document.getElementById('emptyState');
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const location = document.getElementById('locationFilter').value;
-            const mode = document.getElementById('modeFilter').value;
-
-            grid.innerHTML = '';
-            let activeTutors = tutors.filter(t => isTutorPlanActive(t));
-
-            let filtered = activeTutors.filter(t => {
-                const matchesQuery = t.subjects.toLowerCase().includes(query) || t.name.toLowerCase().includes(query);
-                const matchesLocation = !location || t.locality === location;
-                const matchesMode = !mode || t.mode === mode || t.mode === 'Both';
-                return matchesQuery && matchesLocation && matchesMode;
-            });
-
-            document.getElementById('tutorCountText').innerText = `${activeTutors.length} Active Verified Tutors`;
-
-            if (filtered.length === 0) {
-                grid.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            empty.classList.add('hidden');
-
-            filtered.forEach(t => {
-                const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between";
-                card.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                                <i class="fa-solid fa-shield-halved"></i> Active 30-Day Plan
-                            </span>
-                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">${t.locality}</span>
-                        </div>
-                        <h4 class="text-lg font-bold text-slate-900">${t.name}</h4>
-                        <p class="text-xs font-extrabold text-amber-600 mb-2">${t.subjects}</p>
-                        <p class="text-xs text-slate-600 mb-4 line-clamp-3">${t.bio}</p>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-chalkboard text-slate-400"></i> Mode: <strong class="text-slate-700">${t.mode}</strong>
-                        </div>
-                        <a href="https://wa.me/91${t.phone}?text=Hello%20${encodeURIComponent(t.name)},%20I%20found%20your%20profile%20on%20GuruMatch." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
-                            <i class="fa-brands fa-whatsapp text-base"></i> Connect on WhatsApp
-                        </a>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterTutors() { renderTutors(); }
-        function resetSearchAndFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('locationFilter').value = '';
-            document.getElementById('modeFilter').value = '';
-            renderTutors();
-        }
-
-        // Render Learning Requirements
-        function renderRequirements() {
-            const grid = document.getElementById('requirementsGrid');
-            const empty = document.getElementById('requirementsEmptyState');
-            grid.innerHTML = '';
-
-            document.getElementById('reqNavBadge').innerText = requirements.length;
-
-            if (requirements.length === 0) {
-                grid.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            empty.classList.add('hidden');
-
-            requirements.forEach(r => {
-                const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between";
-                card.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-1 rounded-full">${r.locality}</span>
-                            <span class="text-[11px] text-slate-400 font-medium">${r.date}</span>
-                        </div>
-                        <h4 class="text-base font-bold text-slate-900 mb-1">${r.subject}</h4>
-                        <p class="text-xs text-slate-600 mb-4">${r.details}</p>
-                    </div>
-                    <div class="border-t border-slate-100 pt-3">
-                        <p class="text-xs text-slate-500 mb-2">Posted by: <strong class="text-slate-800">${r.studentName}</strong></p>
-                        <a href="https://wa.me/91${r.studentPhone}?text=Hello%20${encodeURIComponent(r.studentName)},%20I%20am%20a%20verified%20tutor%20on%20GuruMatch%20and%20can%20help%20with%20${encodeURIComponent(r.subject)}." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
-                            <i class="fa-brands fa-whatsapp"></i> Contact Student
-                        </a>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Admin Functionality
-        function promptAdminLogin() {
-            if (isAdminLoggedIn) {
-                switchMainView('admin');
-                return;
-            }
-            const pass = prompt("Enter Admin Password:");
-            if (pass === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
-                alert("Admin login successful!");
-                document.getElementById('adminNavButtonLabel').innerText = "Admin Dashboard";
-                switchMainView('admin');
-            } else if (pass !== null) {
-                alert("Incorrect Admin Password!");
-            }
-        }
-
-        function renderAdminTable() {
-            const tbody = document.getElementById('adminTableBody');
-            tbody.innerHTML = '';
-
-            let pendingCount = tutors.filter(t => t.status === 'Pending Verification').length;
-            document.getElementById('pendingAdminBadge').innerText = `${pendingCount} Pending`;
-
-            if (tutors.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No tutors registered yet.</td></tr>`;
-                return;
-            }
-
-            tutors.forEach(t => {
-                const tr = document.createElement('tr');
-                const active = isTutorPlanActive(t);
-                tr.innerHTML = `
-                    <td class="p-4 font-bold text-slate-800">${t.name}</td>
-                    <td class="p-4">${t.subjects} <br><span class="text-xs text-slate-400">${t.locality}</span></td>
-                    <td class="p-4 font-mono text-xs">${t.phone}</td>
-                    <td class="p-4 font-mono text-xs font-bold text-slate-800">${t.utr || 'N/A'}</td>
-                    <td class="p-4">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-full ${active ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-                            ${active ? 'Active (30 Days)' : (t.status === 'Pending Verification' ? 'Pending Approval' : 'Expired')}
-                        </span>
-                    </td>
-                    <td class="p-4 text-right">
-                        ${t.status === 'Pending Verification' 
-                            ? `<button onclick="approveTutorPlan('${t.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg">Approve Plan</button>` 
-                            : `<span class="text-xs text-slate-400">Verified</span>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function approveTutorPlan(id) {
-            const tutor = tutors.find(t => t.id === id);
-            if (tutor) {
-                tutor.status = 'Active';
-                tutor.planStartDate = Date.now();
-                alert(`Plan approved for ${tutor.name}! Profile live for 30 days.`);
-                renderTutors();
-                renderAdminTable();
-            }
-        }
-
-        // Modal Handlers
-        function openTutorModal() { document.getElementById('tutorModal').classList.remove('hidden'); }
-        function closeTutorModal() { document.getElementById('tutorModal').classList.add('hidden'); }
-        function openPostRequirementModal() { document.getElementById('reqModal').classList.remove('hidden'); }
-        function closeReqModal() { document.getElementById('reqModal').classList.add('hidden'); }
-
-        function handleTutorRegistration(e) {
-            e.preventDefault();
-            const utr = document.getElementById('tutorUtr').value.trim();
-            if (utr.length !== 12 || isNaN(utr)) {
-                alert("Please enter a valid 12-digit UPI UTR reference number.");
-                return;
-            }
-
-            const newTutor = {
-                id: 't_' + Date.now(),
-                name: document.getElementById('tutorName').value,
-                phone: document.getElementById('tutorPhone').value,
-                subjects: document.getElementById('tutorSubjects').value,
-                locality: document.getElementById('tutorLocality').value,
-                mode: document.getElementById('tutorMode').value,
-                bio: document.getElementById('tutorBio').value,
-                utr: utr,
-                status: 'Pending Verification',
-                planStartDate: null
-            };
-
-            tutors.push(newTutor);
-            alert("Registration and UTR submitted! Your 30-day plan will activate after admin verification.");
-            closeTutorModal();
-            renderAdminTable();
-        }
-
-        function handlePostRequirement(e) {
-            e.preventDefault();
-            const newReq = {
-                id: 'r_' + Date.now(),
-                studentName: document.getElementById('reqStudentName').value,
-                studentPhone: document.getElementById('reqStudentPhone').value,
-                subject: document.getElementById('reqSubject').value,
-                locality: document.getElementById('reqLocality').value,
-                details: document.getElementById('reqDetails').value,
-                date: 'Just now'
-            };
-
-            requirements.unshift(newReq);
-            alert("Learning requirement posted successfully!");
-            closeReqModal();
-            renderRequirements();
-            switchMainView('requirements');
-        }
-    </script>
 </body>
 </html>

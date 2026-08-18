@@ -3,856 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuruMatch Mumbai - Premier Tutor Directory</title>
-    <!-- Tailwind CSS -->
+    <title>TutorConnect - Find & Hire Expert Tutors</title>
+    <!-- Tailwind CSS CDN for Modern Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Modern & Professional EdTech Google Fonts: Plus Jakarta Sans & Inter/DM Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'DM Sans', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
                     colors: {
+                        navy: {
+                            800: '#1E293B',
+                            900: '#0F172A',
+                        },
                         brand: {
-                            blue: '#1d4ed8',         /* Deep Modern Royal Blue */
-                            darkBlue: '#0f2a4a',     /* Deep Premium Navy */
-                            skyBg: '#f8fafc',        /* High-DPI Crisp Light Background */
-                            orange: '#ea580c',       /* Deep Vibrant Orange */
-                            brightOrange: '#f97316', /* Glossy Orange Accent */
-                            orangeLight: '#fff7ed',  /* Soft Orange Tint */
+                            blue: '#2563EB',
+                            hover: '#1D4ED8',
+                            accent: '#F59E0B'
                         }
                     }
                 }
             }
         }
     </script>
-    <style>
-        body { 
-            font-family: 'Inter', 'DM Sans', sans-serif; 
-            -webkit-font-smoothing: antialiased; 
-            -moz-osx-font-smoothing: grayscale; 
-        }
-        h1, h2, h3, h4, h5, .font-display { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            letter-spacing: -0.02em;
-        }
-        
-        /* Premium Glossy & Glassmorphism Utilities */
-        .glass-header {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .glossy-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            box-shadow: 0 10px 30px -10px rgba(15, 42, 74, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-        }
-        .glossy-hero {
-            background: linear-gradient(135deg, #0f2a4a 0%, #1d4ed8 60%, #2563eb 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 65%);
-            pointer-events: none;
-        }
-        /* Glossy Button Shine Sweep Effect */
-        .shiny-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        .shiny-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 50%;
-            height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(30deg);
-            transition: all 0.6s ease;
-        }
-        .shiny-btn:hover::after {
-            left: 120%;
-        }
-        .fade-in { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-brand-skyBg text-slate-800 min-h-screen flex flex-col antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="glass-header text-slate-800 sticky top-0 z-40 border-b border-slate-200/80 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="resetSearchAndFilters(); switchMainView('tutors');">
-                <div class="w-11 h-11 bg-gradient-to-tr from-brand-darkBlue to-brand-blue rounded-2xl flex items-center justify-center text-white text-xl font-black shadow-lg shadow-blue-600/30">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <h1 class="font-display font-extrabold text-2xl text-slate-900 tracking-tight flex items-center gap-2">
-                        Guru<span class="text-brand-blue">Match</span>
-                        <span class="text-[10px] uppercase tracking-widest bg-blue-50 text-brand-blue border border-blue-200/80 font-bold px-2.5 py-0.5 rounded-full">Mumbai</span>
-                    </h1>
-                    <p class="text-xs text-slate-500 font-medium tracking-tight">Verified Tutors & Featured Spotlights</p>
-                </div>
+    <!-- Header / Navbar -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid font-bold text-2xl text-brand-accent fa-graduation-cap"></i>
+                <span class="text-xl font-bold tracking-wide text-white">Tutor<span class="text-brand-blue">Connect</span></span>
             </div>
-
-            <!-- Navigation Actions -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <button onclick="switchMainView('requirements')" id="navReqBtn" class="bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 border border-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-book-open-reader text-brand-orange"></i>
-                    <span class="hidden sm:inline">Learning Board</span>
-                    <span id="reqNavBadge" class="bg-brand-orange text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm">0</span>
-                </button>
-
-                <button onclick="openStaffModal()" class="bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 border border-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-brand-blue"></i>
-                    <span class="hidden sm:inline" id="staffNavButtonLabel">Staff Portal</span>
-                </button>
-
-                <button onclick="openPostRequirementModal()" class="hidden lg:flex bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all items-center gap-2">
-                    <i class="fa-regular fa-user"></i>
-                    <span>Post Doubt (Free)</span>
-                </button>
-
-                <button onclick="openTutorModal()" class="shiny-btn bg-gradient-to-r from-brand-blue to-brand-darkBlue hover:brightness-110 text-white font-extrabold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-yellow-300"></i>
-                    <span>Register / Sponsored Ad</span>
-                </button>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#home" class="hover:text-brand-blue transition">Home</a>
+                <a href="#tutors" class="hover:text-brand-blue transition">Find Tutors</a>
+                <a href="#register" class="hover:text-brand-blue transition">Register as Tutor</a>
+            </nav>
+            <div>
+                <a href="#register" class="bg-brand-blue hover:bg-brand-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition shadow">
+                    Register as Tutor
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="glossy-hero text-white py-14 px-4 sm:px-6 shadow-md">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-white/10 text-white border border-white/20 mb-4 backdrop-blur-md shadow-inner">
-                <i class="fa-solid fa-bolt text-yellow-300"></i> Get 3x More Leads with Featured Spotlights (₹500)
-            </span>
-            <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-                Find Expert Tutors & Classes in <span class="text-yellow-300 drop-shadow-sm">Mumbai</span>
-            </h2>
-            <p class="text-blue-100 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
-                Connect directly with top verified educators via WhatsApp or showcase your profile with our basic or sponsored plans.
+    <!-- Hero Section -->
+    <section id="home" class="bg-navy-900 text-white py-16 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
+                Connect with Top Verified Tutors Near You
+            </h1>
+            <p class="text-slate-300 max-w-2xl mx-auto text-base md:text-lg mb-8">
+                Explore verified tutor profiles, read genuine student reviews, and choose the perfect tutor for your learning journey.
             </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
+                <input type="text" id="searchInput" placeholder="Search by subject, name, or city..." class="px-4 py-3 rounded-lg text-slate-900 focus:outline-none w-full shadow">
+                <button onclick="filterTutors()" class="bg-brand-blue hover:bg-brand-hover text-white font-semibold px-6 py-3 rounded-lg transition shadow">
+                    Search Tutors
+                </button>
+            </div>
         </div>
     </section>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-        <!-- NAVIGATION TABS -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 border-b border-slate-200 pb-5">
-            <div class="flex items-center gap-3">
-                <button onclick="switchMainView('tutors')" id="mainTabTutors" class="shiny-btn px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-brand-blue text-white shadow-md shadow-blue-600/20 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                    <span>Verified Tutors</span>
-                </button>
-                <button onclick="switchMainView('requirements')" id="mainTabReqs" class="px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-all flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-book-open-reader text-brand-orange"></i>
-                    <span>Requirement Board</span>
-                </button>
-            </div>
-            <div id="headerActionArea"></div>
-        </div>
-
-        <!-- VIEW 1: TUTORS DIRECTORY -->
-        <div id="tutorsViewContainer" class="space-y-6">
-            <!-- Search & Filters Bar -->
-            <div class="glossy-card p-4 rounded-2xl flex flex-col md:flex-row gap-3 mb-6">
-                <div class="flex-1 relative flex items-center">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 text-brand-blue"></i>
-                    <input type="text" id="searchInput" oninput="filterTutors()" placeholder="Search by subject or tutor name..." class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                </div>
-                <div class="w-full md:w-56 relative flex items-center">
-                    <i class="fa-solid fa-location-dot absolute left-4 text-brand-blue"></i>
-                    <input type="text" id="locationFilter" oninput="filterTutors()" placeholder="Filter by Locality..." class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
-                </div>
-                <div class="w-full md:w-48 relative flex items-center">
-                    <i class="fa-solid fa-laptop-code absolute left-4 text-brand-blue"></i>
-                    <select id="modeFilter" onchange="filterTutors()" class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-8 py-3 focus:outline-none focus:border-brand-blue focus:bg-white appearance-none cursor-pointer transition-all font-medium">
-                        <option value="">All Modes</option>
-                        <option value="Online">Online Learning</option>
-                        <option value="Home Tuition">Home Tuition</option>
-                        <option value="Both">Both Modes</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 text-slate-400 text-xs pointer-events-none"></i>
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-display text-xl font-bold text-slate-900 tracking-tight">Active Tutors & Sponsored Spotlights</h3>
-                <div id="activeCountBadge" class="text-xs font-bold px-3.5 py-1.5 rounded-full bg-blue-50 text-brand-blue border border-blue-200/80 flex items-center gap-2 shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
-                    <span id="tutorCountText">Loading tutors...</span>
-                </div>
-            </div>
-
-            <!-- Tutor Cards Grid -->
-            <div id="tutorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <!-- Empty State -->
-            <div id="emptyState" class="hidden text-center py-16 glossy-card rounded-3xl p-8">
-                <div class="w-16 h-16 bg-brand-orangeLight text-brand-orange rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-                <h4 class="font-display text-lg font-bold text-slate-800 mb-1">No Tutors Found</h4>
-                <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">No active tutors match your search parameters.</p>
-                <button onclick="resetSearchAndFilters()" class="bg-brand-blue text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-brand-darkBlue transition-colors shadow-md">
-                    Reset Search Filters
-                </button>
-            </div>
-        </div>
-
-        <!-- VIEW 2: LEARNING REQUIREMENT BOARD -->
-        <div id="requirementsViewContainer" class="hidden space-y-6">
-            <div class="glossy-hero text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <span class="bg-brand-orange text-white text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow">
-                        <i class="fa-solid fa-bullhorn mr-1"></i> Student Requirement Board
-                    </span>
-                    <h3 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight">Student Doubts & Learning Needs</h3>
-                    <p class="text-blue-100 text-sm max-w-2xl mt-1 font-normal">Tutors can review postings and directly reach out to students on WhatsApp.</p>
-                </div>
-                <button onclick="openPostRequirementModal()" class="shiny-btn bg-brand-orange hover:bg-brand-brightOrange text-white font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition-all flex items-center gap-2 flex-shrink-0">
-                    <i class="fa-solid fa-plus text-white"></i>
-                    <span>Post Requirement</span>
-                </button>
-            </div>
-
-            <div id="requirementsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <div id="requirementsEmptyState" class="hidden text-center py-16 glossy-card rounded-3xl p-8">
-                <div class="w-16 h-16 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
-                    <i class="fa-solid fa-book-open"></i>
-                </div>
-                <h4 class="font-display text-lg font-bold text-slate-800 mb-1">No Requirements Posted Yet</h4>
-                <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">Be the first student to post a doubt or learning request!</p>
-                <button onclick="openPostRequirementModal()" class="bg-brand-blue text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-brand-darkBlue transition-colors shadow-md">
-                    Post Learning Requirement
-                </button>
-            </div>
-        </div>
-
-        <!-- VIEW 3: STAFF PANEL -->
-        <div id="staffViewContainer" class="hidden space-y-6">
-            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 rounded-3xl shadow-xl flex justify-between items-center border border-slate-700">
-                <div>
-                    <h3 class="font-display text-xl font-bold flex items-center gap-2 text-white">
-                        <i class="fa-solid fa-user-shield text-brand-blue"></i> Staff Dashboard: Approvals & Verification
-                    </h3>
-                    <p class="text-xs text-slate-300 mt-1">Verify payment UTR reference numbers to activate listings.</p>
-                </div>
-                <button onclick="switchMainView('tutors')" class="bg-white/10 hover:bg-white/20 text-xs px-4 py-2 rounded-xl text-white font-semibold transition-colors border border-white/10">Exit Staff Panel</button>
-            </div>
-
-            <div class="glossy-card rounded-3xl overflow-hidden">
-                <div class="p-4 border-b border-slate-200 font-bold text-sm text-slate-800 flex justify-between items-center bg-slate-50/50">
-                    <span>Pending & Active Tutor Listings</span>
-                    <span id="pendingStaffBadge" class="bg-brand-orangeLight text-brand-orange text-xs px-3 py-1 rounded-full font-extrabold border border-orange-200">0 Pending</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-slate-600">
-                        <thead class="bg-slate-100/70 text-[11px] uppercase tracking-wider font-extrabold text-slate-500 border-b border-slate-200">
-                            <tr>
-                                <th class="p-4">Tutor Name</th>
-                                <th class="p-4">Plan Selected</th>
-                                <th class="p-4">Subjects & Locality</th>
-                                <th class="p-4">Payment UTR</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Staff Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="staffTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 text-slate-600 py-8 text-center text-xs mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 bg-brand-blue text-white rounded-lg flex items-center justify-center font-bold text-xs shadow-sm">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <span class="font-bold text-slate-800 font-display text-sm">GuruMatch Mumbai © 2026</span>
-            </div>
-            <p class="text-slate-500">Mumbai Tutor Directory & Sponsored Spotlight Ads (₹200 / ₹500)</p>
+    <!-- Tutor Profiles & Reviews Section -->
+    <section id="tutors" class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <div>
-                <button onclick="openStaffModal()" class="text-slate-400 hover:text-brand-blue font-semibold transition-colors">Staff Login Portal</button>
+                <h2 class="text-2xl font-bold text-navy-900">Explore Tutors</h2>
+                <p class="text-slate-500 text-sm">Check ratings, reviews, and experience before hiring</p>
+            </div>
+            <!-- Filter Options -->
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-slate-600">Filter:</span>
+                <select id="subjectFilter" onchange="filterTutors()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-blue shadow-sm">
+                    <option value="All">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="English">English</option>
+                    <option value="Computer Science">Computer Science</option>
+                </select>
             </div>
         </div>
+
+        <!-- Tutors Grid -->
+        <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Tutor cards will be injected dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Tutor Registration & Sponsored Ad Flow Section -->
+    <section id="register" class="bg-slate-200 py-12 border-t border-slate-300">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="text-center mb-6">
+                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tutor Portal</span>
+                    <h2 class="text-2xl font-bold text-navy-900 mt-2">Register as Tutor</h2>
+                    <p class="text-slate-600 text-sm mt-1">Complete your basic registration to get listed and unlock profile promotion features.</p>
+                </div>
+
+                <!-- Step Indicator -->
+                <div class="flex justify-between items-center mb-8 max-w-xs mx-auto border-b pb-4">
+                    <div id="step1-badge" class="flex items-center gap-2 font-semibold text-brand-blue">
+                        <span class="w-7 h-7 bg-brand-blue text-white rounded-full flex items-center justify-center text-xs">1</span>
+                        <span>Basic (₹200)</span>
+                    </div>
+                    <div class="h-0.5 bg-slate-300 flex-grow mx-2"></div>
+                    <div id="step2-badge" class="flex items-center gap-2 font-semibold text-slate-400">
+                        <span class="w-7 h-7 bg-slate-300 text-slate-600 rounded-full flex items-center justify-center text-xs">2</span>
+                        <span>Sponsored Ad</span>
+                    </div>
+                </div>
+
+                <!-- Form Step 1: Basic Registration -->
+                <form id="basicRegForm" onsubmit="handleBasicRegistration(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Full Name</label>
+                            <input type="text" required placeholder="e.g. Rahul Sharma" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Primary Subject</label>
+                            <input type="text" required placeholder="e.g. Mathematics" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Experience (Years)</label>
+                            <input type="number" required placeholder="e.g. 5" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">City / Location</label>
+                            <input type="text" required placeholder="e.g. Delhi, Sector 62" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-lg flex items-center justify-between mt-4">
+                        <div>
+                            <p class="font-semibold text-navy-900 text-sm">Mandatory Basic Registration Fee</p>
+                            <p class="text-xs text-slate-500">Includes verified profile listing in directory</p>
+                        </div>
+                        <span class="text-lg font-bold text-navy-900">₹200</span>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-brand-hover text-white font-semibold py-3 rounded-lg transition shadow mt-4">
+                        Pay ₹200 & Complete Registration
+                    </button>
+                </form>
+
+                <!-- Form Step 2: Dashboard / Sponsored Ad Option (Hidden initially) -->
+                <div id="sponsoredDashboard" class="hidden space-y-6">
+                    <div class="bg-green-50 border border-green-200 text-green-800 p-4 rounded-lg flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-green-600 text-xl"></i>
+                        <div>
+                            <p class="font-bold text-sm">Basic Registration Completed!</p>
+                            <p class="text-xs">Your tutor profile is now active on our directory.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-brand-accent/40 bg-amber-50/50 rounded-xl p-5 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-brand-accent text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Optional Feature</span>
+                            <span class="text-amber-700 font-bold text-sm">Boost Visibility</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-navy-900">Promote Profile / Buy Sponsored Ad</h3>
+                        <p class="text-xs text-slate-600 mt-1">Get up to 5x more direct student queries by featuring your profile at the top of search results.</p>
+                        
+                        <div class="mt-4 pt-4 border-t border-amber-200 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500">Sponsored Ad Plan</p>
+                                <p class="text-lg font-extrabold text-navy-900">₹499 <span class="text-xs font-normal text-slate-500">/ month</span></p>
+                            </div>
+                            <button onclick="activateSponsoredAd()" id="sponsorBtn" class="bg-brand-accent hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition shadow">
+                                Buy Sponsored Ad
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
+        <p>&copy; 2026 TutorConnect Platform. All rights reserved.</p>
     </footer>
 
-    <!-- MODAL 1: STAFF LOGIN MODAL -->
-    <div id="staffModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
-        <div class="glossy-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative fade-in border border-slate-100">
-            <button onclick="closeStaffModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <div>
-                    <h3 class="font-display text-xl font-extrabold text-slate-900">Authorized Staff Portal</h3>
-                    <p class="text-xs text-slate-500">Sign in with authorized staff credentials.</p>
-                </div>
-            </div>
-
-            <form onsubmit="handleStaffLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Staff Email</label>
-                    <input type="email" id="staffUsernameInput" value="" placeholder="staff@gurumatch.in" required autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password</label>
-                    <input type="password" id="staffPasswordInput" value="" placeholder="••••••••••••" required autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
-                </div>
-
-                <div class="pt-1 text-right">
-                    <button type="button" onclick="toggleDemoCredentialsHint()" class="text-[11px] text-slate-400 hover:text-brand-blue font-medium transition-colors inline-flex items-center gap-1">
-                        <i class="fa-solid fa-circle-info"></i> Demo credentials info
-                    </button>
-                    <div id="demoCredentialsHint" class="hidden text-left mt-2 p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] font-mono text-slate-700">
-                        <p class="font-bold text-slate-900 mb-0.5">Authorized Credentials:</p>
-                        <p>User: admin.staff@gurumatch.in</p>
-                        <p>Pass: G3ruM@tch#2026!Sec</p>
-                    </div>
-                </div>
-
-                <button type="submit" class="shiny-btn w-full bg-brand-blue hover:bg-brand-darkBlue text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-blue-600/20 transition-all mt-2">
-                    Login to Dashboard
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL 2: TUTOR REGISTRATION & SPONSORED AD -->
-    <div id="tutorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 overflow-y-auto">
-        <div class="glossy-card bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8 fade-in max-h-[90vh] overflow-y-auto border border-slate-100">
-            <button onclick="closeTutorModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <div>
-                    <h3 class="font-display text-xl font-extrabold text-slate-900">Tutor Registration & Spotlight</h3>
-                    <p class="text-xs text-slate-500">Choose Basic Directory listing or Sponsored Spotlight.</p>
-                </div>
-            </div>
-
-            <form onsubmit="handleTutorRegistration(event)" class="space-y-4">
-                <!-- PLAN SELECTION -->
-                <div class="grid grid-cols-2 gap-3 p-1.5 bg-slate-100/80 rounded-2xl border border-slate-200/60">
-                    <label class="cursor-pointer">
-                        <input type="radio" name="planType" value="Basic" checked onclick="updatePlanUI('Basic')" class="peer hidden">
-                        <div class="p-3 text-center rounded-xl peer-checked:bg-brand-blue peer-checked:text-white transition-all text-xs font-bold text-slate-700 shadow-sm">
-                            Basic Directory
-                            <span class="block text-sm font-extrabold mt-0.5 text-brand-orange peer-checked:text-yellow-300">₹200 / 30d</span>
-                        </div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input type="radio" name="planType" value="Sponsored" onclick="updatePlanUI('Sponsored')" class="peer hidden">
-                        <div class="p-3 text-center rounded-xl peer-checked:bg-gradient-to-r peer-checked:from-brand-orange peer-checked:to-brand-brightOrange peer-checked:text-white transition-all text-xs font-bold text-slate-700 shadow-sm">
-                            🔥 Sponsored Spotlight
-                            <span class="block text-sm font-extrabold mt-0.5 text-brand-blue peer-checked:text-white">₹500 / 30d</span>
-                        </div>
-                    </label>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
-                        <input type="text" id="tutorName" required placeholder="Prof. Rajesh Sharma" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">WhatsApp Phone No.</label>
-                        <input type="text" id="tutorPhone" required placeholder="9876543210" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Main Subjects</label>
-                        <input type="text" id="tutorSubjects" required placeholder="Physics, Mathematics" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                    <div>
-                        <!-- CUSTOM BLANK LOCALITY INPUT -->
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality / Area</label>
-                        <input type="text" id="tutorLocality" required placeholder="e.g. Andheri West, Bandra, Thane..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Teaching Mode</label>
-                    <select id="tutorMode" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                        <option value="Both">Both Online & Home Tuition</option>
-                        <option value="Online">Online Classes Only</option>
-                        <option value="Home Tuition">Private Home Tuition Only</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Bio & Qualifications</label>
-                    <textarea id="tutorBio" rows="3" required placeholder="M.Sc Physics, 10+ years experience coaching Class 10-12 students..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all"></textarea>
-                </div>
-
-                <!-- INSTANT UPI APP INVOKE SECTION -->
-                <div class="border-t border-slate-200 pt-4 mt-4">
-                    <div class="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-4 text-center mb-4">
-                        <p class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-1" id="paymentAmountText">Pay ₹200 for 30 Days Basic Access</p>
-                        <p class="text-xs text-slate-600 mb-3">UPI ID: <strong class="font-extrabold text-brand-darkBlue">verizon@upi</strong></p>
-
-                        <!-- CLICKABLE UPI APP BUTTONS -->
-                        <div class="space-y-2 mb-3">
-                            <a id="payUpiBtn" href="upi://pay?pa=verizon@upi&pn=GuruMatch&am=200&cu=INR" class="shiny-btn bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all">
-                                <i class="fa-solid fa-mobile-screen-button text-base"></i>
-                                <span>Pay via Installed UPI App (GPay / PhonePe / Paytm)</span>
-                            </a>
-                        </div>
-
-                        <p class="text-[11px] text-slate-400 font-medium mb-2">Or Scan QR code to pay:</p>
-                        <div class="inline-block bg-white p-2 border border-slate-200 rounded-2xl shadow-sm mb-1">
-                            <img id="qrCodeImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dverizon%40upi%26pn%3DGuruMatch%26am%3D200%26cu%3DINR" alt="UPI QR Code" class="w-32 h-32 mx-auto">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">12-Digit Payment UTR / Ref Number</label>
-                        <input type="text" id="tutorUtr" required maxlength="12" pattern="\d{12}" placeholder="e.g. 423456789012" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-mono focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                </div>
-
-                <button type="submit" class="shiny-btn w-full bg-brand-orange hover:bg-brand-brightOrange text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-orange-500/20 transition-all mt-2">
-                    Submit Application
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL 3: POST LEARNING REQUIREMENT -->
-    <div id="reqModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 overflow-y-auto">
-        <div class="glossy-card bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8 fade-in border border-slate-100">
-            <button onclick="closeReqModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-brand-orangeLight text-brand-orange rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm">
-                    <i class="fa-solid fa-book-open-reader"></i>
-                </div>
-                <div>
-                    <h3 class="font-display text-xl font-extrabold text-slate-900">Post Learning Doubt</h3>
-                    <p class="text-xs text-slate-500">Free for students. Verified tutors will contact you.</p>
-                </div>
-            </div>
-
-            <form onsubmit="handlePostRequirement(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Student Name</label>
-                    <input type="text" id="reqStudentName" required placeholder="Aarav Mehta" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">WhatsApp Phone No.</label>
-                    <input type="text" id="reqStudentPhone" required placeholder="9820012345" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Subject / Topic</label>
-                        <input type="text" id="reqSubject" required placeholder="Class 10 Trigonometry" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality / Area</label>
-                        <input type="text" id="reqLocality" required placeholder="e.g. Andheri West" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Requirement Details</label>
-                    <textarea id="reqDetails" rows="3" required placeholder="Need crash-course sessions to cover Trigonometric identities..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all"></textarea>
-                </div>
-
-                <button type="submit" class="shiny-btn w-full bg-brand-blue hover:bg-brand-darkBlue text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-blue-600/20 transition-all mt-2">
-                    Post Learning Requirement
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- APPLICATION LOGIC -->
+    <!-- JavaScript logic -->
     <script>
-        const STAFF_USER = "admin.staff@gurumatch.in";
-        const STAFF_PASS = "G3ruM@tch#2026!Sec";
-        let isStaffLoggedIn = false;
-        let currentSelectedPlan = "Basic";
-
-        // Initial Tutor Data
-        let tutors = [
+        // Sample Tutor Data with Ratings & Reviews
+        const tutors = [
             {
-                id: 't1',
-                name: 'Dr. Sarah Jenkins',
-                phone: '9876543210',
-                subjects: 'Mathematics, Physics',
-                locality: 'Andheri West',
-                mode: 'Both',
-                planType: 'Sponsored',
-                bio: 'Ph.D. in Applied Mathematics. 10+ years helping high school and college students master calculus and physics.',
-                utr: '423456789012',
-                status: 'Active',
-                planStartDate: Date.now() - (3 * 24 * 60 * 60 * 1000)
+                id: 1,
+                name: "Anjali Gupta",
+                subject: "Mathematics",
+                experience: "6 Years",
+                location: "Delhi NCR",
+                rating: 4.9,
+                reviewsCount: 28,
+                isSponsored: true,
+                reviews: [
+                    { student: "Rohan M.", comment: "Excellent concepts! Score improved from B to A." },
+                    { student: "Pooja S.", comment: "Patience and soft spoken tutor." }
+                ]
             },
             {
-                id: 't2',
-                name: 'Prof. Rajesh Sharma',
-                phone: '9820112233',
-                subjects: 'Chemistry, Biology',
-                locality: 'Bandra West',
-                mode: 'Home Tuition',
-                planType: 'Basic',
-                bio: 'Specialized in NEET prep and high school Chemistry with custom learning modules.',
-                utr: '987654321098',
-                status: 'Active',
-                planStartDate: Date.now() - (10 * 24 * 60 * 60 * 1000)
-            }
-        ];
-
-        // Initial Requirements Data
-        let requirements = [
+                id: 2,
+                name: "Vikram Mehta",
+                subject: "Physics",
+                experience: "8 Years",
+                location: "Mumbai",
+                rating: 4.8,
+                reviewsCount: 34,
+                isSponsored: false,
+                reviews: [
+                    { student: "Aman P.", comment: "Makes numerical problems very easy to solve." }
+                ]
+            },
             {
-                id: 'r1',
-                studentName: 'Aarav Mehta',
-                studentPhone: '9820012345',
-                subject: 'Class 10 Trigonometry',
-                locality: 'Andheri West',
-                details: 'Need help solving NCERT Class 10 chapter 8 questions before board prelims.',
-                date: '2 hours ago'
+                id: 3,
+                name: "Neha Sharma",
+                subject: "English",
+                experience: "4 Years",
+                location: "Bengaluru",
+                rating: 4.7,
+                reviewsCount: 19,
+                isSponsored: false,
+                reviews: [
+                    { student: "Siddharth K.", comment: "Great grammar and communication guidance." }
+                ]
             }
         ];
 
-        // Init App
-        document.addEventListener('DOMContentLoaded', function() {
-            renderTutors();
-            renderRequirements();
-            renderStaffTable();
-        });
+        // Render Tutors into Grid
+        function renderTutors(data) {
+            const container = document.getElementById('tutorGrid');
+            container.innerHTML = '';
 
-        function toggleDemoCredentialsHint() {
-            const hint = document.getElementById('demoCredentialsHint');
-            hint.classList.toggle('hidden');
-        }
+            data.forEach(tutor => {
+                // Generate Star Icons HTML
+                let stars = '';
+                for(let i=0; i<5; i++) {
+                    stars += `<i class="fa-solid fa-star ${i < Math.floor(tutor.rating) ? 'text-amber-400' : 'text-slate-300'} text-xs"></i>`;
+                }
 
-        function switchMainView(view) {
-            document.getElementById('tutorsViewContainer').classList.add('hidden');
-            document.getElementById('requirementsViewContainer').classList.add('hidden');
-            document.getElementById('staffViewContainer').classList.add('hidden');
-
-            document.getElementById('mainTabTutors').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-all flex items-center gap-2 shadow-sm";
-            document.getElementById('mainTabReqs').className = "px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition-all flex items-center gap-2 shadow-sm";
-
-            if (view === 'tutors') {
-                document.getElementById('tutorsViewContainer').classList.remove('hidden');
-                document.getElementById('mainTabTutors').className = "shiny-btn px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-brand-blue text-white shadow-md shadow-blue-600/20 transition-all flex items-center gap-2";
-            } else if (view === 'requirements') {
-                document.getElementById('requirementsViewContainer').classList.remove('hidden');
-                document.getElementById('mainTabReqs').className = "shiny-btn px-5 py-2.5 rounded-2xl text-sm font-extrabold bg-brand-blue text-white shadow-md shadow-blue-600/20 transition-all flex items-center gap-2";
-            } else if (view === 'staff') {
-                document.getElementById('staffViewContainer').classList.remove('hidden');
-            }
-        }
-
-        function isTutorPlanActive(tutor) {
-            if (tutor.status !== 'Active' || !tutor.planStartDate) return false;
-            const daysDiff = (Date.now() - tutor.planStartDate) / (1000 * 60 * 60 * 24);
-            return daysDiff <= 30;
-        }
-
-        function renderTutors() {
-            const grid = document.getElementById('tutorsGrid');
-            const empty = document.getElementById('emptyState');
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const location = document.getElementById('locationFilter').value.toLowerCase();
-            const mode = document.getElementById('modeFilter').value;
-
-            grid.innerHTML = '';
-            let activeTutors = tutors.filter(function(t) { return isTutorPlanActive(t); });
-
-            activeTutors.sort(function(a, b) {
-                return (b.planType === 'Sponsored' ? 1 : 0) - (a.planType === 'Sponsored' ? 1 : 0);
-            });
-
-            let filtered = activeTutors.filter(function(t) {
-                const matchesQuery = t.subjects.toLowerCase().indexOf(query) !== -1 || t.name.toLowerCase().indexOf(query) !== -1;
-                const matchesLocation = !location || t.locality.toLowerCase().indexOf(location) !== -1;
-                const matchesMode = !mode || t.mode === mode || t.mode === 'Both';
-                return matchesQuery && matchesLocation && matchesMode;
-            });
-
-            document.getElementById('tutorCountText').innerText = activeTutors.length + ' Active Verified Tutors';
-
-            if (filtered.length === 0) {
-                grid.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            empty.classList.add('hidden');
-
-            filtered.forEach(function(t) {
-                const isSponsored = t.planType === 'Sponsored';
-                const card = document.createElement('div');
-                card.className = "glossy-card rounded-3xl hover:shadow-xl hover:-translate-y-1 transition-all border border-slate-200/80 overflow-hidden flex flex-col justify-between group";
-                
-                let badgeHTML = isSponsored 
-                    ? '<span class="bg-white/20 text-white border border-white/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 backdrop-blur-sm"><i class="fa-solid fa-bolt text-yellow-300"></i> SPONSORED SPOTLIGHT</span>'
-                    : '<span class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">VERIFIED TUTOR</span>';
-
-                let headerBg = isSponsored ? 'bg-gradient-to-r from-brand-orange to-brand-brightOrange' : 'bg-gradient-to-r from-brand-blue to-brand-darkBlue';
-
-                card.innerHTML = `
-                    <div>
-                        <div class="${headerBg} h-16 p-4 relative flex justify-between items-center shadow-sm">
-                            ${badgeHTML}
-                            <span class="text-xs font-bold text-white bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">${t.locality}</span>
-                        </div>
-
-                        <div class="p-6 pt-4">
-                            <h4 class="font-display text-lg font-bold text-slate-900 group-hover:text-brand-blue transition-colors flex items-center gap-1.5">
-                                ${t.name}
-                                <i class="fa-solid fa-circle-check text-brand-blue text-xs"></i>
-                            </h4>
-                            <p class="text-xs font-extrabold text-brand-orange mb-2">${t.subjects}</p>
-                            <p class="text-xs text-slate-600 mb-4 line-clamp-3 leading-relaxed">${t.bio}</p>
-                        </div>
+                // Reviews List HTML
+                let reviewsHtml = tutor.reviews.map(r => `
+                    <div class="bg-slate-50 p-2 rounded text-xs border border-slate-200 mt-2">
+                        <span class="font-semibold text-slate-700">${r.student}:</span> "${r.comment}"
                     </div>
-                    <div class="px-6 pb-6 pt-0">
-                        <div class="text-xs text-slate-500 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-chalkboard text-brand-blue"></i> Mode: <strong class="text-slate-800">${t.mode}</strong>
+                `).join('');
+
+                const cardHtml = `
+                    <div class="bg-white border ${tutor.isSponsored ? 'border-brand-accent ring-1 ring-brand-accent/50' : 'border-slate-200'} rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between relative">
+                        ${tutor.isSponsored ? '<span class="absolute top-3 right-3 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-300"><i class="fa-solid fa-bolt mr-1"></i>SPONSORED</span>' : ''}
+                        
+                        <div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-lg">
+                                    ${tutor.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-navy-900 text-base">${tutor.name}</h3>
+                                    <p class="text-xs text-brand-blue font-medium">${tutor.subject} • ${tutor.experience} Exp.</p>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-500 mb-2"><i class="fa-solid fa-location-dot mr-1"></i>${tutor.location}</p>
+
+                            <!-- Rating & Reviews -->
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="flex">${stars}</div>
+                                <span class="text-xs font-bold text-slate-700">${tutor.rating}</span>
+                                <span class="text-xs text-slate-400">(${tutor.reviewsCount} reviews)</span>
+                            </div>
+
+                            <!-- Student Choice/Reviews Preview -->
+                            <div class="mt-3 border-t border-slate-100 pt-3">
+                                <p class="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Student Feedback:</p>
+                                ${reviewsHtml}
+                            </div>
                         </div>
-                        <a href="https://wa.me/91${t.phone}?text=Hello%20${encodeURIComponent(t.name)},%20I%20found%20your%20profile%20on%20GuruMatch." target="_blank" class="shiny-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-emerald-600/20">
-                            <i class="fa-brands fa-whatsapp text-base"></i> Connect on WhatsApp
-                        </a>
+
+                        <button onclick="alert('Contact details sent to your registered number!')" class="mt-5 w-full bg-slate-100 hover:bg-slate-200 text-navy-900 text-xs font-bold py-2 rounded-lg transition">
+                            Contact Tutor
+                        </button>
                     </div>
                 `;
-                grid.appendChild(card);
+                container.innerHTML += cardHtml;
             });
         }
 
-        function filterTutors() { renderTutors(); }
-        function resetSearchAndFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('locationFilter').value = '';
-            document.getElementById('modeFilter').value = '';
-            renderTutors();
-        }
+        // Filter Functionality
+        function filterTutors() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const subjectValue = document.getElementById('subjectFilter').value;
 
-        function renderRequirements() {
-            const grid = document.getElementById('requirementsGrid');
-            const empty = document.getElementById('requirementsEmptyState');
-            grid.innerHTML = '';
-
-            document.getElementById('reqNavBadge').innerText = requirements.length;
-
-            if (requirements.length === 0) {
-                grid.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            empty.classList.add('hidden');
-
-            requirements.forEach(function(r) {
-                const card = document.createElement('div');
-                card.className = "glossy-card rounded-3xl p-6 shadow-sm flex flex-col justify-between border border-slate-200/80";
-                card.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="bg-blue-50 text-brand-blue text-xs font-bold px-2.5 py-1 rounded-full border border-blue-100">${r.locality}</span>
-                            <span class="text-[11px] text-slate-400 font-medium">${r.date}</span>
-                        </div>
-                        <h4 class="font-display text-base font-bold text-slate-900 mb-1">${r.subject}</h4>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${r.details}</p>
-                    </div>
-                    <div class="border-t border-slate-100 pt-3">
-                        <p class="text-xs text-slate-500 mb-2">Posted by: <strong class="text-slate-800">${r.studentName}</strong></p>
-                        <a href="https://wa.me/91${r.studentPhone}?text=Hello%20${encodeURIComponent(r.studentName)},%20I%20am%20a%20verified%20tutor%20on%20GuruMatch%20and%20can%20help%20with%20${encodeURIComponent(r.subject)}." target="_blank" class="shiny-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm">
-                            <i class="fa-brands fa-whatsapp"></i> Contact Student
-                        </a>
-                    </div>
-                `;
-                grid.appendChild(card);
+            const filtered = tutors.filter(t => {
+                const matchesSearch = t.name.toLowerCase().includes(searchValue) || 
+                                      t.subject.toLowerCase().includes(searchValue) || 
+                                      t.location.toLowerCase().includes(searchValue);
+                const matchesSubject = subjectValue === 'All' || t.subject === subjectValue;
+                return matchesSearch && matchesSubject;
             });
+
+            renderTutors(filtered);
         }
 
-        function openStaffModal() {
-            if (isStaffLoggedIn) {
-                switchMainView('staff');
-                return;
-            }
-            document.getElementById('staffUsernameInput').value = '';
-            document.getElementById('staffPasswordInput').value = '';
-            document.getElementById('demoCredentialsHint').classList.add('hidden');
-            document.getElementById('staffModal').classList.remove('hidden');
-        }
-
-        function closeStaffModal() {
-            document.getElementById('staffModal').classList.add('hidden');
-        }
-
-        function handleStaffLogin(e) {
+        // Handle ₹200 Basic Registration Form
+        function handleBasicRegistration(e) {
             e.preventDefault();
-            const u = document.getElementById('staffUsernameInput').value.trim();
-            const p = document.getElementById('staffPasswordInput').value.trim();
-
-            if (u === STAFF_USER && p === STAFF_PASS) {
-                isStaffLoggedIn = true;
-                document.getElementById('staffNavButtonLabel').innerText = "Dashboard";
-                closeStaffModal();
-                switchMainView('staff');
-            } else {
-                alert("Invalid Credentials! Please check user email and password.");
-            }
-        }
-
-        function renderStaffTable() {
-            const tbody = document.getElementById('staffTableBody');
-            tbody.innerHTML = '';
-
-            let pendingCount = tutors.filter(function(t) { return t.status === 'Pending Verification'; }).length;
-            document.getElementById('pendingStaffBadge').innerText = pendingCount + ' Pending';
-
-            if (tutors.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">No tutors registered yet.</td></tr>';
-                return;
-            }
-
-            tutors.forEach(function(t) {
-                const tr = document.createElement('tr');
-                const active = isTutorPlanActive(t);
-                
-                let planTag = t.planType === 'Sponsored' 
-                    ? '<span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-orange-100 text-orange-800">Sponsored (₹500)</span>' 
-                    : '<span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800">Basic (₹200)</span>';
-
-                let statusTag = active 
-                    ? '<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">Active (30 Days)</span>'
-                    : (t.status === 'Pending Verification' 
-                        ? '<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">Pending Approval</span>' 
-                        : '<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Expired</span>');
-
-                let actionBtn = t.status === 'Pending Verification' 
-                    ? `<button onclick="approveTutorPlan('${t.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-sm">Approve Plan</button>` 
-                    : '<span class="text-xs text-slate-400">Verified</span>';
-
-                tr.innerHTML = `
-                    <td class="p-4 font-bold text-slate-900">${t.name}</td>
-                    <td class="p-4">${planTag}</td>
-                    <td class="p-4">${t.subjects} <br><span class="text-xs text-slate-400">${t.locality}</span></td>
-                    <td class="p-4 font-mono text-xs font-bold text-slate-800">${t.utr || 'N/A'}</td>
-                    <td class="p-4">${statusTag}</td>
-                    <td class="p-4 text-right">${actionBtn}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function approveTutorPlan(id) {
-            const tutor = tutors.find(function(t) { return t.id === id; });
-            if (tutor) {
-                tutor.status = 'Active';
-                tutor.planStartDate = Date.now();
-                alert(`Plan approved for ${tutor.name}! Profile live for 30 days.`);
-                renderTutors();
-                renderStaffTable();
-            }
-        }
-
-        function updatePlanUI(plan) {
-            currentSelectedPlan = plan;
-            const amt = plan === 'Sponsored' ? 500 : 200;
-            document.getElementById('paymentAmountText').innerText = `Pay ₹${amt} for 30 Days ${plan} Access`;
             
-            // Dynamic UPI Intent URI
-            const upiUri = `upi://pay?pa=verizon@upi&pn=GuruMatch&am=${amt}&cu=INR`;
-            document.getElementById('payUpiBtn').href = upiUri;
-            document.getElementById('qrCodeImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUri)}`;
+            // Simulating Basic Registration Complete
+            document.getElementById('basicRegForm').classList.add('hidden');
+            document.getElementById('sponsoredDashboard').classList.remove('hidden');
+
+            // Update Steps UI
+            document.getElementById('step1-badge').className = "flex items-center gap-2 font-semibold text-green-600";
+            document.getElementById('step2-badge').className = "flex items-center gap-2 font-semibold text-brand-blue";
         }
 
-        function openTutorModal() { document.getElementById('tutorModal').classList.remove('hidden'); }
-        function closeTutorModal() { document.getElementById('tutorModal').classList.add('hidden'); }
-        function openPostRequirementModal() { document.getElementById('reqModal').classList.remove('hidden'); }
-        function closeReqModal() { document.getElementById('reqModal').classList.add('hidden'); }
-
-        function handleTutorRegistration(e) {
-            e.preventDefault();
-            const utr = document.getElementById('tutorUtr').value.trim();
-            if (utr.length !== 12 || isNaN(utr)) {
-                alert("Please enter a valid 12-digit UPI UTR reference number.");
-                return;
-            }
-
-            const newTutor = {
-                id: 't_' + Date.now(),
-                name: document.getElementById('tutorName').value,
-                phone: document.getElementById('tutorPhone').value,
-                subjects: document.getElementById('tutorSubjects').value,
-                locality: document.getElementById('tutorLocality').value,
-                mode: document.getElementById('tutorMode').value,
-                bio: document.getElementById('tutorBio').value,
-                planType: currentSelectedPlan,
-                utr: utr,
-                status: 'Pending Verification',
-                planStartDate: null
-            };
-
-            tutors.push(newTutor);
-            alert(`Registration for ${currentSelectedPlan} Plan submitted! Profile will go live after verification.`);
-            closeTutorModal();
-            renderStaffTable();
+        // Handle Sponsored Ad Purchase
+        function activateSponsoredAd() {
+            const btn = document.getElementById('sponsorBtn');
+            btn.innerText = "Sponsored Active ✓";
+            btn.className = "bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg cursor-default";
+            btn.onclick = null;
+            alert("Congratulations! Your profile is now Sponsored and featured on top.");
         }
 
-        function handlePostRequirement(e) {
-            e.preventDefault();
-            const newReq = {
-                id: 'r_' + Date.now(),
-                studentName: document.getElementById('reqStudentName').value,
-                studentPhone: document.getElementById('reqStudentPhone').value,
-                subject: document.getElementById('reqSubject').value,
-                locality: document.getElementById('reqLocality').value,
-                details: document.getElementById('reqDetails').value,
-                date: 'Just now'
-            };
-
-            requirements.unshift(newReq);
-            alert("Learning requirement posted successfully!");
-            closeReqModal();
-            renderRequirements();
-            switchMainView('requirements');
-        }
+        // Initial Render
+        renderTutors(tutors);
     </script>
 </body>
 </html>

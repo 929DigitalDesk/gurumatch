@@ -8,21 +8,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter & Outfit for Crisp Modern Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Modern & Professional EdTech Google Fonts: Plus Jakarta Sans & Inter/DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        sans: ['Inter', 'DM Sans', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
                         brand: {
-                            blue: '#1d4ed8',         /* Rich Deep Royal Blue */
-                            darkBlue: '#1e40af',     /* Darker Royal Navy */
-                            skyBg: '#f8fafc',        /* Crisp Clean Background */
+                            blue: '#1d4ed8',         /* Deep Modern Royal Blue */
+                            darkBlue: '#0f2a4a',     /* Deep Premium Navy */
+                            skyBg: '#f8fafc',        /* High-DPI Crisp Light Background */
                             orange: '#ea580c',       /* Deep Vibrant Orange */
                             brightOrange: '#f97316', /* Glossy Orange Accent */
                             orangeLight: '#fff7ed',  /* Soft Orange Tint */
@@ -33,23 +37,30 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        h1, h2, h3, h4, .font-display { font-family: 'Outfit', sans-serif; }
+        body { 
+            font-family: 'Inter', 'DM Sans', sans-serif; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale; 
+        }
+        h1, h2, h3, h4, h5, .font-display { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            letter-spacing: -0.02em;
+        }
         
-        /* Glossy & Glassmorphism Utilities */
+        /* Premium Glossy & Glassmorphism Utilities */
         .glass-header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
         .glossy-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 10px 30px -10px rgba(15, 42, 74, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         }
         .glossy-hero {
-            background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #2563eb 100%);
+            background: linear-gradient(135deg, #0f2a4a 0%, #1d4ed8 60%, #2563eb 100%);
             position: relative;
             overflow: hidden;
         }
@@ -60,10 +71,10 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%);
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 65%);
             pointer-events: none;
         }
-        /* Glossy Button Shine Effect */
+        /* Glossy Button Shine Sweep Effect */
         .shiny-btn {
             position: relative;
             overflow: hidden;
@@ -110,26 +121,22 @@
 
             <!-- Navigation Actions -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Learning Board Button -->
                 <button onclick="switchMainView('requirements')" id="navReqBtn" class="bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 border border-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-book-open-reader text-brand-orange"></i>
                     <span class="hidden sm:inline">Learning Board</span>
                     <span id="reqNavBadge" class="bg-brand-orange text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm">0</span>
                 </button>
 
-                <!-- Staff Login Button -->
                 <button onclick="openStaffModal()" class="bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 border border-slate-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-user-shield text-brand-blue"></i>
                     <span class="hidden sm:inline" id="staffNavButtonLabel">Staff Portal</span>
                 </button>
 
-                <!-- Post Doubt Button -->
                 <button onclick="openPostRequirementModal()" class="hidden lg:flex bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all items-center gap-2">
                     <i class="fa-regular fa-user"></i>
                     <span>Post Doubt (Free)</span>
                 </button>
 
-                <!-- Register Tutor / Sponsored Ad CTA -->
                 <button onclick="openTutorModal()" class="shiny-btn bg-gradient-to-r from-brand-blue to-brand-darkBlue hover:brightness-110 text-white font-extrabold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
                     <i class="fa-solid fa-bolt text-yellow-300"></i>
                     <span>Register / Sponsored Ad</span>
@@ -144,7 +151,7 @@
             <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-white/10 text-white border border-white/20 mb-4 backdrop-blur-md shadow-inner">
                 <i class="fa-solid fa-bolt text-yellow-300"></i> Get 3x More Leads with Featured Spotlights (₹500)
             </span>
-            <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight">
+            <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
                 Find Expert Tutors & Classes in <span class="text-yellow-300 drop-shadow-sm">Mumbai</span>
             </h2>
             <p class="text-blue-100 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
@@ -176,22 +183,11 @@
             <div class="glossy-card p-4 rounded-2xl flex flex-col md:flex-row gap-3 mb-6">
                 <div class="flex-1 relative flex items-center">
                     <i class="fa-solid fa-magnifying-glass absolute left-4 text-brand-blue"></i>
-                    <input type="text" id="searchInput" oninput="filterTutors()" placeholder="Search by subject (e.g. Mathematics, Physics, Chemistry)..." class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
+                    <input type="text" id="searchInput" oninput="filterTutors()" placeholder="Search by subject or tutor name..." class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
                 </div>
-                <div class="w-full md:w-48 relative flex items-center">
+                <div class="w-full md:w-56 relative flex items-center">
                     <i class="fa-solid fa-location-dot absolute left-4 text-brand-blue"></i>
-                    <select id="locationFilter" onchange="filterTutors()" class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-8 py-3 focus:outline-none focus:border-brand-blue focus:bg-white appearance-none cursor-pointer transition-all font-medium">
-                        <option value="">All Localities</option>
-                        <option value="Andheri">Andheri</option>
-                        <option value="Bandra">Bandra</option>
-                        <option value="Borivali">Borivali</option>
-                        <option value="Dadar">Dadar</option>
-                        <option value="Ghatkopar">Ghatkopar</option>
-                        <option value="Malad">Malad</option>
-                        <option value="Thane">Thane</option>
-                        <option value="Powai">Powai</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 text-slate-400 text-xs pointer-events-none"></i>
+                    <input type="text" id="locationFilter" oninput="filterTutors()" placeholder="Filter by Locality..." class="w-full bg-slate-50/80 border border-slate-200 text-slate-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
                 </div>
                 <div class="w-full md:w-48 relative flex items-center">
                     <i class="fa-solid fa-laptop-code absolute left-4 text-brand-blue"></i>
@@ -311,7 +307,7 @@
         </div>
     </footer>
 
-    <!-- MODAL 1: STAFF LOGIN MODAL (SECURE & PROTECTED) -->
+    <!-- MODAL 1: STAFF LOGIN MODAL -->
     <div id="staffModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4">
         <div class="glossy-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative fade-in border border-slate-100">
             <button onclick="closeStaffModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
@@ -338,7 +334,6 @@
                     <input type="password" id="staffPasswordInput" value="" placeholder="••••••••••••" required autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
                 </div>
 
-                <!-- Hidden Demo Helper Toggle (Prevents Public Screen Display) -->
                 <div class="pt-1 text-right">
                     <button type="button" onclick="toggleDemoCredentialsHint()" class="text-[11px] text-slate-400 hover:text-brand-blue font-medium transition-colors inline-flex items-center gap-1">
                         <i class="fa-solid fa-circle-info"></i> Demo credentials info
@@ -409,17 +404,9 @@
                         <input type="text" id="tutorSubjects" required placeholder="Physics, Mathematics" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality (Mumbai)</label>
-                        <select id="tutorLocality" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                            <option value="Andheri">Andheri</option>
-                            <option value="Bandra">Bandra</option>
-                            <option value="Borivali">Borivali</option>
-                            <option value="Dadar">Dadar</option>
-                            <option value="Ghatkopar">Ghatkopar</option>
-                            <option value="Malad">Malad</option>
-                            <option value="Thane">Thane</option>
-                            <option value="Powai">Powai</option>
-                        </select>
+                        <!-- CUSTOM BLANK LOCALITY INPUT -->
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality / Area</label>
+                        <input type="text" id="tutorLocality" required placeholder="e.g. Andheri West, Bandra, Thane..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
                     </div>
                 </div>
                 <div>
@@ -435,10 +422,21 @@
                     <textarea id="tutorBio" rows="3" required placeholder="M.Sc Physics, 10+ years experience coaching Class 10-12 students..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all"></textarea>
                 </div>
 
+                <!-- INSTANT UPI APP INVOKE SECTION -->
                 <div class="border-t border-slate-200 pt-4 mt-4">
                     <div class="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-4 text-center mb-4">
                         <p class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-1" id="paymentAmountText">Pay ₹200 for 30 Days Basic Access</p>
-                        <p class="text-xs text-slate-600 mb-3">Pay via UPI to ID: <strong class="font-extrabold text-brand-darkBlue">verizon@upi</strong></p>
+                        <p class="text-xs text-slate-600 mb-3">UPI ID: <strong class="font-extrabold text-brand-darkBlue">verizon@upi</strong></p>
+
+                        <!-- CLICKABLE UPI APP BUTTONS -->
+                        <div class="space-y-2 mb-3">
+                            <a id="payUpiBtn" href="upi://pay?pa=verizon@upi&pn=GuruMatch&am=200&cu=INR" class="shiny-btn bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all">
+                                <i class="fa-solid fa-mobile-screen-button text-base"></i>
+                                <span>Pay via Installed UPI App (GPay / PhonePe / Paytm)</span>
+                            </a>
+                        </div>
+
+                        <p class="text-[11px] text-slate-400 font-medium mb-2">Or Scan QR code to pay:</p>
                         <div class="inline-block bg-white p-2 border border-slate-200 rounded-2xl shadow-sm mb-1">
                             <img id="qrCodeImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dverizon%40upi%26pn%3DGuruMatch%26am%3D200%26cu%3DINR" alt="UPI QR Code" class="w-32 h-32 mx-auto">
                         </div>
@@ -488,17 +486,8 @@
                         <input type="text" id="reqSubject" required placeholder="Class 10 Trigonometry" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality</label>
-                        <select id="reqLocality" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
-                            <option value="Andheri">Andheri</option>
-                            <option value="Bandra">Bandra</option>
-                            <option value="Borivali">Borivali</option>
-                            <option value="Dadar">Dadar</option>
-                            <option value="Ghatkopar">Ghatkopar</option>
-                            <option value="Malad">Malad</option>
-                            <option value="Thane">Thane</option>
-                            <option value="Powai">Powai</option>
-                        </select>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality / Area</label>
+                        <input type="text" id="reqLocality" required placeholder="e.g. Andheri West" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-brand-blue focus:bg-white transition-all">
                     </div>
                 </div>
                 <div>
@@ -515,7 +504,6 @@
 
     <!-- APPLICATION LOGIC -->
     <script>
-        // HARDENED STAFF CREDENTIALS
         const STAFF_USER = "admin.staff@gurumatch.in";
         const STAFF_PASS = "G3ruM@tch#2026!Sec";
         let isStaffLoggedIn = false;
@@ -528,7 +516,7 @@
                 name: 'Dr. Sarah Jenkins',
                 phone: '9876543210',
                 subjects: 'Mathematics, Physics',
-                locality: 'Andheri',
+                locality: 'Andheri West',
                 mode: 'Both',
                 planType: 'Sponsored',
                 bio: 'Ph.D. in Applied Mathematics. 10+ years helping high school and college students master calculus and physics.',
@@ -541,7 +529,7 @@
                 name: 'Prof. Rajesh Sharma',
                 phone: '9820112233',
                 subjects: 'Chemistry, Biology',
-                locality: 'Bandra',
+                locality: 'Bandra West',
                 mode: 'Home Tuition',
                 planType: 'Basic',
                 bio: 'Specialized in NEET prep and high school Chemistry with custom learning modules.',
@@ -558,7 +546,7 @@
                 studentName: 'Aarav Mehta',
                 studentPhone: '9820012345',
                 subject: 'Class 10 Trigonometry',
-                locality: 'Andheri',
+                locality: 'Andheri West',
                 details: 'Need help solving NCERT Class 10 chapter 8 questions before board prelims.',
                 date: '2 hours ago'
             }
@@ -571,13 +559,11 @@
             renderStaffTable();
         });
 
-        // Toggle Demo Credentials View
         function toggleDemoCredentialsHint() {
             const hint = document.getElementById('demoCredentialsHint');
             hint.classList.toggle('hidden');
         }
 
-        // Navigation Switcher
         function switchMainView(view) {
             document.getElementById('tutorsViewContainer').classList.add('hidden');
             document.getElementById('requirementsViewContainer').classList.add('hidden');
@@ -597,19 +583,17 @@
             }
         }
 
-        // Active 30-Day Check
         function isTutorPlanActive(tutor) {
             if (tutor.status !== 'Active' || !tutor.planStartDate) return false;
             const daysDiff = (Date.now() - tutor.planStartDate) / (1000 * 60 * 60 * 24);
             return daysDiff <= 30;
         }
 
-        // Render Tutor Cards
         function renderTutors() {
             const grid = document.getElementById('tutorsGrid');
             const empty = document.getElementById('emptyState');
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const location = document.getElementById('locationFilter').value;
+            const location = document.getElementById('locationFilter').value.toLowerCase();
             const mode = document.getElementById('modeFilter').value;
 
             grid.innerHTML = '';
@@ -621,7 +605,7 @@
 
             let filtered = activeTutors.filter(function(t) {
                 const matchesQuery = t.subjects.toLowerCase().indexOf(query) !== -1 || t.name.toLowerCase().indexOf(query) !== -1;
-                const matchesLocation = !location || t.locality === location;
+                const matchesLocation = !location || t.locality.toLowerCase().indexOf(location) !== -1;
                 const matchesMode = !mode || t.mode === mode || t.mode === 'Both';
                 return matchesQuery && matchesLocation && matchesMode;
             });
@@ -685,7 +669,6 @@
             renderTutors();
         }
 
-        // Render Student Requirements
         function renderRequirements() {
             const grid = document.getElementById('requirementsGrid');
             const empty = document.getElementById('requirementsEmptyState');
@@ -725,7 +708,6 @@
             });
         }
 
-        // Staff Modal Controls
         function openStaffModal() {
             if (isStaffLoggedIn) {
                 switchMainView('staff');
@@ -809,12 +791,15 @@
             }
         }
 
-        // Plan Switching & Modal Controls
         function updatePlanUI(plan) {
             currentSelectedPlan = plan;
             const amt = plan === 'Sponsored' ? 500 : 200;
             document.getElementById('paymentAmountText').innerText = `Pay ₹${amt} for 30 Days ${plan} Access`;
-            document.getElementById('qrCodeImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Dverizon%40upi%26pn%3DGuruMatch%26am%3D${amt}%26cu%3DINR`;
+            
+            // Dynamic UPI Intent URI
+            const upiUri = `upi://pay?pa=verizon@upi&pn=GuruMatch&am=${amt}&cu=INR`;
+            document.getElementById('payUpiBtn').href = upiUri;
+            document.getElementById('qrCodeImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUri)}`;
         }
 
         function openTutorModal() { document.getElementById('tutorModal').classList.remove('hidden'); }

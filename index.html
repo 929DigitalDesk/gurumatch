@@ -46,7 +46,7 @@
             <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
                 <a href="#home" class="hover:text-brand-blue transition">HOME</a>
                 <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & REQUIREMENTS</a>
+                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & LEARNING REQUESTS</a>
             </nav>
             <div class="flex gap-2">
                 <button onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
@@ -66,7 +66,7 @@
                 Empowering Education with <span class="text-amber-300">GURU MATCH</span>
             </h1>
             <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
-                Find elite verified tutors, post your custom learning requirements, and manage academics securely with automated credentials.
+                Find elite verified tutors, post your custom learning requests, and manage academics securely with automated credentials.
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
@@ -99,7 +99,7 @@
         </div>
     </section>
 
-    <!-- Registration & Learning Requirements Section -->
+    <!-- Registration & Learning Requests Section -->
     <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
         <div class="max-w-3xl mx-auto px-4">
             
@@ -112,7 +112,7 @@
                     <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR
                 </button>
                 <button id="tabRequirementBtn" onclick="switchTab('requirement')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
-                    <i class="fa-solid fa-clipboard-list mr-1"></i>REQUIREMENTS
+                    <i class="fa-solid fa-clipboard-list mr-1"></i>LEARNING REQUESTS
                 </button>
             </div>
 
@@ -159,18 +159,34 @@
                 <div class="text-center mb-8">
                     <span class="bg-red-100 text-red-600 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Verification Portal</span>
                     <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & Payment</h2>
-                    <p class="text-slate-600 text-sm mt-1">Pay ₹200 fee securely via UPI or Card, enter UTR, and get instant portal access.</p>
+                    <p class="text-slate-600 text-sm mt-1">Review plan details, complete payment via UPI app, and get verified instantly.</p>
                 </div>
 
-                <div class="bg-white border border-slate-200 p-5 rounded-2xl mb-6 shadow-sm">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="font-bold text-brand-dark text-sm"><i class="fa-solid fa-shield-halved text-brand-blue mr-1.5"></i>Step 1: Complete Payment (₹200)</span>
-                        <span class="text-lg font-black text-brand-blue bg-blue-50 px-3 py-1 rounded-xl">₹200</span>
+                <!-- Plan Details & Feature Breakdown Box (New Feature) -->
+                <div class="bg-white border-2 border-brand-blue/30 rounded-2xl p-5 mb-6 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-bl-xl tracking-widest uppercase">
+                        RECOMMENDED PLAN
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <a href="upi://pay?pa=gurumatch@upi&pn=GuruMatch&am=200&cu=INR" target="_blank" onclick="markPaymentInitiated()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-mobile-screen-button text-base"></i> PAY VIA UPI APP
-                        </a>
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
+                        <div>
+                            <h4 class="font-black text-brand-dark text-base">Elite Tutor Verification Pass</h4>
+                            <p class="text-xs text-slate-500 font-medium">Valid for 1 Full Year Profile Listing & Leads</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-2xl font-black text-brand-blue">₹200</span>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">One-time fee</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-700 font-medium mb-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Direct 1-tap mobile UPI app invocation (GPay, PhonePe, Paytm, BHIM)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Verified Blue Badge on Tutor Listing Marketplace</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Instant automated login credentials generation</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Direct access to post student learning requests</li>
+                    </ul>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+                        <button type="button" onclick="openUpiQrModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI APP & PAY ₹200
+                        </button>
                         <button type="button" onclick="openCardPaymentModal()" class="bg-brand-blue hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
                             <i class="fa-solid fa-credit-card text-base"></i> PAY VIA CARD
                         </button>
@@ -200,7 +216,7 @@
                     </div>
 
                     <div class="border border-brand-blue bg-blue-50/50 p-4 rounded-2xl">
-                        <label class="block text-xs font-bold text-brand-blue uppercase tracking-wider mb-1.5">Step 2: Enter UTR / Transaction Reference Number *</label>
+                        <label class="block text-xs font-bold text-brand-blue uppercase tracking-wider mb-1.5">Enter UTR / Transaction Reference Number *</label>
                         <input type="text" id="txnIdInput" required placeholder="Enter 12-digit UTR ID after successful payment" class="w-full border border-brand-blue rounded-xl p-3.5 text-sm focus:outline-none font-mono font-bold bg-white" oninput="saveFormData()">
                     </div>
 
@@ -220,11 +236,11 @@
                 </div>
             </div>
 
-            <!-- Learning Requirements Form Card -->
+            <!-- Learning Requests Form Card -->
             <div id="requirementFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
                 <div class="text-center mb-8">
                     <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Custom Matchmaking</span>
-                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Post Learning Requirements</h2>
+                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Submit Learning Requests</h2>
                     <p class="text-slate-600 text-sm mt-1">Tell us your learning goals, mode of study, and budget so we find the best tutor for you.</p>
                 </div>
                 <form onsubmit="handleRequirementSubmit(event)" class="space-y-4">
@@ -247,17 +263,46 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detailed Requirement Description *</label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detailed Learning Request Description *</label>
                         <textarea id="req_desc" rows="3" required placeholder="Mention timing, preferred gender of tutor, budget per month, etc." class="w-full border border-slate-300 rounded-xl p-3 text-sm bg-white focus:outline-none"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-md tracking-wider">
-                        POST LEARNING REQUIREMENT
+                        POST LEARNING REQUEST
                     </button>
                 </form>
             </div>
 
         </div>
     </section>
+
+    <!-- UPI QR Code & App Intent Modal -->
+    <div id="upiQrModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative">
+            <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full uppercase">Instant UPI Payment</span>
+            <h3 class="text-xl font-black text-brand-dark mt-2 tracking-tight">Scan & Pay ₹200</h3>
+            <p class="text-xs text-slate-500 mb-4">Use GPay, PhonePe, Paytm, or BHIM to scan or tap below</p>
+            
+            <!-- Dynamic QR Code Container -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mb-4 shadow-inner">
+                <div id="qrcode" class="flex justify-center items-center">
+                    <img id="dynamicQrImg" src="" alt="UPI QR Code" class="w-48 h-48 mx-auto rounded-lg">
+                </div>
+            </div>
+
+            <div class="space-y-3 mb-5">
+                <p class="text-xs font-bold text-slate-700">UPI ID: <span class="text-brand-blue font-mono">gurumatch@upi</span></p>
+                
+                <!-- Direct UPI App Launcher Buttons for Mobile/Desktop Simulation -->
+                <a id="upiAppDeepLink" href="#" onclick="triggerUpiApp(event)" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition shadow text-center">
+                    <i class="fa-solid fa-mobile-screen-button mr-1"></i> OPEN ANY UPI APP (GPay/PhonePe/Paytm)
+                </a>
+            </div>
+
+            <button type="button" onclick="closeUpiQrModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs">
+                CLOSE / DONE PAYMENT
+            </button>
+        </div>
+    </div>
 
     <!-- Staff Login / Verification Modal (Privacy Secured) -->
     <div id="staffLoginModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
@@ -293,7 +338,7 @@
                 <div>
                     <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Staff Access Verified</span>
                     <h2 class="text-2xl md:text-3xl font-black text-brand-dark tracking-tight mt-1">Staff Control Panel - Records & UTR Payments</h2>
-                    <p class="text-slate-500 text-sm">Review UTR transactions, student/tutor accounts, and learning requirements.</p>
+                    <p class="text-slate-500 text-sm">Review UTR transactions, student/tutor accounts, and learning requests.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
@@ -304,7 +349,7 @@
             <!-- Tabs inside Staff Panel -->
             <div class="flex gap-3 mb-6">
                 <button onclick="switchStaffTab('users')" id="staffTabUsersBtn" class="bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">Registered Users & Tutors</button>
-                <button onclick="switchStaffTab('reqs')" id="staffTabReqsBtn" class="bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold">Learning Requirements List</button>
+                <button onclick="switchStaffTab('reqs')" id="staffTabReqsBtn" class="bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold">Learning Requests List</button>
             </div>
 
             <!-- Users Table View -->
@@ -325,7 +370,7 @@
                 </table>
             </div>
 
-            <!-- Requirements Table View -->
+            <!-- Learning Requests Table View -->
             <div id="staffReqsView" class="overflow-x-auto hidden">
                 <table class="w-full text-left text-sm">
                     <thead>
@@ -333,7 +378,7 @@
                             <th class="p-3.5">Student Name</th>
                             <th class="p-3.5">Subject Needed</th>
                             <th class="p-3.5">Mode</th>
-                            <th class="p-3.5">Full Requirement Description</th>
+                            <th class="p-3.5">Full Learning Request Description</th>
                         </tr>
                     </thead>
                     <tbody id="requirementsTableBody">
@@ -489,7 +534,7 @@
                 if(document.getElementById('stu_email')) document.getElementById('stu_email').value = saved.stu_email || '';
                 if(document.getElementById('stu_phone')) document.getElementById('stu_phone').value = saved.stu_phone || '';
                 if(document.getElementById('stu_class')) document.getElementById('stu_class').value = saved.stu_class || '';
-                if(document.getElementById('stu_subject')) document.getElementById('stu_subject').value = saved.stu_subject || '';
+                if(document.getElementById('stu_subject')) document.getElementById('stu_subject').value = saved.stu_desktop || saved.stu_subject || '';
                 if(document.getElementById('t_name')) document.getElementById('t_name').value = saved.t_name || '';
                 if(document.getElementById('t_subject')) document.getElementById('t_subject').value = saved.t_subject || '';
                 if(document.getElementById('t_email')) document.getElementById('t_email').value = saved.t_email || '';
@@ -500,7 +545,26 @@
             updateStaffTables();
         };
 
-        function markPaymentInitiated() { saveFormData(); }
+        function openUpiQrModal() {
+            saveFormData();
+            const upiString = "upi://pay?pa=gurumatch@upi&pn=GuruMatch&am=200&cu=INR&tn=TutorRegistrationFee";
+            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiString)}`;
+            
+            document.getElementById('dynamicQrImg').src = qrImageUrl;
+            document.getElementById('upiAppDeepLink').href = upiString;
+            document.getElementById('upiQrModal').classList.remove('hidden');
+        }
+
+        function triggerUpiApp(e) {
+            saveFormData();
+            const upiString = "upi://pay?pa=gurumatch@upi&pn=GuruMatch&am=200&cu=INR&tn=TutorRegistrationFee";
+            window.location.href = upiString;
+        }
+
+        function closeUpiQrModal() {
+            document.getElementById('upiQrModal').classList.add('hidden');
+        }
+
         function openCardPaymentModal() { saveFormData(); document.getElementById('cardModal').classList.remove('hidden'); }
         function closeCardPaymentModal() { document.getElementById('cardModal').classList.add('hidden'); }
 
@@ -510,7 +574,6 @@
         function handleStaffLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('staffPassInput').value;
-            // Simple staff password verification (Default: staff123)
             if (pass === 'staff123' || pass === 'admin123') {
                 closeStaffLoginModal();
                 document.getElementById('staffPanelModal').classList.remove('hidden');
@@ -574,7 +637,7 @@
             };
             learningRequirements.push(req);
             localStorage.setItem('guruMatchReqs', JSON.stringify(learningRequirements));
-            alert("Your learning requirement has been posted successfully! Tutors can now view and apply.");
+            alert("Your learning request has been posted successfully! Tutors can now view and apply.");
             e.target.reset();
             updateStaffTables();
         }
@@ -614,7 +677,7 @@
             });
 
             const reqTable = document.getElementById('requirementsTableBody');
-            reqTable.innerHTML = '';
+            reqTable.innerHTML = ``;
             learningRequirements.forEach(req => {
                 reqTable.innerHTML += `
                     <tr class="border-b border-slate-100">

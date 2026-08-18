@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TutorConnect - Find & Hire Expert Tutors</title>
-    <!-- Tailwind CSS CDN for Modern Styling -->
+    <title>TutorConnect - Premium Tutor & Student Platform</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,7 +18,8 @@
                         brand: {
                             blue: '#2563EB',
                             hover: '#1D4ED8',
-                            accent: '#F59E0B'
+                            accent: '#F59E0B',
+                            lightBg: '#EFF6FF'
                         }
                     }
                 }
@@ -28,22 +29,25 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+    <!-- Navbar -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-lg border-b border-blue-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i class="fa-solid font-bold text-2xl text-brand-accent fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap text-2xl text-brand-accent"></i>
                 <span class="text-xl font-bold tracking-wide text-white">Tutor<span class="text-brand-blue">Connect</span></span>
             </div>
-            <nav class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#home" class="hover:text-brand-blue transition">Home</a>
-                <a href="#tutors" class="hover:text-brand-blue transition">Find Tutors</a>
-                <a href="#register" class="hover:text-brand-blue transition">Register as Tutor</a>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-200">
+                <a href="#home" class="hover:text-white transition">Home</a>
+                <a href="#tutors" class="hover:text-white transition">Find Tutors</a>
+                <a href="#registrationSection" class="hover:text-white transition">Join Us</a>
             </nav>
-            <div>
-                <a href="#register" class="bg-brand-blue hover:bg-brand-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition shadow">
+            <div class="flex gap-3">
+                <a href="#registrationSection" onclick="switchTab('student')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-medium px-3 py-2 rounded-lg transition border border-slate-700">
+                    Student Signup
+                </a>
+                <a href="#registrationSection" onclick="switchTab('tutor')" class="bg-brand-blue hover:bg-brand-hover text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg transition shadow">
                     Register as Tutor
                 </a>
             </div>
@@ -51,17 +55,17 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-navy-900 text-white py-16 border-b border-slate-800">
+    <section id="home" class="bg-gradient-to-b from-navy-900 to-slate-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
-                Connect with Top Verified Tutors Near You
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                Connect with Expert Tutors & Unlock Learning
             </h1>
             <p class="text-slate-300 max-w-2xl mx-auto text-base md:text-lg mb-8">
-                Explore verified tutor profiles, read genuine student reviews, and choose the perfect tutor for your learning journey.
+                Students can browse ratings and reviews to pick tutors. Tutors can register easily to list their profile and run sponsored ads.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
-                <input type="text" id="searchInput" placeholder="Search by subject, name, or city..." class="px-4 py-3 rounded-lg text-slate-900 focus:outline-none w-full shadow">
-                <button onclick="filterTutors()" class="bg-brand-blue hover:bg-brand-hover text-white font-semibold px-6 py-3 rounded-lg transition shadow">
+            <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-xl mx-auto">
+                <input type="text" id="searchInput" placeholder="Search by subject, name, or city..." class="px-4 py-3 rounded-lg text-slate-900 focus:outline-none w-full shadow border-2 border-brand-blue">
+                <button onclick="filterTutors()" class="bg-brand-blue hover:bg-brand-hover text-white font-bold px-6 py-3 rounded-lg transition shadow">
                     Search Tutors
                 </button>
             </div>
@@ -70,14 +74,13 @@
 
     <!-- Tutor Profiles & Reviews Section -->
     <section id="tutors" class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
             <div>
-                <h2 class="text-2xl font-bold text-navy-900">Explore Tutors</h2>
-                <p class="text-slate-500 text-sm">Check ratings, reviews, and experience before hiring</p>
+                <h2 class="text-2xl font-bold text-navy-900">Available Tutors</h2>
+                <p class="text-slate-500 text-sm">Choose from top rated tutors based on genuine student feedback</p>
             </div>
-            <!-- Filter Options -->
             <div class="flex items-center gap-3">
-                <span class="text-sm font-medium text-slate-600">Filter:</span>
+                <span class="text-sm font-semibold text-slate-700">Subject:</span>
                 <select id="subjectFilter" onchange="filterTutors()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-blue shadow-sm">
                     <option value="All">All Subjects</option>
                     <option value="Mathematics">Mathematics</option>
@@ -90,93 +93,129 @@
 
         <!-- Tutors Grid -->
         <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Tutor cards will be injected dynamically via JavaScript -->
+            <!-- Dynamic Tutor Cards -->
         </div>
     </section>
 
-    <!-- Tutor Registration & Sponsored Ad Flow Section -->
-    <section id="register" class="bg-slate-200 py-12 border-t border-slate-300">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+    <!-- Combined Registration Portal Section -->
+    <section id="registrationSection" class="bg-brand-lightBg py-14 border-t border-blue-200">
+        <div class="max-w-3xl mx-auto px-4">
+            
+            <!-- Tab Switcher -->
+            <div class="flex bg-slate-200 p-1.5 rounded-xl mb-6 shadow-inner">
+                <button id="tabStudentBtn" onclick="switchTab('student')" class="w-1/2 py-2.5 rounded-lg text-sm font-bold transition text-slate-600">
+                    <i class="fa-solid fa-user-graduate mr-2"></i>Register as Student
+                </button>
+                <button id="tabTutorBtn" onclick="switchTab('tutor')" class="w-1/2 py-2.5 rounded-lg text-sm font-bold transition bg-brand-blue text-white shadow">
+                    <i class="fa-solid fa-chalkboard-user mr-2"></i>Register as Tutor
+                </button>
+            </div>
+
+            <!-- Student Registration Card -->
+            <div id="studentFormCard" class="bg-white rounded-xl shadow-md border border-slate-200 p-6 md:p-8 hidden">
                 <div class="text-center mb-6">
-                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tutor Portal</span>
+                    <h2 class="text-2xl font-bold text-navy-900">Student Sign Up</h2>
+                    <p class="text-slate-500 text-sm mt-1">Create a free account to contact tutors and leave reviews.</p>
+                </div>
+                <form onsubmit="handleStudentRegistration(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Student Name</label>
+                        <input type="text" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email / Phone</label>
+                        <input type="text" required placeholder="Enter phone or email" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Class / Grade</label>
+                        <input type="text" required placeholder="e.g. Class 10th, B.Tech, etc." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-navy-900 hover:bg-slate-800 text-white font-bold py-3 rounded-lg transition shadow">
+                        Create Free Student Account
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tutor Registration Card -->
+            <div id="tutorFormCard" class="bg-white rounded-xl shadow-md border border-slate-200 p-6 md:p-8">
+                <div class="text-center mb-6">
+                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1 rounded-full uppercase">Tutor Portal</span>
                     <h2 class="text-2xl font-bold text-navy-900 mt-2">Register as Tutor</h2>
-                    <p class="text-slate-600 text-sm mt-1">Complete your basic registration to get listed and unlock profile promotion features.</p>
+                    <p class="text-slate-500 text-sm mt-1">Basic ₹200 fee required to create your public listing and unlock sponsored ads.</p>
                 </div>
 
-                <!-- Step Indicator -->
-                <div class="flex justify-between items-center mb-8 max-w-xs mx-auto border-b pb-4">
-                    <div id="step1-badge" class="flex items-center gap-2 font-semibold text-brand-blue">
-                        <span class="w-7 h-7 bg-brand-blue text-white rounded-full flex items-center justify-center text-xs">1</span>
-                        <span>Basic (₹200)</span>
-                    </div>
-                    <div class="h-0.5 bg-slate-300 flex-grow mx-2"></div>
-                    <div id="step2-badge" class="flex items-center gap-2 font-semibold text-slate-400">
-                        <span class="w-7 h-7 bg-slate-300 text-slate-600 rounded-full flex items-center justify-center text-xs">2</span>
-                        <span>Sponsored Ad</span>
-                    </div>
-                </div>
-
-                <!-- Form Step 1: Basic Registration -->
-                <form id="basicRegForm" onsubmit="handleBasicRegistration(event)" class="space-y-4">
+                <!-- Form Step 1: Basic Registration & Payment -->
+                <form id="tutorRegForm" onsubmit="processTutorPayment(event)" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Full Name</label>
-                            <input type="text" required placeholder="e.g. Rahul Sharma" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name</label>
+                            <input type="text" required placeholder="e.g. Amit Kumar" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Primary Subject</label>
-                            <input type="text" required placeholder="e.g. Mathematics" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject Expertise</label>
+                            <input type="text" required placeholder="e.g. Physics" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Experience (Years)</label>
-                            <input type="number" required placeholder="e.g. 5" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Experience (Years)</label>
+                            <input type="number" required placeholder="e.g. 4" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">City / Location</label>
-                            <input type="text" required placeholder="e.g. Delhi, Sector 62" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-blue">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">City / Location</label>
+                            <input type="text" required placeholder="e.g. Jaipur" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:border-brand-blue focus:outline-none">
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-lg flex items-center justify-between mt-4">
-                        <div>
-                            <p class="font-semibold text-navy-900 text-sm">Mandatory Basic Registration Fee</p>
-                            <p class="text-xs text-slate-500">Includes verified profile listing in directory</p>
+                    <!-- Payment Mode Selector for ₹200 -->
+                    <div class="border border-blue-200 bg-blue-50/50 p-4 rounded-xl mt-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bold text-navy-900 text-sm">Registration Fee:</span>
+                            <span class="text-xl font-extrabold text-brand-blue">₹200</span>
                         </div>
-                        <span class="text-lg font-bold text-navy-900">₹200</span>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Select Payment Method</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="flex items-center justify-center border border-slate-300 bg-white p-2 rounded-lg cursor-pointer text-xs font-semibold hover:border-brand-blue">
+                                <input type="radio" name="payMethod" value="upi" checked class="mr-1"> UPI / GPay
+                            </label>
+                            <label class="flex items-center justify-center border border-slate-300 bg-white p-2 rounded-lg cursor-pointer text-xs font-semibold hover:border-brand-blue">
+                                <input type="radio" name="payMethod" value="card" class="mr-1"> Card
+                            </label>
+                            <label class="flex items-center justify-center border border-slate-300 bg-white p-2 rounded-lg cursor-pointer text-xs font-semibold hover:border-brand-blue">
+                                <input type="radio" name="payMethod" value="netbanking" class="mr-1"> NetBanking
+                            </label>
+                        </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-brand-blue hover:bg-brand-hover text-white font-semibold py-3 rounded-lg transition shadow mt-4">
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-brand-hover text-white font-bold py-3 rounded-lg transition shadow">
                         Pay ₹200 & Complete Registration
                     </button>
                 </form>
 
-                <!-- Form Step 2: Dashboard / Sponsored Ad Option (Hidden initially) -->
-                <div id="sponsoredDashboard" class="hidden space-y-6">
-                    <div class="bg-green-50 border border-green-200 text-green-800 p-4 rounded-lg flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-green-600 text-xl"></i>
+                <!-- Post-Registration Dashboard (Unlocked after ₹200 Payment) -->
+                <div id="tutorPostDashboard" class="hidden space-y-6">
+                    <div class="bg-green-50 border border-green-300 text-green-900 p-4 rounded-xl flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-green-600 text-2xl"></i>
                         <div>
-                            <p class="font-bold text-sm">Basic Registration Completed!</p>
-                            <p class="text-xs">Your tutor profile is now active on our directory.</p>
+                            <p class="font-bold text-sm">Payment Received! Registration Complete.</p>
+                            <p class="text-xs text-green-700">Your profile is now live in the student directory.</p>
                         </div>
                     </div>
 
-                    <div class="border border-brand-accent/40 bg-amber-50/50 rounded-xl p-5 relative overflow-hidden">
+                    <div class="border-2 border-brand-accent bg-amber-50 rounded-xl p-5 relative">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="bg-brand-accent text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Optional Feature</span>
-                            <span class="text-amber-700 font-bold text-sm">Boost Visibility</span>
+                            <span class="bg-brand-accent text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Unlocked Feature</span>
+                            <span class="text-amber-800 font-bold text-sm">Boost Reach</span>
                         </div>
                         <h3 class="text-lg font-bold text-navy-900">Promote Profile / Buy Sponsored Ad</h3>
-                        <p class="text-xs text-slate-600 mt-1">Get up to 5x more direct student queries by featuring your profile at the top of search results.</p>
+                        <p class="text-xs text-slate-600 mt-1">Get featured at the top of search results and attract more student inquiries.</p>
                         
                         <div class="mt-4 pt-4 border-t border-amber-200 flex items-center justify-between">
                             <div>
-                                <p class="text-xs font-semibold text-slate-500">Sponsored Ad Plan</p>
+                                <p class="text-xs font-bold text-slate-500">Sponsored Ad Package</p>
                                 <p class="text-lg font-extrabold text-navy-900">₹499 <span class="text-xs font-normal text-slate-500">/ month</span></p>
                             </div>
-                            <button onclick="activateSponsoredAd()" id="sponsorBtn" class="bg-brand-accent hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition shadow">
+                            <button onclick="buySponsoredAd()" id="sponsorBtn" class="bg-brand-accent hover:bg-amber-600 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition shadow">
                                 Buy Sponsored Ad
                             </button>
                         </div>
@@ -192,9 +231,8 @@
         <p>&copy; 2026 TutorConnect Platform. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript logic -->
+    <!-- JavaScript Engine -->
     <script>
-        // Sample Tutor Data with Ratings & Reviews
         const tutors = [
             {
                 id: 1,
@@ -206,8 +244,8 @@
                 reviewsCount: 28,
                 isSponsored: true,
                 reviews: [
-                    { student: "Rohan M.", comment: "Excellent concepts! Score improved from B to A." },
-                    { student: "Pooja S.", comment: "Patience and soft spoken tutor." }
+                    { student: "Rohan M.", comment: "Concepts cleared step-by-step!" },
+                    { student: "Pooja S.", comment: "Very helpful before exams." }
                 ]
             },
             {
@@ -220,7 +258,7 @@
                 reviewsCount: 34,
                 isSponsored: false,
                 reviews: [
-                    { student: "Aman P.", comment: "Makes numerical problems very easy to solve." }
+                    { student: "Aman P.", comment: "Numerical problem solving made simple." }
                 ]
             },
             {
@@ -233,62 +271,57 @@
                 reviewsCount: 19,
                 isSponsored: false,
                 reviews: [
-                    { student: "Siddharth K.", comment: "Great grammar and communication guidance." }
+                    { student: "Siddharth K.", comment: "Great focus on spoken English and writing skills." }
                 ]
             }
         ];
 
-        // Render Tutors into Grid
         function renderTutors(data) {
             const container = document.getElementById('tutorGrid');
             container.innerHTML = '';
 
             data.forEach(tutor => {
-                // Generate Star Icons HTML
                 let stars = '';
                 for(let i=0; i<5; i++) {
                     stars += `<i class="fa-solid fa-star ${i < Math.floor(tutor.rating) ? 'text-amber-400' : 'text-slate-300'} text-xs"></i>`;
                 }
 
-                // Reviews List HTML
                 let reviewsHtml = tutor.reviews.map(r => `
                     <div class="bg-slate-50 p-2 rounded text-xs border border-slate-200 mt-2">
-                        <span class="font-semibold text-slate-700">${r.student}:</span> "${r.comment}"
+                        <span class="font-bold text-slate-700">${r.student}:</span> "${r.comment}"
                     </div>
                 `).join('');
 
                 const cardHtml = `
-                    <div class="bg-white border ${tutor.isSponsored ? 'border-brand-accent ring-1 ring-brand-accent/50' : 'border-slate-200'} rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between relative">
+                    <div class="bg-white border ${tutor.isSponsored ? 'border-brand-accent ring-2 ring-brand-accent/30' : 'border-slate-200'} rounded-xl p-5 shadow-sm flex flex-col justify-between relative">
                         ${tutor.isSponsored ? '<span class="absolute top-3 right-3 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-300"><i class="fa-solid fa-bolt mr-1"></i>SPONSORED</span>' : ''}
                         
                         <div>
                             <div class="flex items-center gap-3 mb-3">
-                                <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-lg">
+                                <div class="w-12 h-12 rounded-full bg-brand-lightBg text-brand-blue flex items-center justify-center font-bold text-lg border border-blue-200">
                                     ${tutor.name.charAt(0)}
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-navy-900 text-base">${tutor.name}</h3>
-                                    <p class="text-xs text-brand-blue font-medium">${tutor.subject} • ${tutor.experience} Exp.</p>
+                                    <p class="text-xs text-brand-blue font-semibold">${tutor.subject} • ${tutor.experience} Exp.</p>
                                 </div>
                             </div>
 
                             <p class="text-xs text-slate-500 mb-2"><i class="fa-solid fa-location-dot mr-1"></i>${tutor.location}</p>
 
-                            <!-- Rating & Reviews -->
                             <div class="flex items-center gap-2 mb-3">
                                 <div class="flex">${stars}</div>
                                 <span class="text-xs font-bold text-slate-700">${tutor.rating}</span>
                                 <span class="text-xs text-slate-400">(${tutor.reviewsCount} reviews)</span>
                             </div>
 
-                            <!-- Student Choice/Reviews Preview -->
                             <div class="mt-3 border-t border-slate-100 pt-3">
-                                <p class="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Student Feedback:</p>
+                                <p class="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Student Reviews:</p>
                                 ${reviewsHtml}
                             </div>
                         </div>
 
-                        <button onclick="alert('Contact details sent to your registered number!')" class="mt-5 w-full bg-slate-100 hover:bg-slate-200 text-navy-900 text-xs font-bold py-2 rounded-lg transition">
+                        <button onclick="alert('Inquiry sent to tutor!')" class="mt-5 w-full bg-navy-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 rounded-lg transition">
                             Contact Tutor
                         </button>
                     </div>
@@ -297,7 +330,6 @@
             });
         }
 
-        // Filter Functionality
         function filterTutors() {
             const searchValue = document.getElementById('searchInput').value.toLowerCase();
             const subjectValue = document.getElementById('subjectFilter').value;
@@ -313,29 +345,46 @@
             renderTutors(filtered);
         }
 
-        // Handle ₹200 Basic Registration Form
-        function handleBasicRegistration(e) {
-            e.preventDefault();
-            
-            // Simulating Basic Registration Complete
-            document.getElementById('basicRegForm').classList.add('hidden');
-            document.getElementById('sponsoredDashboard').classList.remove('hidden');
+        function switchTab(tab) {
+            const studentCard = document.getElementById('studentFormCard');
+            const tutorCard = document.getElementById('tutorFormCard');
+            const studentBtn = document.getElementById('tabStudentBtn');
+            const tutorBtn = document.getElementById('tabTutorBtn');
 
-            // Update Steps UI
-            document.getElementById('step1-badge').className = "flex items-center gap-2 font-semibold text-green-600";
-            document.getElementById('step2-badge').className = "flex items-center gap-2 font-semibold text-brand-blue";
+            if (tab === 'student') {
+                studentCard.classList.remove('hidden');
+                tutorCard.classList.add('hidden');
+                studentBtn.className = "w-1/2 py-2.5 rounded-lg text-sm font-bold transition bg-navy-900 text-white shadow";
+                tutorBtn.className = "w-1/2 py-2.5 rounded-lg text-sm font-bold transition text-slate-600";
+            } else {
+                tutorCard.classList.remove('hidden');
+                studentCard.classList.add('hidden');
+                tutorBtn.className = "w-1/2 py-2.5 rounded-lg text-sm font-bold transition bg-brand-blue text-white shadow";
+                studentBtn.className = "w-1/2 py-2.5 rounded-lg text-sm font-bold transition text-slate-600";
+            }
         }
 
-        // Handle Sponsored Ad Purchase
-        function activateSponsoredAd() {
+        function handleStudentRegistration(e) {
+            e.preventDefault();
+            alert("Student Account Created Successfully! You can now contact tutors directly.");
+            e.target.reset();
+        }
+
+        function processTutorPayment(e) {
+            e.preventDefault();
+            alert("Processing ₹200 Payment...\nPayment Successful! Profile Registered.");
+            document.getElementById('tutorRegForm').classList.add('hidden');
+            document.getElementById('tutorPostDashboard').classList.remove('hidden');
+        }
+
+        function buySponsoredAd() {
             const btn = document.getElementById('sponsorBtn');
             btn.innerText = "Sponsored Active ✓";
-            btn.className = "bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg cursor-default";
+            btn.className = "bg-green-600 text-white text-sm font-bold px-5 py-2.5 rounded-lg cursor-default";
             btn.onclick = null;
-            alert("Congratulations! Your profile is now Sponsored and featured on top.");
+            alert("Payment Successful! Your profile is now marked as Sponsored at the top.");
         }
 
-        // Initial Render
         renderTutors(tutors);
     </script>
 </body>

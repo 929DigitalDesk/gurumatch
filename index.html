@@ -363,16 +363,16 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-xl font-black text-brand-dark tracking-tight">Admin Portal Login</h3>
-                <p class="text-xs text-slate-500 mt-1">Username: <span class="font-bold text-brand-blue">admin_master</span><br>Password: <span class="font-bold text-brand-blue">Secure#GURU@2026</span></p>
+                <p class="text-xs text-slate-500 mt-1">Please enter authorized staff credentials to continue.</p>
             </div>
             <form onsubmit="handleStaffLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Username *</label>
-                    <input type="text" id="staffUserInput" required placeholder="admin_master" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+                    <input type="text" id="staffUserInput" required placeholder="Enter Staff Username" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Secure Password *</label>
-                    <input type="password" id="staffPassInput" required placeholder="Secure#GURU@2026" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+                    <input type="password" id="staffPassInput" required placeholder="Enter Secure Password" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
                 </div>
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="closeStaffLoginModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs">CANCEL</button>
@@ -457,175 +457,159 @@
         let tutorsList = [
             { id: 1, name: "Prof. Rajesh Sharma", subject: "Mathematics", rating: "4.9", exp: "10+ Yrs", location: "Mumbai", verified: true },
             { id: 2, name: "Dr. Ananya Roy", subject: "Physics", rating: "4.8", exp: "8 Yrs", location: "Delhi", verified: true },
-            { id: 3, name: "Kavita Verma", subject: "English", rating: "4.7", exp: "5 Yrs", location: "Bangalore", verified: true },
-            { id: 4, name: "Vikram Mehta", subject: "Mathematics", rating: "4.9", exp: "12 Yrs", location: "Pune", verified: true },
-            { id: 5, name: "Dr. Suresh Patel", subject: "Physics", rating: "4.9", exp: "15 Yrs", location: "Ahmedabad", verified: true },
-            { id: 6, name: "Meera Nair", subject: "English", rating: "4.8", exp: "6 Yrs", location: "Chennai", verified: true }
+            { id: 3, name: "Kavita Verma", subject: "English", rating: "4.7", exp: "5 Yrs", location: "Bangalore", verified: true }
         ];
 
-        let registeredUsers = [
-            { id: 101, name: "Aarav Gupta", role: "Student", detail: "Science (Physics, Maths)", phone: "+91 98******10", email: "aarav@gmail.com", status: "Verified" },
-            { id: 102, name: "Priya Singh", role: "Student", detail: "Commerce (Accounts)", phone: "+91 97******45", email: "priya@gmail.com", status: "Verified" },
-            { id: 201, name: "Rohan Kapoor", role: "Tutor", detail: "Advanced Mathematics", phone: "+91 99******88", email: "rohan@gmail.com", utr: "UTR987654321012", status: "Pending Approval" }
-        ];
-
-        let requirementsList = [
-            { id: 1, student: "Aarav Gupta", subject: "Physics & Calculus", mode: "Online", desc: "Need experienced tutor for Grade 12 CBSE board exams. 3 days a week." },
-            { id: 2, student: "Priya Singh", subject: "Financial Accounting", mode: "Home Tutor", desc: "Looking for home tutor in South Delhi area for B.Com 1st year." }
-        ];
-
+        let registeredUsers = [];
+        let requirementsList = [];
         let currentStudent = null;
+
+        // Student Directory Pagination State
         let currentPage = 1;
-        const totalPages = 200;
         const itemsPerPage = 6;
+        const totalStudentsCount = 1197;
+        const totalPages = Math.ceil(totalStudentsCount / itemsPerPage);
 
-        const mockFirstNames = ["Amit", "Sneha", "Rahul", "Pooja", "Rohan", "Anjali", "Siddharth", "Neha", "Karan", "Riya", "Vikas", "Tanvi", "Aditya", "Shreya", "Nikhil", "Divya"];
-        const mockLastNames = ["Sharma", "Verma", "Gupta", "Patel", "Singh", "Kumar", "Joshi", "Mehta", "Reddy", "Nair", "Chawla", "Bhasin"];
-        const mockStreams = ["Arts", "Science", "Commerce"];
-        const mockSubjectsMap = {
-            Arts: ["History & Political Science", "Psychology", "Sociology", "English Literature"],
-            Science: ["Physics & Mathematics", "Chemistry & Biology", "Computer Science (Python)", "Calculus"],
-            Commerce: ["Accountancy & Economics", "Business Studies", "Applied Mathematics", "Financial Accounting"]
-        };
-
-        function getStudentsForPage(page) {
-            let pageStudents = [];
-            let startIndex = (page - 1) * itemsPerPage;
-            for (let i = 0; i < itemsPerPage; i++) {
-                let profileId = startIndex + i + 1;
-                let fn = mockFirstNames[(profileId * 3) % mockFirstNames.length];
-                let ln = mockLastNames[(profileId * 7) % mockLastNames.length];
-                let stream = mockStreams[(profileId) % mockStreams.length];
-                let subjects = mockSubjectsMap[stream][(profileId) % mockSubjectsMap[stream].length];
-                pageStudents.push({
-                    id: profileId,
-                    name: `${fn} ${ln}`,
-                    stream: stream,
-                    subjects: subjects,
-                    phone: `+91 ${90000 + (profileId * 17) % 90000}*****`,
-                    location: ["Mumbai", "Delhi", "Bangalore", "Kolkata", "Hyderabad", "Pune", "Jaipur"][(profileId) % 7]
-                });
-            }
-            return pageStudents;
-        }
-
-        // Initialize UI
-        window.addEventListener('DOMContentLoaded', () => {
+        // Initial Load
+        document.addEventListener("DOMContentLoaded", () => {
             renderTutors();
-            renderStudentDirectory();
+            renderStudentGrid();
+            renderPagination();
         });
 
-        // Tutor Rendering
-        function renderTutors(filterSubject = "All") {
-            const grid = document.getElementById('tutorGrid');
-            grid.innerHTML = '';
+        // Render Tutors
+        function renderTutors(filteredSubject = "All") {
+            const tutorGrid = document.getElementById("tutorGrid");
+            if (!tutorGrid) return;
+            tutorGrid.innerHTML = "";
             
-            let filtered = tutorsList.filter(t => filterSubject === "All" || t.subject === filterSubject);
-            
+            const filtered = filteredSubject === "All" 
+                ? tutorsList 
+                : tutorsList.filter(t => t.subject.toLowerCase() === filteredSubject.toLowerCase());
+
             if (filtered.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-slate-500 py-8 font-medium">No tutors found for this subject.</p>`;
+                tutorGrid.innerHTML = `<p class="col-span-full text-center text-slate-500 py-8 font-medium">No tutors found for this subject.</p>`;
                 return;
             }
 
             filtered.forEach(t => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between">
+                tutorGrid.innerHTML += `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-start justify-between mb-3">
-                                <div>
-                                    <h3 class="font-bold text-lg text-brand-dark flex items-center gap-2">
-                                        ${t.name}
-                                        ${t.verified ? '<i class="fa-solid fa-circle-check text-brand-blue text-sm" title="Verified Tutor"></i>' : ''}
-                                    </h3>
-                                    <p class="text-xs text-brand-blue font-bold uppercase tracking-wide mt-0.5">${t.subject}</p>
-                                </div>
-                                <span class="bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1">
-                                    <i class="fa-solid fa-star text-amber-500"></i> ${t.rating}
-                                </span>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full border border-blue-100">${t.subject}</span>
+                                ${t.verified ? '<span class="text-xs font-bold text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Verified</span>' : ''}
                             </div>
-                            <div class="space-y-1.5 text-xs text-slate-600 mb-6">
-                                <p><i class="fa-solid fa-briefcase w-5 text-slate-400"></i> Experience: <strong>${t.exp}</strong></p>
-                                <p><i class="fa-solid fa-location-dot w-5 text-slate-400"></i> Location: <strong>${t.location}</strong></p>
-                            </div>
+                            <h3 class="text-lg font-black text-brand-dark mb-1">${t.name}</h3>
+                            <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-location-dot mr-1"></i>${t.location} • Experience: ${t.exp}</p>
                         </div>
-                        <button onclick="switchTab('requirement')" class="w-full bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
-                            REQUEST TUTOR
-                        </button>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${t.rating} / 5.0</span>
+                            <a href="#registrationSection" onclick="switchTab('student')" class="bg-brand-blue text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-blue-700 transition">Contact Tutor</a>
+                        </div>
                     </div>
                 `;
             });
         }
 
         function filterTutors() {
-            const val = document.getElementById('subjectFilter').value;
+            const val = document.getElementById("subjectFilter").value;
             renderTutors(val);
         }
 
-        // Student Directory & Pagination
-        function renderStudentDirectory() {
-            const container = document.getElementById('studentGridContainer');
-            container.innerHTML = '';
+        // Student Directory Data Mocking
+        function getMockStudentsForPage(page) {
+            const streams = ["Arts", "Science", "Commerce"];
+            const subjectsMap = {
+                "Arts": ["History, Political Science", "English, Sociology", "Psychology, Geography"],
+                "Science": ["Physics, Chemistry, Math", "Biology, Chemistry", "Computer Science, Math"],
+                "Commerce": ["Accountancy, Economics", "Business Studies, Math", "Economics, Finance"]
+            };
+            const names = ["Aarav Sharma", "Priya Patel", "Rohan Mehta", "Ananya Singh", "Siddharth Rao", "Neha Gupta", "Vikram Malhotra", "Isha Verma", "Karan Das", "Riya Kumar"];
             
-            const students = getStudentsForPage(currentPage);
+            let list = [];
+            for (let i = 0; i < itemsPerPage; i++) {
+                let index = ((page - 1) * itemsPerPage + i) % names.length;
+                let stream = streams[i % streams.length];
+                let subList = subjectsMap[stream];
+                let subject = subList[i % subList.length];
+                let studentId = 1000 + (page - 1) * itemsPerPage + i + 1;
+                
+                list.push({
+                    id: studentId,
+                    name: names[index] + " #" + studentId,
+                    stream: stream,
+                    subject: subject,
+                    phone: "+91 98******" + Math.floor(10 + Math.random() * 90)
+                });
+            }
+            return list;
+        }
+
+        function renderStudentGrid() {
+            const grid = document.getElementById("studentGridContainer");
+            if (!grid) return;
+            grid.innerHTML = "";
+            
+            const students = getMockStudentsForPage(currentPage);
             students.forEach(s => {
-                container.innerHTML += `
-                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md ${
-                                    s.stream === 'Science' ? 'bg-purple-100 text-purple-700' :
-                                    s.stream === 'Commerce' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[11px] font-black uppercase px-2.5 py-1 rounded-lg ${
+                                    s.stream === 'Science' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                                    s.stream === 'Commerce' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                                    'bg-teal-50 text-teal-700 border border-teal-200'
                                 }">${s.stream}</span>
-                                <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot mr-1"></i>${s.location}</span>
+                                <span class="text-[10px] font-bold text-slate-400">ID: GM-STU-${s.id}</span>
                             </div>
-                            <h4 class="font-bold text-base text-brand-dark mb-1">${s.name}</h4>
-                            <p class="text-xs text-slate-600 font-medium mb-3">Required: <strong class="text-slate-800">${s.subjects}</strong></p>
+                            <h4 class="font-black text-brand-dark text-base mb-1">${s.name}</h4>
+                            <p class="text-xs text-slate-600 font-medium mb-3"><span class="font-bold">Subject:</span> ${s.subject}</p>
                         </div>
                         <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="text-slate-400 font-mono"><i class="fa-solid fa-phone mr-1"></i>${s.phone}</span>
-                            <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                                <i class="fa-solid fa-shield-halved mr-1"></i>Protected
-                            </span>
+                            <span class="font-mono text-slate-500 font-bold"><i class="fa-solid fa-lock text-slate-400 mr-1"></i> ${s.phone}</span>
+                            <span class="text-[11px] text-brand-blue font-bold">Protected</span>
                         </div>
                     </div>
                 `;
             });
-
-            renderPagination();
+            
+            document.getElementById("totalPagesText").innerText = `/ ${totalPages}`;
+            document.getElementById("pageJumpInput").value = currentPage;
         }
 
         function renderPagination() {
-            const pageContainer = document.getElementById('paginationNumbers');
-            pageContainer.innerHTML = '';
-            
-            document.getElementById('pageJumpInput').value = currentPage;
-            document.getElementById('totalPagesText').innerText = `/ ${totalPages}`;
-            document.getElementById('prevBtn').disabled = (currentPage === 1);
-            
-            let pagesToDisplay = [];
-            if (currentPage > 1) pagesToDisplay.push(currentPage - 1);
-            pagesToDisplay.push(currentPage);
-            if (currentPage < totalPages) pagesToDisplay.push(currentPage + 1);
+            const container = document.getElementById("paginationNumbers");
+            if (!container) return;
+            container.innerHTML = "";
 
-            pagesToDisplay.forEach(p => {
-                let btn = document.createElement('button');
-                btn.innerText = p;
-                btn.className = `px-3.5 py-1.5 text-xs font-bold rounded-lg transition ${
-                    p === currentPage ? 'bg-brand-blue text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`;
+            let start = Math.max(1, currentPage - 2);
+            let end = Math.min(totalPages, start + 4);
+            if (end - start < 4) start = Math.max(1, end - 4);
+
+            for (let i = start; i <= end; i++) {
+                const btn = document.createElement("button");
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition ${i === currentPage ? 'bg-brand-blue text-white shadow' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'}`;
+                btn.innerText = i;
                 btn.onclick = () => {
-                    currentPage = p;
-                    renderStudentDirectory();
+                    currentPage = i;
+                    renderStudentGrid();
+                    renderPagination();
                 };
-                pageContainer.appendChild(btn);
-            });
+                container.appendChild(btn);
+            }
+
+            document.getElementById("prevBtn").disabled = currentPage === 1;
+            document.getElementById("nextBtn").disabled = currentPage === totalPages;
         }
 
         function changePage(delta) {
-            let target = currentPage + delta;
-            if (target >= 1 && target <= totalPages) {
-                currentPage = target;
-                renderStudentDirectory();
+            let newPage = currentPage + delta;
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderStudentGrid();
+                renderPagination();
             }
         }
 
@@ -633,280 +617,269 @@
             let p = parseInt(val);
             if (p >= 1 && p <= totalPages) {
                 currentPage = p;
-                renderStudentDirectory();
+                renderStudentGrid();
+                renderPagination();
             }
         }
 
-        // Section Tabs
+        // Tabs Switcher
         function switchTab(tab) {
-            const sCard = document.getElementById('studentFormCard');
-            const tCard = document.getElementById('tutorFormCard');
-            const rCard = document.getElementById('requirementFormCard');
-            
-            const sBtn = document.getElementById('tabStudentBtn');
-            const tBtn = document.getElementById('tabTutorBtn');
-            const rBtn = document.getElementById('tabRequirementBtn');
-            
+            const studentCard = document.getElementById("studentFormCard");
+            const tutorCard = document.getElementById("tutorFormCard");
+            const reqCard = document.getElementById("requirementFormCard");
+
+            const btnStudent = document.getElementById("tabStudentBtn");
+            const btnTutor = document.getElementById("tabTutorBtn");
+            const btnReq = document.getElementById("tabRequirementBtn");
+
+            studentCard.classList.add("hidden");
+            tutorCard.classList.add("hidden");
+            reqCard.classList.add("hidden");
+
             const activeClass = "bg-brand-blue text-white shadow";
-            const inactiveClass = "text-slate-600 hover:text-brand-dark bg-transparent";
+            const inactiveClass = "text-slate-600 hover:text-brand-dark";
 
-            sCard.classList.add('hidden');
-            tCard.classList.add('hidden');
-            rCard.classList.add('hidden');
+            btnStudent.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${tab === 'student' ? activeClass : inactiveClass}`;
+            btnTutor.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${tab === 'tutor' ? activeClass : inactiveClass}`;
+            btnReq.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${tab === 'requirement' ? activeClass : inactiveClass}`;
 
-            sBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-            tBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-            rBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-
-            if (tab === 'student') {
-                sCard.classList.remove('hidden');
-                sBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
-            } else if (tab === 'tutor') {
-                tCard.classList.remove('hidden');
-                tBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
-            } else if (tab === 'requirement') {
-                rCard.classList.remove('hidden');
-                rBtn.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
+            if (tab === 'student') studentCard.classList.remove("hidden");
+            if (tab === 'tutor') tutorCard.classList.remove("hidden");
+            if (tab === 'requirement') {
+                reqCard.classList.remove("hidden");
+                checkStudentLoginState();
             }
         }
 
-        // Form Actions
+        // Student Form Submit
         function handleStudentFormSubmit(e) {
             e.preventDefault();
-            const name = document.getElementById('stu_name').value;
-            const email = document.getElementById('stu_email').value;
-            const phone = document.getElementById('stu_phone').value;
-            const stream = document.getElementById('stu_stream').value;
-            const subject = document.getElementById('stu_subject').value;
+            const name = document.getElementById("stu_name").value.trim();
+            const email = document.getElementById("stu_email").value.trim();
+            const phone = document.getElementById("stu_phone").value.trim();
+            const stream = document.getElementById("stu_stream").value;
+            const subject = document.getElementById("stu_subject").value.trim();
 
-            currentStudent = { name, email, phone, stream, subject };
-            
-            registeredUsers.push({
-                id: Date.now(),
-                name: name,
-                role: "Student",
-                detail: `${stream} (${subject})`,
-                phone: phone,
-                email: email,
-                status: "Verified"
-            });
+            currentStudent = { name, email, phone, stream, subject, role: 'Student' };
+            registeredUsers.push(currentStudent);
 
-            document.getElementById('navLoggedName').innerText = name;
-            document.getElementById('currentUserBadge').classList.remove('hidden');
-            document.getElementById('activeStudentNameDisplay').innerText = `${name} (${email})`;
+            document.getElementById("navLoggedName").innerText = name;
+            document.getElementById("currentUserBadge").classList.remove("hidden");
 
-            document.getElementById('notLoggedInAlert').classList.add('hidden');
-            document.getElementById('protectedReqForm').classList.remove('hidden');
-
-            alert(`Welcome, ${name}! Your student registration is complete.`);
+            alert(`Welcome ${name}! Student registration successful.`);
             switchTab('requirement');
         }
 
-        function handleTutorFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('t_name').value;
-            const subject = document.getElementById('t_subject').value;
-            const email = document.getElementById('t_email').value;
-            const phone = document.getElementById('t_phone').value;
-            const utr = document.getElementById('txnIdInput').value;
+        function checkStudentLoginState() {
+            const alertBox = document.getElementById("notLoggedInAlert");
+            const reqForm = document.getElementById("protectedReqForm");
+            const nameDisplay = document.getElementById("activeStudentNameDisplay");
 
-            registeredUsers.push({
-                id: Date.now(),
-                name: name,
-                role: "Tutor",
-                detail: subject,
-                phone: phone,
-                email: email,
-                utr: utr,
-                status: "Pending Approval"
-            });
-
-            document.getElementById('tutorPostDashboard').classList.remove('hidden');
-            alert("Application Submitted! Staff will review your payment reference.");
-        }
-
-        function handleRequirementSubmit(e) {
-            e.preventDefault();
-            if (!currentStudent) {
-                alert("Please register as a student first!");
-                switchTab('student');
-                return;
+            if (currentStudent) {
+                alertBox.classList.add("hidden");
+                reqForm.classList.remove("hidden");
+                nameDisplay.innerText = currentStudent.name;
+            } else {
+                alertBox.classList.remove("hidden");
+                reqForm.classList.add("hidden");
             }
-
-            const subject = document.getElementById('req_subject').value;
-            const mode = document.getElementById('req_mode').value;
-            const desc = document.getElementById('req_desc').value;
-
-            requirementsList.push({
-                id: Date.now(),
-                student: currentStudent.name,
-                subject: subject,
-                mode: mode,
-                desc: desc
-            });
-
-            alert("Your learning request has been posted successfully!");
-            e.target.reset();
         }
 
         function logoutStudent() {
             currentStudent = null;
-            document.getElementById('currentUserBadge').classList.add('hidden');
-            document.getElementById('notLoggedInAlert').classList.remove('hidden');
-            document.getElementById('protectedReqForm').classList.add('hidden');
-            alert("Logged out successfully.");
+            document.getElementById("currentUserBadge").classList.add("hidden");
+            checkStudentLoginState();
         }
 
-        // Modals Logic
+        // Tutor Form Submit
+        function handleTutorFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById("t_name").value.trim();
+            const subject = document.getElementById("t_subject").value.trim();
+            const email = document.getElementById("t_email").value.trim();
+            const phone = document.getElementById("t_phone").value.trim();
+            const txnId = document.getElementById("txnIdInput").value.trim();
+
+            const tutorData = { name, subject, email, phone, txnId, role: 'Tutor', verified: false };
+            registeredUsers.push(tutorData);
+
+            document.getElementById("tutorRegForm").classList.add("hidden");
+            document.getElementById("tutorPostDashboard").classList.remove("hidden");
+            alert("Application & UTR submitted successfully! Staff will verify your account shortly.");
+        }
+
+        // Learning Requirement Submit
+        function handleRequirementSubmit(e) {
+            e.preventDefault();
+            if (!currentStudent) return;
+
+            const subject = document.getElementById("req_subject").value.trim();
+            const mode = document.getElementById("req_mode").value;
+            const desc = document.getElementById("req_desc").value.trim();
+
+            requirementsList.push({
+                studentName: currentStudent.name,
+                subject,
+                mode,
+                desc
+            });
+
+            alert("Your Learning Request has been posted successfully!");
+            document.getElementById("protectedReqForm").reset();
+        }
+
+        // UPI Modal Functions
         function openUpiQrModal() {
-            document.getElementById('upiQrModal').classList.remove('hidden');
+            document.getElementById("upiQrModal").classList.remove("hidden");
         }
-
         function closeUpiQrModal() {
-            document.getElementById('upiQrModal').classList.add('hidden');
+            document.getElementById("upiQrModal").classList.add("hidden");
         }
 
+        // Staff Login Functions
         function openStaffLoginModal() {
-            document.getElementById('staffLoginModal').classList.remove('hidden');
+            document.getElementById("staffLoginModal").classList.remove("hidden");
         }
-
         function closeStaffLoginModal() {
-            document.getElementById('staffLoginModal').classList.add('hidden');
+            document.getElementById("staffLoginModal").classList.add("hidden");
         }
 
         function handleStaffLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('staffUserInput').value;
-            const pass = document.getElementById('staffPassInput').value;
+            const u = document.getElementById("staffUserInput").value.trim();
+            const p = document.getElementById("staffPassInput").value.trim();
 
-            if (user === 'admin_master' && pass === 'Secure#GURU@2026') {
+            if (u === "admin_master" && p === "Secure#GURU@2026") {
                 closeStaffLoginModal();
                 openStaffPanelModal();
+                document.getElementById("staffUserInput").value = "";
+                document.getElementById("staffPassInput").value = "";
             } else {
-                alert("Invalid Username or Password!");
+                alert("Invalid Staff Credentials!");
             }
         }
 
         function openStaffPanelModal() {
-            document.getElementById('staffPanelModal').classList.remove('hidden');
-            renderStaffUsers();
-            renderStaffReqs();
+            renderVerificationTable();
+            renderRequirementsTable();
+            document.getElementById("staffPanelModal").classList.remove("hidden");
         }
-
         function closeStaffPanelModal() {
-            document.getElementById('staffPanelModal').classList.add('hidden');
+            document.getElementById("staffPanelModal").classList.add("hidden");
         }
 
         function switchStaffTab(tab) {
-            const uView = document.getElementById('staffUsersView');
-            const rView = document.getElementById('staffReqsView');
-            const uBtn = document.getElementById('staffTabUsersBtn');
-            const rBtn = document.getElementById('staffTabReqsBtn');
+            const usersView = document.getElementById("staffUsersView");
+            const reqsView = document.getElementById("staffReqsView");
+            const btnUsers = document.getElementById("staffTabUsersBtn");
+            const btnReqs = document.getElementById("staffTabReqsBtn");
 
             if (tab === 'users') {
-                uView.classList.remove('hidden');
-                rView.classList.add('hidden');
-                uBtn.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                rBtn.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+                usersView.classList.remove("hidden");
+                reqsView.classList.add("hidden");
+                btnUsers.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
+                btnReqs.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
             } else {
-                uView.classList.add('hidden');
-                rView.classList.remove('hidden');
-                rBtn.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                uBtn.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+                usersView.classList.add("hidden");
+                reqsView.classList.remove("hidden");
+                btnReqs.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
+                btnUsers.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
             }
         }
 
-        // Staff Admin Operations
-        function renderStaffUsers() {
-            const tbody = document.getElementById('verificationTableBody');
-            tbody.innerHTML = '';
+        function renderVerificationTable() {
+            const tbody = document.getElementById("verificationTableBody");
+            if (!tbody) return;
+            tbody.innerHTML = "";
 
-            registeredUsers.forEach(u => {
+            if (registeredUsers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 text-xs font-medium">No registered users or pending tutor applications yet.</td></tr>`;
+                return;
+            }
+
+            registeredUsers.forEach((u, idx) => {
                 tbody.innerHTML += `
-                    <tr class="border-b border-slate-100 hover:bg-slate-50/50">
+                    <tr class="border-b border-slate-100">
                         <td class="p-3.5">
                             <p class="font-bold text-brand-dark">${u.name}</p>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${u.role === 'Student' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}">${u.role}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${u.role === 'Tutor' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'}">${u.role}</span>
                         </td>
-                        <td class="p-3.5 text-xs text-slate-600 font-medium">${u.detail}</td>
-                        <td class="p-3.5 text-xs text-slate-600 font-mono">${u.phone}<br>${u.email}</td>
-                        <td class="p-3.5 text-xs font-mono font-bold text-brand-blue">${u.utr || 'N/A'}</td>
-                        <td class="p-3.5 space-x-1">
-                            ${u.status === 'Pending Approval' ? `<button onclick="approveUser(${u.id})" class="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded hover:bg-emerald-700">Approve</button>` : `<span class="text-emerald-600 font-bold text-xs"><i class="fa-solid fa-check mr-1"></i>Verified</span>`}
-                            <button onclick="deleteUser(${u.id})" class="bg-red-100 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded hover:bg-red-200">Delete</button>
+                        <td class="p-3.5 font-medium text-slate-600">${u.subject || u.stream || 'N/A'}</td>
+                        <td class="p-3.5 font-mono text-xs text-slate-600">${u.phone}<br>${u.email}</td>
+                        <td class="p-3.5 font-mono font-bold ${u.txnId ? 'text-brand-blue' : 'text-slate-400'}">${u.txnId || 'N/A'}</td>
+                        <td class="p-3.5 space-x-2">
+                            ${u.role === 'Tutor' && !u.verified ? `<button onclick="verifyTutor(${idx})" class="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg hover:bg-emerald-700">Approve</button>` : ''}
+                            <button onclick="deleteUser(${idx})" class="bg-red-500 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-600">Delete</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        function renderStaffReqs() {
-            const tbody = document.getElementById('requirementsTableBody');
-            tbody.innerHTML = '';
+        function renderRequirementsTable() {
+            const tbody = document.getElementById("requirementsTableBody");
+            if (!tbody) return;
+            tbody.innerHTML = "";
 
-            requirementsList.forEach(r => {
+            if (requirementsList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 text-xs font-medium">No learning requests submitted yet.</td></tr>`;
+                return;
+            }
+
+            requirementsList.forEach((r, idx) => {
                 tbody.innerHTML += `
-                    <tr class="border-b border-slate-100 hover:bg-slate-50/50">
-                        <td class="p-3.5 font-bold text-brand-dark">${r.student}</td>
-                        <td class="p-3.5 text-xs text-brand-blue font-bold">${r.subject}</td>
-                        <td class="p-3.5 text-xs font-bold text-slate-600">${r.mode}</td>
-                        <td class="p-3.5 text-xs text-slate-600 max-w-xs">${r.desc}</td>
+                    <tr class="border-b border-slate-100">
+                        <td class="p-3.5 font-bold text-brand-dark">${r.studentName}</td>
+                        <td class="p-3.5 font-medium text-slate-700">${r.subject}</td>
+                        <td class="p-3.5"><span class="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-1 rounded-md">${r.mode}</span></td>
+                        <td class="p-3.5 text-xs text-slate-600 max-w-xs truncate">${r.desc}</td>
                         <td class="p-3.5">
-                            <button onclick="deleteReq(${r.id})" class="bg-red-100 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded hover:bg-red-200">Remove</button>
+                            <button onclick="deleteRequest(${idx})" class="bg-red-500 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-600">Delete</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        function approveUser(id) {
-            let u = registeredUsers.find(x => x.id === id);
-            if (u) {
-                u.status = "Verified";
-                if (u.role === "Tutor") {
-                    tutorsList.push({
-                        id: Date.now(),
-                        name: u.name,
-                        subject: u.detail,
-                        rating: "5.0",
-                        exp: "New Verified",
-                        location: "Online / Regional",
-                        verified: true
-                    });
-                    renderTutors();
-                }
-                renderStaffUsers();
-                alert(`${u.name} has been verified!`);
+        function verifyTutor(idx) {
+            if (registeredUsers[idx]) {
+                registeredUsers[idx].verified = true;
+                tutorsList.push({
+                    id: tutorsList.length + 1,
+                    name: registeredUsers[idx].name,
+                    subject: registeredUsers[idx].subject,
+                    rating: "5.0",
+                    exp: "Verified",
+                    location: "Online / Local",
+                    verified: true
+                });
+                renderTutors();
+                renderVerificationTable();
+                alert("Tutor approved and published to marketplace!");
             }
         }
 
-        function deleteUser(id) {
-            registeredUsers = registeredUsers.filter(x => x.id !== id);
-            renderStaffUsers();
+        function deleteUser(idx) {
+            registeredUsers.splice(idx, 1);
+            renderVerificationTable();
         }
 
-        function deleteReq(id) {
-            requirementsList = requirementsList.filter(x => x.id !== id);
-            renderStaffReqs();
+        function deleteRequest(idx) {
+            requirementsList.splice(idx, 1);
+            renderRequirementsTable();
         }
 
         function addManualRequest() {
-            const student = prompt("Enter Student Name:");
-            if (!student) return;
+            const name = prompt("Enter Student Name:");
             const subject = prompt("Enter Subject Needed:");
-            const mode = prompt("Enter Mode (Online / Home Tutor / Hybrid):") || "Online";
-            const desc = prompt("Enter Brief Description:");
+            const mode = prompt("Enter Mode (Online/Home Tutor/Hybrid):") || "Online";
+            const desc = prompt("Enter Request Description:");
 
-            requirementsList.push({
-                id: Date.now(),
-                student: student,
-                subject: subject,
-                mode: mode,
-                desc: desc || "Added manually by admin staff."
-            });
-
-            renderStaffReqs();
-            alert("Manual requirement added successfully!");
+            if (name && subject) {
+                requirementsList.push({ studentName: name, subject, mode, desc: desc || "Manual Entry by Staff" });
+                renderRequirementsTable();
+                alert("Manual request added successfully!");
+            }
         }
     </script>
 </body>

@@ -43,7 +43,6 @@
                 </div>
             </div>
 
-            <!-- Active User Indicator / Staff Login -->
             <div class="flex items-center gap-3">
                 <div id="currentUserBadge" class="hidden items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 text-xs font-semibold">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -64,7 +63,6 @@
     <!-- Main Content Container -->
     <main class="max-w-7xl mx-auto px-4 py-8 space-y-12 w-full flex-grow">
 
-        <!-- Hero Title -->
         <section class="text-center space-y-3">
             <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">India's Leading Academic Network</span>
             <h2 class="text-3xl sm:text-4xl font-black text-brand-dark tracking-tight">Connect with Verified Tutors & Students</h2>
@@ -73,7 +71,6 @@
 
         <!-- Registration & Requirement Portal (Tabs) -->
         <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm max-w-3xl mx-auto">
-            <!-- Tab Headers -->
             <div class="grid grid-cols-3 gap-2 p-1.5 bg-slate-100 rounded-2xl mb-6">
                 <button id="tabStudentBtn" onclick="switchTab('student')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide">
                     Student Signup
@@ -199,9 +196,8 @@
                 </div>
             </div>
 
-            <!-- Grid Container -->
             <div id="tutorGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- Dynamic Content via JS -->
+                <!-- Populated dynamically via JS -->
             </div>
         </section>
 
@@ -212,12 +208,10 @@
                 <p class="text-xs text-slate-500">Active students seeking personalized guidance</p>
             </div>
 
-            <!-- Student Grid -->
             <div id="studentGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Dynamic Content via JS -->
+                <!-- Populated dynamically via JS -->
             </div>
 
-            <!-- Pagination Controls -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200">
                 <div class="flex items-center gap-2">
                     <button id="prevBtn" onclick="changePage(-1)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition disabled:opacity-40">
@@ -290,7 +284,7 @@
         </div>
     </div>
 
-    <!-- Staff Control Panel Modal -->
+    <!-- Staff Control Panel Modal (Completed from cutoff) -->
     <div id="staffPanelModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-4xl w-full p-6 space-y-5 border border-slate-100 shadow-xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeStaffPanelModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
@@ -314,7 +308,7 @@
 
             <div class="flex justify-end">
                 <button onclick="addManualRequest()" class="bg-slate-900 hover:bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-plus"></i> Add Manual Request
+                    <i class="fa-solid fa-plus"></i> ADD MANUAL REQUEST
                 </button>
             </div>
 
@@ -333,7 +327,7 @@
                             </tr>
                         </thead>
                         <tbody id="staffUsersTableBody" class="divide-y divide-slate-200 font-medium bg-white">
-                            <!-- Dynamic Content -->
+                            <!-- Populated dynamically via JS -->
                         </tbody>
                     </table>
                 </div>
@@ -353,7 +347,7 @@
                             </tr>
                         </thead>
                         <tbody id="staffReqsTableBody" class="divide-y divide-slate-200 font-medium bg-white">
-                            <!-- Dynamic Content -->
+                            <!-- Populated dynamically via JS -->
                         </tbody>
                     </table>
                 </div>
@@ -370,11 +364,10 @@
         </div>
     </footer>
 
-    <!-- JavaScript Application Script -->
+    <!-- JavaScript Functional Script -->
     <script>
-        // --- Application State ---
         let state = {
-            currentUser: null, // { name, email, role: 'student'|'tutor' }
+            currentUser: null,
             currentPage: 1,
             totalPages: 20,
             tutors: [
@@ -396,14 +389,12 @@
             ]
         };
 
-        // --- DOM Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
             renderTutors('All');
             renderStudentsPage();
             renderStaffTables();
         });
 
-        // --- Tutor Marketplace Rendering & Filtering ---
         function renderTutors(filterSubject) {
             const grid = document.getElementById('tutorGrid');
             grid.innerHTML = '';
@@ -449,7 +440,6 @@
             renderTutors(selected);
         }
 
-        // --- Student Directory Pagination ---
         function renderStudentsPage() {
             const container = document.getElementById('studentGridContainer');
             container.innerHTML = '';
@@ -476,11 +466,9 @@
                 container.appendChild(card);
             });
 
-            // Update Page Controls
             document.getElementById('pageJumpInput').value = state.currentPage;
             document.getElementById('prevBtn').disabled = state.currentPage === 1;
             
-            // Render pagination numbers
             const numContainer = document.getElementById('paginationNumbers');
             numContainer.innerHTML = '';
             const maxPagesToShow = Math.min(state.totalPages, 5);
@@ -509,7 +497,6 @@
             }
         }
 
-        // --- Tab Switching ---
         function switchTab(tab) {
             const tabs = ['student', 'tutor', 'requirement'];
             tabs.forEach(t => {
@@ -523,7 +510,6 @@
             activeBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
         }
 
-        // --- Form Handlers ---
         function handleStudentFormSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('stu_name').value;
@@ -531,7 +517,6 @@
             
             state.currentUser = { name, email, role: 'student' };
 
-            // Sync UI
             document.getElementById('navLoggedName').innerText = name;
             document.getElementById('currentUserBadge').classList.remove('hidden');
             document.getElementById('currentUserBadge').classList.add('flex');
@@ -577,7 +562,6 @@
             alert('Learning Request posted successfully!');
         }
 
-        // --- UPI QR Modal Handlers ---
         function openUpiQrModal(amount) {
             document.getElementById('modalPayAmountText').innerText = `₹${amount}`;
             const upiUri = `upi://pay?pa=Verizon@upi&pn=GuruMatch&am=${amount}&cu=INR`;
@@ -590,7 +574,6 @@
             document.getElementById('upiQrModal').classList.add('hidden');
         }
 
-        // --- Staff Login & Modal Handlers ---
         function openStaffLoginModal() {
             document.getElementById('staffLoginModal').classList.remove('hidden');
         }
@@ -632,7 +615,6 @@
         }
 
         function renderStaffTables() {
-            // Render Users Table
             const usersTbody = document.getElementById('staffUsersTableBody');
             usersTbody.innerHTML = `
                 <tr>
@@ -653,7 +635,6 @@
                 </tr>
             `;
 
-            // Render Requirements Table
             const reqsTbody = document.getElementById('staffReqsTableBody');
             reqsTbody.innerHTML = '';
             state.learningRequests.forEach(req => {

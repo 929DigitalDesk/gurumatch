@@ -413,127 +413,147 @@
         </div>
     </div>
 
-    <!-- Staff Control Panel Modal -->
-    <div id="staffPanelModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden overflow-y-auto p-4 md:p-8">
-        <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 md:p-8 relative my-8">
-            <button onclick="closeStaffPanelModal()" class="absolute top-6 right-6 w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-700">
-                <i class="fa-solid fa-xmark text-lg"></i>
+    <!-- UNAUTHORIZED POPUP MODAL (For Dummy/Illustrative Student Profiles) -->
+    <div id="unauthorizedModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative animate-bounce-short">
+            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="fa-solid fa-ban"></i>
+            </div>
+            <h3 class="text-xl font-black text-brand-dark tracking-tight">YOU ARE NOT AUTHORIZED</h3>
+            <p class="text-xs text-slate-600 mt-2 mb-6">
+                This profile is illustrative/dummy data. Direct contact features are exclusively restricted to verified platform members and premium registered tutors.
+            </p>
+            <button onclick="closeUnauthorizedModal()" class="w-full bg-brand-dark hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs tracking-wider">
+                UNDERSTOOD
             </button>
-            
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 border-b border-slate-200 pb-4 gap-4">
-                <div>
-                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Admin Control Verified</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-brand-dark tracking-tight mt-1">Staff Control Panel & Moderation</h2>
-                    <p class="text-slate-500 text-sm">Review users, manage UTR payments, delete spam, and add manual learning requests.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
-                    <span class="text-xs font-bold text-emerald-700">Securely Logged In</span>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-                <div class="flex gap-3">
-                    <button onclick="switchStaffTab('users')" id="staffTabUsersBtn" class="bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">Registered Users & Tutors</button>
-                    <button onclick="switchStaffTab('reqs')" id="staffTabReqsBtn" class="bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold">Learning Requests List</button>
-                </div>
-                <button onclick="addManualRequest()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> Add Manual Request
-                </button>
-            </div>
-
-            <!-- Panel Content Area -->
-            <div id="staffPanelUsersView" class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-xs">
-                    <thead>
-                        <tr class="bg-slate-100 text-slate-700 uppercase">
-                            <th class="p-3 rounded-l-xl">User Name</th>
-                            <th class="p-3">Role / Subject</th>
-                            <th class="p-3">Email / Contact</th>
-                            <th class="p-3">Status / UTR</th>
-                            <th class="p-3 rounded-r-xl text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 font-medium">
-                        <tr>
-                            <td class="p-3 font-bold">Dr. Rajesh Verma</td>
-                            <td class="p-3"><span class="bg-blue-100 text-brand-blue px-2 py-0.5 rounded font-bold">Tutor</span> (Mathematics)</td>
-                            <td class="p-3">rajesh@gmail.com</td>
-                            <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">UTR: 987654321012</span></td>
-                            <td class="p-3 text-right">
-                                <button onclick="alert('User Verified')" class="text-blue-600 hover:underline font-bold mr-2">Approve</button>
-                                <button onclick="alert('User Removed')" class="text-red-600 hover:underline font-bold">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="staffPanelReqsView" class="hidden overflow-x-auto">
-                <p class="text-xs text-slate-500 py-4 font-medium">No pending learning requests to review at the moment.</p>
-            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="font-bold text-slate-200 text-sm mb-1">GURU MATCH - Verified Tutoring Hub</p>
-            <p>© 2026 GURU MATCH. All rights reserved.</p>
+    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs">
+            <p>&copy; 2026 GURU MATCH Platform. All Rights Reserved. Secure Academic Hub.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Functions -->
+    <!-- JavaScript Application Logic -->
     <script>
-        // App State
-        let currentPage = 1;
-        const totalPages = 200;
-        let loggedInStudent = null;
-
-        // Dummy Data
-        const tutors = [
-            { name: "Dr. Rajesh Verma", subject: "Mathematics", experience: "12+ Years", rating: "4.9 ⭐", verified: true },
-            { name: "Ananya Sharma", subject: "Physics", experience: "8+ Years", rating: "4.8 ⭐", verified: true },
-            { name: "Suresh Menon", subject: "English", experience: "10+ Years", rating: "4.9 ⭐", verified: true },
-            { name: "Priya Sundaram", subject: "Mathematics", experience: "6+ Years", rating: "4.7 ⭐", verified: true },
-            { name: "Karan Patel", subject: "Physics", experience: "5+ Years", rating: "4.8 ⭐", verified: true },
-            { name: "Meera Sen", subject: "English", experience: "9+ Years", rating: "4.9 ⭐", verified: true }
+        // Dummy Tutors Data
+        const tutorsData = [
+            { id: 1, name: "Dr. Rajesh Sharma", subject: "Mathematics", exp: "12 Years", rating: "4.9", price: "₹800/hr", verified: true },
+            { id: 2, name: "Ananya Iyer", subject: "Physics", exp: "8 Years", rating: "4.8", price: "₹650/hr", verified: true },
+            { id: 3, name: "Vikram Malhotra", subject: "English", exp: "10 Years", rating: "4.7", price: "₹600/hr", verified: true }
         ];
 
-        // Initialize UI
-        window.onload = function() {
-            renderTutors('All');
-            renderStudentsPage(currentPage);
-            updatePaginationUI();
-        };
+        // Dummy Student Profiles (Illustrative)
+        const dummyStudents = [
+            { id: 'd1', name: "Aarav Patel", stream: "Science", subject: "Physics & Chemistry", phone: "+91 98765 43210", isDummy: true },
+            { id: 'd2', name: "Sneha Gupta", stream: "Commerce", subject: "Accountancy & Economics", phone: "+91 91234 56789", isDummy: true },
+            { id: 'd3', name: "Rohan Verma", stream: "Arts", subject: "History & Political Science", phone: "+91 99887 76655", isDummy: true },
+            { id: 'd4', name: "Priya Nair", stream: "Science", subject: "Mathematics", phone: "+91 94455 66778", isDummy: true },
+            { id: 'd5', name: "Kabir Mehta", stream: "Commerce", subject: "Business Studies", phone: "+91 92233 44556", isDummy: true },
+            { id: 'd6', name: "Ananya Sen", stream: "Arts", subject: "English Literature", phone: "+91 97711 22334", isDummy: true }
+        ];
 
-        // Render Tutors
-        function renderTutors(filter) {
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        const totalPages = 200; // Simulated large database pages
+
+        function renderTutors(filter = "All") {
             const grid = document.getElementById('tutorGrid');
-            grid.innerHTML = '';
-            
-            const filtered = filter === 'All' ? tutors : tutors.filter(t => t.subject === filter);
-            
+            grid.innerHTML = "";
+            let filtered = tutorsData;
+            if (filter !== "All") {
+                filtered = tutorsData.filter(t => t.subject.toLowerCase() === filter.toLowerCase());
+            }
+
             filtered.forEach(t => {
                 grid.innerHTML += `
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-black text-brand-dark text-lg">${t.name} ${t.verified ? '<i class="fa-solid fa-circle-check text-blue-600 text-sm"></i>' : ''}</h3>
-                                <p class="text-xs font-bold text-brand-blue">${t.subject} Specialist</p>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">${t.subject}</span>
+                                <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star mr-1"></i>${t.rating}</span>
                             </div>
-                            <span class="bg-amber-50 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-lg">${t.rating}</span>
+                            <h3 class="font-black text-brand-dark text-lg flex items-center gap-1.5">
+                                ${t.name} <i class="fa-solid fa-circle-check text-blue-600 text-sm" title="Verified"></i>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Experience: ${t.exp} | Rate: <strong class="text-brand-dark">${t.price}</strong></p>
                         </div>
-                        <div class="text-xs text-slate-500 mb-4 space-y-1">
-                            <p><i class="fa-solid fa-briefcase mr-1.5"></i> Experience: <strong>${t.experience}</strong></p>
-                            <p><i class="fa-solid fa-shield-halved mr-1.5"></i> Background Verified</p>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>Verified Tutor</span>
+                            <button onclick="alert('Contact request sent to ${t.name}!')" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                                CONNECT
+                            </button>
                         </div>
-                        <button onclick="alert('Please register/login to connect with ${t.name}')" class="w-full bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
-                            CONTACT TUTOR
-                        </button>
                     </div>
                 `;
             });
+        }
+
+        function renderStudentsDirectory() {
+            const container = document.getElementById('studentGridContainer');
+            container.innerHTML = "";
+
+            // Generate mix of dynamic stored students + dummy list for the current page simulation
+            let listToDisplay = [...dummyStudents];
+            
+            // Fetch any registered local students
+            const localRegistered = JSON.parse(localStorage.getItem('gm_students') || '[]');
+
+            listToDisplay.forEach(s => {
+                container.innerHTML += `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-indigo-50 text-indigo-600 text-xs font-bold px-3 py-1 rounded-full">${s.stream} Stream</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">ID: GM-STU-${Math.floor(1000 + Math.random() * 9000)}</span>
+                            </div>
+                            <h3 class="font-black text-brand-dark text-lg">${s.name}</h3>
+                            <p class="text-xs text-slate-600 mt-1">Looking for: <strong class="text-brand-dark">${s.subject}</strong></p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-lock text-amber-500 mr-1"></i> Protected Phone</span>
+                            <button onclick="handleStudentContactClick(${s.isDummy})" class="bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-xs font-bold px-4 py-2 rounded-xl transition">
+                                VIEW CONTACT
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Update pagination UI numbers
+            document.getElementById('pageJumpInput').value = currentPage;
+            document.getElementById('totalPagesText').textContent = `/ ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+        }
+
+        function handleStudentContactClick(isDummy) {
+            if (isDummy) {
+                // Show Unauthorized popup modal for dummy student profiles
+                document.getElementById('unauthorizedModal').classList.remove('hidden');
+            } else {
+                alert('Access granted: Contact details revealed for registered student.');
+            }
+        }
+
+        function closeUnauthorizedModal() {
+            document.getElementById('unauthorizedModal').classList.add('hidden');
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            renderStudentsDirectory();
+        }
+
+        function jumpToPageInput(val) {
+            let p = parseInt(val);
+            if (p >= 1 && p <= totalPages) {
+                currentPage = p;
+                renderStudentsDirectory();
+            }
         }
 
         function filterTutors() {
@@ -541,175 +561,33 @@
             renderTutors(val);
         }
 
-        // Student Directory Pagination Simulation
-       
-function renderStudentsPage(page) {
-            const container = document.getElementById('studentGridContainer');
-            container.innerHTML = '';
-            
-            // 30 alag-alag realistic names ki list taaki repetition na ho
-            const studentNames = [
-                "Aarav Mehta", "Ishita Sharma", "Rohan Gupta", "Sneha Iyer", "Aditya Verma", 
-                "Priya Kulkarni", "Vikram Singh", "Anjali Rao", "Karan Malhotra", "Meera Sen",
-                "Arjun Nair", "Tanvi Joshi", "Rahul Deshmukh", "Sana Khan", "Manish Yadav",
-                "Deepika Reddy", "Varun Thakur", "Swati Bose", "Nitin Aggarwal", "Pooja Singh",
-                "Kabir Kapoor", "Neha Chawla", "Aatif Aslam", "Divya Pillai", "Siddharth Roy",
-                "Ritu Saxena", "Manoj Tiwari", "Ananya Pandey", "Akash Ambani", "Kritika Sanon"
-            ];
-            
-            const dataMap = {
-                'Arts': ['History', 'Geography', 'Political Science', 'Sociology'],
-                'Science': ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
-                'Commerce': ['Accountancy', 'Economics', 'Business Studies', 'Statistics']
-            };
-            
-            const streams = ['Arts', 'Science', 'Commerce'];
-            
-            for(let i = 0; i < 6; i++) {
-                // Har card ke liye unique index calculate karein taaki naam repeat na ho
-                const index = (page - 1) * 6 + i;
-                const nameIndex = index % studentNames.length;
-                const randomName = studentNames[nameIndex];
-                
-                // Stream aur subject ko index ke hisaab se map karein
-                const streamIndex = (index + Math.floor(index / 3)) % streams.length;
-                const randomStream = streams[streamIndex];
-                
-                const subjects = dataMap[randomStream];
-                const subjectIndex = index % subjects.length;
-                const randomSubject = subjects[subjectIndex];
-                
-                const id = index + 1;
-                
-                container.innerHTML += `
-                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-black text-brand-blue bg-blue-50 px-2.5 py-1 rounded-lg">ID #STU-${1000 + id}</span>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${randomStream} Stream</span>
-                        </div>
-                        <h4 class="font-bold text-brand-dark text-base mb-1">${randomName}</h4>
-                        <p class="text-xs text-slate-600 font-medium mb-3">Seeking tutor for: <strong>${randomSubject}</strong></p>
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                            <span><i class="fa-solid fa-lock text-slate-400 mr-1"></i> Phone Protected</span>
-                            <span class="text-emerald-600 font-bold">Verified User</span>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            
-            document.getElementById('pageJumpInput').value = currentPage;
-            renderStudentsPage(currentPage);
-            updatePaginationUI();
-        }
-
-        function jumpToPageInput(val) {
-            let p = parseInt(val);
-            if(isNaN(p) || p < 1) p = 1;
-            if(p > totalPages) p = totalPages;
-            currentPage = p;
-            renderStudentsPage(currentPage);
-            updatePaginationUI();
-        }
-
-        function updatePaginationUI() {
-            document.getElementById('prevBtn').disabled = (currentPage === 1);
-            document.getElementById('nextBtn').disabled = (currentPage === totalPages);
-            
-            const numbersDiv = document.getElementById('paginationNumbers');
-            numbersDiv.innerHTML = '';
-            
-            let start = Math.max(1, currentPage - 1);
-            let end = Math.min(totalPages, currentPage + 2);
-            
-            for(let i = start; i <= end; i++) {
-                numbersDiv.innerHTML += `
-                    <button onclick="jumpToPageInput(${i})" class="w-8 h-8 rounded-lg text-xs font-bold transition ${i === currentPage ? 'bg-brand-blue text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                        ${i}
-                    </button>
-                `;
-            }
-        }
-
-        // Tabs
+        // Tab Switching Logic
         function switchTab(tab) {
-            const stuCard = document.getElementById('studentFormCard');
-            const tutCard = document.getElementById('tutorFormCard');
-            const reqCard = document.getElementById('requirementFormCard');
+            document.getElementById('studentFormCard').classList.add('hidden');
+            document.getElementById('tutorFormCard').classList.add('hidden');
+            document.getElementById('requirementFormCard').classList.add('hidden');
 
-            const btnStu = document.getElementById('tabStudentBtn');
-            const btnTut = document.getElementById('tabTutorBtn');
-            const btnReq = document.getElementById('tabRequirementBtn');
+            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+            document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
 
-            stuCard.classList.add('hidden');
-            tutCard.classList.add('hidden');
-            reqCard.classList.add('hidden');
-
-            const activeClass = "bg-brand-blue text-white shadow";
-            const inactiveClass = "text-slate-600 hover:text-brand-dark";
-
-            btnStu.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-            btnTut.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-            btnReq.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${inactiveClass}`;
-
-            if(tab === 'student') {
-                stuCard.classList.remove('hidden');
-                btnStu.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
-            } else if(tab === 'tutor') {
-                tutCard.classList.remove('hidden');
-                btnTut.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
-            } else if(tab === 'requirement') {
-                reqCard.classList.remove('hidden');
-                btnReq.className = `py-3 rounded-xl text-xs sm:text-sm font-bold transition text-center tracking-wide ${activeClass}`;
+            if (tab === 'student') {
+                document.getElementById('studentFormCard').classList.remove('hidden');
+                document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+            } else if (tab === 'tutor') {
+                document.getElementById('tutorFormCard').classList.remove('hidden');
+                document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+            } else if (tab === 'requirement') {
+                document.getElementById('requirementFormCard').classList.remove('hidden');
+                document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+                checkStudentLoginState();
             }
         }
 
-        // Forms Logic
-        function handleStudentFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('stu_name').value.trim();
-            loggedInStudent = name;
-
-            document.getElementById('currentUserBadge').classList.remove('hidden');
-            document.getElementById('navLoggedName').innerText = name;
-            document.getElementById('activeStudentNameDisplay').innerText = name;
-
-            document.getElementById('notLoggedInAlert').classList.add('hidden');
-            document.getElementById('protectedReqForm').classList.remove('hidden');
-
-            alert(`Registration Successful! Logged in as ${name}.`);
-            switchTab('requirement');
-        }
-
-        function logoutStudent() {
-            loggedInStudent = null;
-            document.getElementById('currentUserBadge').classList.add('hidden');
-            document.getElementById('notLoggedInAlert').classList.remove('hidden');
-            document.getElementById('protectedReqForm').classList.add('hidden');
-            switchTab('student');
-        }
-
-        function handleTutorFormSubmit(e) {
-            e.preventDefault();
-            alert("Application Submitted! Your payment and credentials are being processed.");
-            document.getElementById('tutorPostDashboard').classList.remove('hidden');
-        }
-
-        function handleRequirementSubmit(e) {
-            e.preventDefault();
-            alert("Learning Request Posted Successfully!");
-            e.target.reset();
-        }
-
-        // UPI Modal Logic
+        // UPI QR Modal Controls
         function openUpiQrModal(amount) {
-            document.getElementById('modalPayAmountText').innerText = `₹${amount}`;
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=GuruMatch%26am=${amount}%26cu=INR`;
-            document.getElementById('dynamicQrImg').src = qrUrl;
+            document.getElementById('modalPayAmountText').textContent = `₹${amount}`;
+            document.getElementById('dynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=GuruMatch%26am=${amount}%26cu=INR`;
             document.getElementById('upiAppDeepLink').href = `upi://pay?pa=Verizon@upi&pn=GuruMatch&am=${amount}&cu=INR`;
             document.getElementById('upiQrModal').classList.remove('hidden');
         }
@@ -718,64 +596,84 @@ function renderStudentsPage(page) {
             document.getElementById('upiQrModal').classList.add('hidden');
         }
 
-        // Staff Login & Control Panel
+        // Staff Login Modal Controls
         function openStaffLoginModal() {
             document.getElementById('staffLoginModal').classList.remove('hidden');
         }
 
         function closeStaffLoginModal() {
             document.getElementById('staffLoginModal').classList.add('hidden');
-            document.getElementById('staffUserInput').value = '';
-            document.getElementById('staffPassInput').value = '';
         }
 
         function handleStaffLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('staffUserInput').value.trim();
-            const pass = document.getElementById('staffPassInput').value.trim();
-
-            const SECURE_USER = "GuruAdmin_X92";
-            const SECURE_PASS = "K9#mP8$vL2!Secure";
-
-            if (user === SECURE_USER && pass === SECURE_PASS) {
-                alert("Staff Login Successful!");
+            const u = document.getElementById('staffUserInput').value;
+            const p = document.getElementById('staffPassInput').value;
+            if (u === 'admin' && p === 'admin123') {
+                alert('Staff Login Successful!');
                 closeStaffLoginModal();
-                openStaffPanelModal();
             } else {
-                alert("Invalid Staff Credentials! Please check username and password.");
+                alert('Invalid Staff Credentials.');
             }
         }
 
-        function openStaffPanelModal() {
-            document.getElementById('staffPanelModal').classList.remove('hidden');
+        // Student Registration Handler
+        function handleStudentFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('stu_name').value;
+            const email = document.getElementById('stu_email').value;
+            localStorage.setItem('active_student', name);
+            alert(`Welcome ${name}! Student registration successful.`);
+            updateAuthBadge();
+            switchTab('requirement');
         }
 
-        function closeStaffPanelModal() {
-            document.getElementById('staffPanelModal').classList.add('hidden');
-        }
-
-        function switchStaffTab(tab) {
-            const usersView = document.getElementById('staffPanelUsersView');
-            const reqsView = document.getElementById('staffPanelReqsView');
-            const btnUsers = document.getElementById('staffTabUsersBtn');
-            const btnReqs = document.getElementById('staffTabReqsBtn');
-
-            if(tab === 'users') {
-                usersView.classList.remove('hidden');
-                reqsView.classList.add('hidden');
-                btnUsers.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                btnReqs.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+        function updateAuthBadge() {
+            const active = localStorage.getItem('active_student');
+            if (active) {
+                document.getElementById('currentUserBadge').classList.remove('hidden');
+                document.getElementById('navLoggedName').textContent = active;
             } else {
-                usersView.classList.add('hidden');
-                reqsView.classList.remove('hidden');
-                btnReqs.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                btnUsers.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+                document.getElementById('currentUserBadge').classList.add('hidden');
             }
         }
 
-        function addManualRequest() {
-            alert("Manual Request Addition Dialog");
+        function checkStudentLoginState() {
+            const active = localStorage.getItem('active_student');
+            if (active) {
+                document.getElementById('notLoggedInAlert').classList.add('hidden');
+                document.getElementById('protectedReqForm').classList.remove('hidden');
+                document.getElementById('activeStudentNameDisplay').textContent = active;
+            } else {
+                document.getElementById('notLoggedInAlert').classList.remove('hidden');
+                document.getElementById('protectedReqForm').classList.add('hidden');
+            }
         }
+
+        function logoutStudent() {
+            localStorage.removeItem('active_student');
+            updateAuthBadge();
+            checkStudentLoginState();
+        }
+
+        function handleTutorFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('tutorRegForm').classList.add('hidden');
+            document.getElementById('tutorPostDashboard').classList.remove('hidden');
+        }
+
+        function handleRequirementSubmit(e) {
+            e.preventDefault();
+            alert('Learning request posted successfully!');
+            e.target.reset();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderTutors();
+            renderStudentsDirectory();
+            updateAuthBadge();
+        };
     </script>
 </body>
 </html>

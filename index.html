@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>929 Digital Desk - Partners in Positive change</title>
+    <title>O Connect - Partners in Positive Change</title>
     <!-- Google Fonts: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
@@ -36,8 +36,10 @@
     <header class="bg-[#1D4ED8] text-white sticky top-0 z-50 shadow-md border-b border-blue-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <a href="#home" class="flex items-center">
-                    <img src="logo.png" alt="929 Digital Desk" class="h-10 sm:h-11 w-auto object-contain drop-shadow">
+                <a href="#home" class="flex items-center gap-2">
+                    <span class="text-2xl font-black tracking-tight text-white flex items-center">
+                        O <span class="text-yellow-300 ml-1.5 font-light">CONNECT</span>
+                    </span>
                 </a>
             </div>
             <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-100">
@@ -61,13 +63,24 @@
         </div>
     </header>
 
-    <!-- Hero Banner with Large Logo Integration -->
+    <!-- Hero Banner with Large Brand Name & Fallback Integration -->
     <section id="home" class="bg-[#1D4ED8] text-white py-16 md:py-24 relative overflow-hidden shadow-inner">
         <div class="max-w-4xl mx-auto px-4 text-center relative z-10 flex flex-col items-center">
             
-            <!-- Banner Logo Container -->
+            <!-- Banner Logo / Brand Name Container -->
             <div class="mb-6 bg-white/10 p-6 md:p-8 rounded-3xl backdrop-blur-sm border border-white/20 shadow-2xl max-w-xl w-full flex flex-col items-center justify-center">
-                <img src="929_3.png" alt="929 Digital Desk Logo" class="max-h-36 md:max-h-44 w-auto object-contain drop-shadow-2xl">
+                <!-- Optional Image Logo (if '929_3.png' exists in folder) with Fallback -->
+                <img src="929_3.png" alt="O Connect Logo" class="max-h-24 md:max-h-32 w-auto object-contain drop-shadow-2xl mb-2" onerror="this.style.display='none'; document.getElementById('fallbackBrandTitle').classList.remove('hidden');">
+                
+                <!-- Big Brand Name (Appears if image is missing or as core banner text) -->
+                <div id="fallbackBrandTitle" class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight drop-shadow-md">
+                        O <span class="text-yellow-300">CONNECT</span>
+                    </h1>
+                    <p class="text-xs md:text-sm font-bold text-slate-200 tracking-widest uppercase mt-2">
+                        Partners in Positive Change
+                    </p>
+                </div>
             </div>
 
             <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-8 font-normal mt-2">
@@ -403,13 +416,13 @@
             
             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mb-4 shadow-inner">
                 <div id="qrcode" class="flex justify-center items-center">
-                    <img id="dynamicQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=929DigitalDesk%26am=200%26cu=INR" alt="UPI QR Code" class="w-48 h-48 mx-auto rounded-lg">
+                    <img id="dynamicQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=OConnect%26am=200%26cu=INR" alt="UPI QR Code" class="w-48 h-48 mx-auto rounded-lg">
                 </div>
             </div>
 
             <div class="space-y-3 mb-5">
                 <p class="text-xs font-bold text-slate-700">UPI ID: <span class="text-blue-700 font-mono">Verizon@upi</span></p>
-                <a id="upiAppDeepLink" href="upi://pay?pa=Verizon@upi&pn=929DigitalDesk&am=200&cu=INR" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition shadow text-center">
+                <a id="upiAppDeepLink" href="upi://pay?pa=Verizon@upi&pn=OConnect&am=200&cu=INR" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition shadow text-center">
                     <i class="fa-solid fa-mobile-screen-button mr-1"></i> OPEN ANY UPI APP & PAY
                 </a>
             </div>
@@ -494,7 +507,7 @@
     <!-- Footer -->
     <footer class="bg-brand-dark text-slate-400 py-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs space-y-1">
-            <p>&copy; 2026 929 Digital Desk. Partners in Positive change. All Rights Reserved.</p>
+            <p>&copy; 2026 O Connect. Partners in Positive Change. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -674,7 +687,7 @@
             const sub = subList[i % subList.length];
 
             allStudentsData.push({
-                id: `GM-STU-${1000 + i}`,
+                id: `OC-STU-${1000 + i}`,
                 name: `${fName} ${lName}`,
                 standard: standard,
                 stream: stream,
@@ -833,8 +846,8 @@
 
         function openUpiQrModal(amount) {
             document.getElementById('modalPayAmountText').textContent = `₹${amount}`;
-            document.getElementById('dynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=929DigitalDesk%26am=${amount}%26cu=INR`;
-            document.getElementById('upiAppDeepLink').href = `upi://pay?pa=Verizon@upi&pn=929DigitalDesk&am=${amount}&cu=INR`;
+            document.getElementById('dynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=OConnect%26am=${amount}%26cu=INR`;
+            document.getElementById('upiAppDeepLink').href = `upi://pay?pa=Verizon@upi&pn=OConnect&am=${amount}&cu=INR`;
             document.getElementById('upiQrModal').classList.remove('hidden');
         }
 

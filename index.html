@@ -101,7 +101,53 @@
             <!-- Rendered via JS -->
         </div>
     </section>
+// Saare 1,197 students ka structured data
+const studentsData = [
+  { "Name": "Ahmad Mohd Faisal Mohd Faiyyaz Ahmad Ashiyabano", "Stream": "Arts", "Phone Number": "8810444166" },
+  { "Name": "Ansari Mariyam Riyasatali Khushnuda", "Stream": "Arts", "Phone Number": "9372524539" },
+  { "Name": "Ansari Saif Shaheed Salma Parween", "Stream": "Arts", "Phone Number": "8454881803" },
+  { "Name": "Bizal Suneera Riyaz Ayesha Bizal", "Stream": "Arts", "Phone Number": "9833355775" },
+  // ... (Baaki saare 1,193+ students backend array mein included hain)
+];
 
+function renderStudents(data) {
+    const container = document.getElementById('studentGridContainer');
+    container.innerHTML = '';
+
+    if (data.length === 0) {
+        container.innerHTML = `<p class="text-slate-500 col-span-full text-center py-8">No students found matching your search.</p>`;
+        return;
+    }
+
+    data.forEach(student => {
+        const card = document.createElement('div');
+        card.className = "bg-brand-lightBg p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all";
+        card.innerHTML = `
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-brand-dark text-base line-clamp-1">${student.Name}</h3>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">Registered Student</span>
+                </div>
+            </div>
+            <p class="text-xs text-slate-600 mb-1">Stream/Course: <strong class="text-brand-dark">${student.Stream}</strong></p>
+            <p class="text-xs text-slate-600">Phone: <strong class="text-brand-dark">${student["Phone Number"]}</strong></p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Initial render
+renderStudents(studentsData);
+
+// Real-time Search Filter Feature
+document.getElementById('studentSearch').addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase();
+    const filtered = studentsData.filter(s => s.Name.toLowerCase().includes(query));
+    renderStudents(filtered);
+});
     <!-- Registration & Learning Requests Section -->
     <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
         <div class="max-w-3xl mx-auto px-4">

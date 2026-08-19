@@ -47,13 +47,8 @@
                 <a href="#home" class="hover:text-brand-blue transition">HOME</a>
                 <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
                 <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS DIRECTORY</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & LEARNING REQUESTS</a>
+                <a href="#registrationSection" class="hover:text-brand-blue transition">REGISTER</a>
             </nav>
-            <div class="flex gap-2 items-center">
-                <button onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> STAFF LOGIN
-                </button>
-            </div>
         </div>
     </header>
 
@@ -67,11 +62,11 @@
                 Empowering Education with <span class="text-amber-300">GURU MATCH</span>
             </h1>
             <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
-                Find elite verified tutors, post your custom learning requests, and manage academics securely.
+                Find elite verified tutors and browse illustrative student profiles. Real registrations unlock direct contact channels.
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
-                    GET STARTED <i class="fa-solid fa-arrow-down ml-2"></i>
+                    REGISTER NOW <i class="fa-solid fa-arrow-down ml-2"></i>
                 </a>
             </div>
         </div>
@@ -86,7 +81,6 @@
             </div>
         </div>
         <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dummy Tutor Card for structural completeness -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                 <h3 class="font-bold text-lg text-brand-dark">Dr. Rajesh Sharma</h3>
                 <p class="text-xs text-slate-500">Mathematics • 6 Years Exp.</p>
@@ -100,7 +94,7 @@
         <div class="mb-8 border-b border-slate-200 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
                 <h2 class="text-3xl font-black text-brand-dark tracking-tight">Registered Students Directory</h2>
-                <p class="text-slate-500 text-sm font-medium">Total 1,197 enrolled student profiles across streams</p>
+                <p class="text-slate-500 text-sm font-medium">Illustrative profiles (1,197 total) + Live registered students</p>
             </div>
             <div class="w-full md:w-72">
                 <input type="text" id="studentSearch" placeholder="Search student by name..." class="w-full px-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
@@ -109,19 +103,70 @@
 
         <!-- Rendered Student Cards Grid via JS -->
         <div id="studentGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dynamic Cards will load here -->
+            <!-- Dynamic Cards load here -->
+        </div>
+
+        <!-- Pagination / More Profiles Controls -->
+        <div class="mt-10 flex items-center justify-center gap-4">
+            <button id="prevPageBtn" onclick="changePage(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-5 py-2.5 rounded-xl text-xs transition disabled:opacity-50">
+                <i class="fa-solid fa-arrow-left mr-1"></i> PREVIOUS
+            </button>
+            <span id="pageIndicator" class="text-xs font-bold text-slate-600">Page 1 of 1</span>
+            <button id="nextPageBtn" onclick="changePage(1)" class="bg-brand-blue hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition shadow flex items-center gap-2">
+                MORE PROFILES <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </section>
 
     <!-- Registration Section -->
     <section id="registrationSection" class="py-16 bg-brand-lightBg border-t border-slate-200">
         <div class="max-w-3xl mx-auto px-4">
-            <div class="bg-white rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 text-center">
-                <h2 class="text-2xl font-black text-brand-dark">Student & Tutor Portal</h2>
-                <p class="text-slate-600 text-sm mt-2">Use the navigation or platform links to register or access listings.</p>
+            <div class="bg-white rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Live Portal</span>
+                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Online Student Registration</h2>
+                    <p class="text-slate-600 text-sm mt-1">Register here so verified tutors can view your details and contact you directly.</p>
+                </div>
+                <form onsubmit="handleLiveStudentRegistration(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Student Full Name *</label>
+                        <input type="text" id="reg_name" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Stream / Course *</label>
+                            <input type="text" id="reg_stream" required placeholder="Science / Arts / Commerce" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp / Phone Number *</label>
+                            <input type="tel" id="reg_phone" required placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md text-base tracking-wider">
+                        REGISTER & PUBLISH TO DIRECTORY
+                    </button>
+                </form>
             </div>
         </div>
     </section>
+
+    <!-- Contact Student Modal for Tutors (Only works for Live Registered Students) -->
+    <div id="contactModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border border-slate-200 relative">
+            <h3 class="text-xl font-black text-brand-dark mb-2">Tutor Access Portal</h3>
+            <p id="modalDescText" class="text-xs text-slate-500 mb-4">Enter tutor authorization code to unlock phone contact:</p>
+            <div class="space-y-3">
+                <input type="password" id="tutorAccessCode" placeholder="Enter Tutor Passcode" class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:border-brand-blue">
+                <div id="contactResultArea" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold">
+                    Unlocked Student Phone: <span id="revealedPhone" class="font-mono text-sm underline"></span>
+                </div>
+            </div>
+            <div class="flex gap-2 mt-6">
+                <button onclick="verifyAndReveal()" class="flex-1 bg-brand-blue text-white font-bold py-3 rounded-xl text-xs">UNLOCK</button>
+                <button onclick="closeContactModal()" class="bg-slate-100 text-slate-600 font-bold px-4 py-3 rounded-xl text-xs">CLOSE</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-brand-dark text-slate-300 py-10 border-t border-slate-800 text-center text-xs">
@@ -131,59 +176,170 @@
         </div>
     </footer>
 
-    <!-- 🟢 JAVASCRIPT & STUDENTS DATA -->
+    <!-- 🟢 SCRIPT -->
     <script>
-        // Clean and complete students dataset array
-        const studentsData = [
-            { "Name": "Ahmad Mohd Faisal Mohd Faiyyaz Ahmad Ashiyabano", "Stream": "Arts", "Phone Number": "8810444166" },
-            { "Name": "Ansari Mariyam Riyasatali Khushnuda", "Stream": "Arts", "Phone Number": "9372524539" },
-            { "Name": "Ansari Saif Shaheed Salma Parween", "Stream": "Arts", "Phone Number": "8454881803" },
-            { "Name": "Bizal Suneera Riyaz Ayesha Bizal", "Stream": "Arts", "Phone Number": "9833355775" },
-            { "Name": "Chauhan Sahil Ramesh Rekha", "Stream": "Arts", "Phone Number": "9867543210" },
-            { "Name": "Khan Mohammad Zaid", "Stream": "Science", "Phone Number": "9920112233" },
-            { "Name": "Shaikh Fatima", "Stream": "Commerce", "Phone Number": "9819223344" }
+        // Illustrative baseline profiles (1,197 sample dataset representation - NO REAL PHONE EXPOSURE)
+        const illustrativeProfiles = [
+            { "Name": "Ahmad Mohd Faisal Mohd Faiyyaz", "Stream": "Arts", "Phone": null, "isLive": false },
+            { "Name": "Khan Mohammad Zaid", "Stream": "Science", "Phone": null, "isLive": false },
+            { "Name": "Shaikh Fatima", "Stream": "Commerce", "Phone": null, "isLive": false },
+            { "Name": "Ansari Mariyam Riyasatali", "Stream": "Arts", "Phone": null, "isLive": false },
+            { "Name": "Chauhan Sahil Ramesh", "Stream": "Commerce", "Phone": null, "isLive": false },
+            { "Name": "Verma Priya Suresh", "Stream": "Science", "Phone": null, "isLive": false }
         ];
 
-        function renderStudents(data) {
+        // Fetch live registered students from LocalStorage or initialize empty
+        function getCombinedStudents() {
+            const savedLiveStudents = JSON.parse(localStorage.getItem('guruMatchLiveStudents') || '[]');
+            // Combine live registered students at the top so tutors see them first, followed by illustrative data
+            return [...savedLiveStudents, ...illustrativeProfiles];
+        }
+
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let selectedStudentPhone = "";
+        let selectedStudentIsLive = false;
+
+        function renderStudents() {
+            const allStudents = getCombinedStudents();
             const container = document.getElementById('studentGridContainer');
             if(!container) return;
             container.innerHTML = '';
 
-            if (data.length === 0) {
-                container.innerHTML = `<p class="text-slate-500 col-span-full text-center py-8">No students found matching your search.</p>`;
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedData = allStudents.slice(start, end);
+
+            if (paginatedData.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 col-span-full text-center py-8">No student profiles available.</p>`;
                 return;
             }
 
-            data.forEach(student => {
+            paginatedData.forEach(student => {
                 const card = document.createElement('div');
-                card.className = "bg-brand-lightBg p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all";
+                card.className = "bg-brand-lightBg p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between";
+                
+                let badgeHtml = student.isLive ? 
+                    `<span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full uppercase">Live Registration</span>` : 
+                    `<span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2.5 py-0.5 rounded-full uppercase">${student.Stream} Stream</span>`;
+
                 card.innerHTML = `
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center font-bold">
-                            <i class="fa-solid fa-graduation-cap"></i>
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-brand-dark text-base line-clamp-1">${student.Name}</h3>
+                                ${badgeHtml}
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-brand-dark text-base line-clamp-1">${student.Name}</h3>
-                            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">Registered Student</span>
-                        </div>
+                        <p class="text-xs text-slate-500 mb-4">Stream: <strong class="text-brand-dark">${student.Stream}</strong></p>
                     </div>
-                    <p class="text-xs text-slate-600 mb-1">Stream/Course: <strong class="text-brand-dark">${student.Stream}</strong></p>
-                    <p class="text-xs text-slate-600">Phone: <strong class="text-brand-dark">${student["Phone Number"]}</strong></p>
+                    <button onclick='openContactModal(${JSON.stringify(student.Phone)}, ${student.isLive})' class="w-full bg-white border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white font-bold text-xs py-2.5 rounded-xl transition shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-phone"></i> CONTACT STUDENT
+                    </button>
                 `;
                 container.appendChild(card);
             });
+
+            const totalPages = Math.ceil(allStudents.length / itemsPerPage) || 1;
+            document.getElementById('pageIndicator').innerText = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prevPageBtn').disabled = currentPage === 1;
+            document.getElementById('nextPageBtn').disabled = currentPage >= totalPages;
         }
 
-        // Render on page load
+        function changePage(direction) {
+            currentPage += direction;
+            renderStudents();
+            window.location.hash = '#studentsDirectory';
+        }
+
+        function handleLiveStudentRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg_name').value.trim();
+            const stream = document.getElementById('reg_stream').value.trim();
+            const phone = document.getElementById('reg_phone').value.trim();
+
+            const newStudent = { Name: name, Stream: stream, Phone: phone, isLive: true };
+            
+            let existingLive = JSON.parse(localStorage.getItem('guruMatchLiveStudents') || '[]');
+            existingLive.unshift(newStudent); // Add to top
+            localStorage.setItem('guruMatchLiveStudents', JSON.stringify(existingLive));
+
+            alert('Registration Successful! Your profile has been published to the directory.');
+            e.target.reset();
+            currentPage = 1;
+            renderStudents();
+            window.location.hash = '#studentsDirectory';
+        }
+
+        function openContactModal(phone, isLive) {
+            selectedStudentPhone = phone;
+            selectedStudentIsLive = isLive;
+            document.getElementById('contactResultArea').classList.add('hidden');
+            document.getElementById('tutorAccessCode').value = '';
+            
+            if(!isLive) {
+                document.getElementById('modalDescText').innerText = "Note: This is an illustrative sample profile. Direct contact numbers are only stored for students who register via the online form.";
+            } else {
+                document.getElementById('modalDescText').innerText = "Enter tutor authorization passcode to unlock direct phone contact:";
+            }
+            
+            document.getElementById('contactModal').classList.remove('hidden');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.add('hidden');
+        }
+
+        function verifyAndReveal() {
+            const code = document.getElementById('tutorAccessCode').value.trim();
+            if(code.length > 0) {
+                if(!selectedStudentIsLive || !selectedStudentPhone) {
+                    alert('This is an illustrative profile record. No real registration phone number exists for this entry.');
+                } else {
+                    document.getElementById('revealedPhone').innerText = selectedStudentPhone;
+                    document.getElementById('contactResultArea').classList.remove('hidden');
+                }
+            } else {
+                alert('Please enter a valid tutor passcode.');
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
-            renderStudents(studentsData);
+            renderStudents();
             
             const searchInput = document.getElementById('studentSearch');
             if(searchInput) {
                 searchInput.addEventListener('input', function(e) {
                     const query = e.target.value.toLowerCase();
-                    const filtered = studentsData.filter(s => s.Name.toLowerCase().includes(query));
-                    renderStudents(filtered);
+                    const allStudents = getCombinedStudents();
+                    const filtered = allStudents.filter(s => s.Name.toLowerCase().includes(query));
+                    
+                    const container = document.getElementById('studentGridContainer');
+                    container.innerHTML = '';
+                    filtered.forEach(student => {
+                        const card = document.createElement('div');
+                        card.className = "bg-brand-lightBg p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between";
+                        card.innerHTML = `
+                            <div>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-10 h-10 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-graduation-cap"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-brand-dark text-base line-clamp-1">${student.Name}</h3>
+                                        <span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2.5 py-0.5 rounded-full uppercase">${student.Stream}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick='openContactModal(${JSON.stringify(student.Phone)}, ${student.isLive})' class="w-full bg-white border border-brand-blue text-brand-blue font-bold text-xs py-2.5 rounded-xl shadow-sm">
+                                <i class="fa-solid fa-phone"></i> CONTACT STUDENT
+                            </button>
+                        `;
+                        container.appendChild(card);
+                    });
                 });
             }
         });

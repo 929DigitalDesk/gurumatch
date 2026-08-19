@@ -547,12 +547,14 @@ function renderStudentsPage(page) {
             const container = document.getElementById('studentGridContainer');
             container.innerHTML = '';
             
-            // 20 realistic names ki list
+            // 30 alag-alag realistic names ki list taaki repetition na ho
             const studentNames = [
                 "Aarav Mehta", "Ishita Sharma", "Rohan Gupta", "Sneha Iyer", "Aditya Verma", 
                 "Priya Kulkarni", "Vikram Singh", "Anjali Rao", "Karan Malhotra", "Meera Sen",
                 "Arjun Nair", "Tanvi Joshi", "Rahul Deshmukh", "Sana Khan", "Manish Yadav",
-                "Deepika Reddy", "Varun Thakur", "Swati Bose", "Nitin Aggarwal", "Pooja Singh"
+                "Deepika Reddy", "Varun Thakur", "Swati Bose", "Nitin Aggarwal", "Pooja Singh",
+                "Kabir Kapoor", "Neha Chawla", "Aatif Aslam", "Divya Pillai", "Siddharth Roy",
+                "Ritu Saxena", "Manoj Tiwari", "Ananya Pandey", "Akash Ambani", "Kritika Sanon"
             ];
             
             const dataMap = {
@@ -564,14 +566,20 @@ function renderStudentsPage(page) {
             const streams = ['Arts', 'Science', 'Commerce'];
             
             for(let i = 0; i < 6; i++) {
-                // Har baar naya random data select karne ke liye
-                const randomName = studentNames[Math.floor(Math.random() * studentNames.length)];
-                const randomStream = streams[Math.floor(Math.random() * streams.length)];
-                const subjects = dataMap[randomStream];
-                const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+                // Har card ke liye unique index calculate karein taaki naam repeat na ho
+                const index = (page - 1) * 6 + i;
+                const nameIndex = index % studentNames.length;
+                const randomName = studentNames[nameIndex];
                 
-                // Unique ID calculation
-                const id = (page - 1) * 6 + i + 1;
+                // Stream aur subject ko index ke hisaab se map karein
+                const streamIndex = (index + Math.floor(index / 3)) % streams.length;
+                const randomStream = streams[streamIndex];
+                
+                const subjects = dataMap[randomStream];
+                const subjectIndex = index % subjects.length;
+                const randomSubject = subjects[subjectIndex];
+                
+                const id = index + 1;
                 
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">

@@ -368,11 +368,11 @@
             <form onsubmit="handleStaffLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Username *</label>
-                    <input type="text" id="staffUserInput" required placeholder="Enter Staff Username" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+                    <input type="text" id="staffUserInput" required autocomplete="off" placeholder="Enter Staff Username" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Secure Password *</label>
-                    <input type="password" id="staffPassInput" required placeholder="Enter Secure Password" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+                    <input type="password" id="staffPassInput" required autocomplete="off" placeholder="Enter Secure Password" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
                 </div>
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="closeStaffLoginModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs">CANCEL</button>
@@ -736,7 +736,7 @@
             document.getElementById("upiQrModal").classList.add("hidden");
         }
 
-        // Staff Login Functions
+        // Staff Login Functions (Secured via Crypto Hashing - No Plain Text Credentials in JS)
         function openStaffLoginModal() {
             document.getElementById("staffLoginModal").classList.remove("hidden");
         }
@@ -744,12 +744,26 @@
             document.getElementById("staffLoginModal").classList.add("hidden");
         }
 
-        function handleStaffLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById("staffUserInput").value.trim();
-            const p = document.getElementById("staffPassInput").value.trim();
+        // Native SHA-256 Hash Function
+        async function sha256Hex(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
-            if (u === "admin_master" && p === "Secure#GURU@2026") {
+        async function handleStaffLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById("staffUserInput").value.trim();
+            const password = document.getElementById("staffPassInput").value.trim();
+
+            // Hash user inputs together
+            const computedHash = await sha256Hex(username.toLowerCase() + "::" + password);
+            
+            // Expected SHA-256 digest (Plain text credentials are never stored)
+            const TARGET_HASH = "a41703668f121d5568efee91a2bb46961cf3d8677c72dbbf2e2938fddbe54f3b";
+
+            if (computedHash === TARGET_HASH) {
                 closeStaffLoginModal();
                 openStaffPanelModal();
                 document.getElementById("staffUserInput").value = "";

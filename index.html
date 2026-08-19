@@ -103,7 +103,7 @@
         </div>
     </section>
 
-    <!-- STUDENT PROFILES DIRECTORY (MIXED STREAMS & PAGINATION) -->
+    <!-- STUDENT PROFILES DIRECTORY (MIXED STREAMS & INTERACTIVE PAGINATION) -->
     <section id="studentsDirectory" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
@@ -120,11 +120,27 @@
             <!-- Rendered via JS -->
         </div>
 
-        <!-- More Profiles / Pagination -->
-        <div class="flex justify-center items-center gap-4 mt-10">
-            <button id="prevBtn" onclick="changePage(-1)" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-6 py-3 rounded-xl text-xs font-bold disabled:opacity-50 transition">PREVIOUS</button>
-            <span id="pageIndicator" class="text-xs font-bold text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">Page 1</span>
-            <button id="nextBtn" onclick="changePage(1)" class="bg-brand-blue text-white hover:bg-blue-700 px-6 py-3 rounded-xl text-xs font-bold shadow transition">MORE PROFILES</button>
+        <!-- Fully Interactive Clickable Pagination -->
+        <div class="flex flex-wrap justify-center items-center gap-3 mt-10">
+            <button id="prevBtn" onclick="changePage(-1)" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-5 py-2.5 rounded-xl text-xs font-bold disabled:opacity-50 transition flex items-center gap-1">
+                <i class="fa-solid fa-chevron-left"></i> PREVIOUS
+            </button>
+            
+            <!-- Clickable Page Number Buttons (1, 2, 3...) -->
+            <div id="paginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1">
+                <!-- Rendered dynamically -->
+            </div>
+
+            <button id="nextBtn" onclick="changePage(1)" class="bg-brand-blue text-white hover:bg-blue-700 px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-1">
+                NEXT <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Jump to Page Input -->
+            <div class="flex items-center gap-2 border-l border-slate-300 pl-3 ml-2">
+                <span class="text-xs font-bold text-slate-600">Go to Page:</span>
+                <input type="number" id="pageJumpInput" min="1" max="200" value="1" onchange="jumpToPageInput(this.value)" class="w-16 border border-slate-300 rounded-lg p-1.5 text-xs text-center font-bold focus:outline-none focus:border-brand-blue bg-white">
+                <span id="totalPagesText" class="text-xs font-bold text-slate-500">/ 200</span>
+            </div>
         </div>
     </section>
 
@@ -546,6 +562,11 @@
             container.innerHTML = '';
 
             const allProfiles = [...liveStudents, ...sampleProfiles];
+            const totalPages = Math.ceil(allProfiles.length / itemsPerPage);
+
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
             const start = (currentPage - 1) * itemsPerPage;
             const pageItems = allProfiles.slice(start, start + itemsPerPage);
 
@@ -572,21 +593,80 @@
                 container.appendChild(card);
             });
 
-            const totalPages = Math.ceil(allProfiles.length / itemsPerPage);
-            document.getElementById('pageIndicator').innerText = `Page ${currentPage} of ${totalPages}`;
+            // Update Pagination UI
             document.getElementById('prevBtn').disabled = currentPage === 1;
             document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+            
+            const jumpInput = document.getElementById('pageJumpInput');
+            if (jumpInput) jumpInput.value = currentPage;
+            
+            const totalText = document.getElementById('totalPagesText');
+            if (totalText) totalText.innerText = `/ ${totalPages}`;
+
+            renderPaginationButtons(totalPages);
+        }
+
+        // Interactive Page Buttons Generator (1, 2, 3... 200)
+        function renderPaginationButtons(totalPages) {
+            const navDiv = document.getElementById('paginationNumbers');
+            if (!navDiv) return;
+            navDiv.innerHTML = '';
+
+            let pagesToShow = [];
+            if (totalPages <= 5) {
+                for (let i = 1; i <= totalPages; i++) pagesToShow.push(i);
+            } else {
+                if (currentPage <= 3) {
+                    pagesToShow = [1, 2, 3, 4, '...', totalPages];
+                } else if (currentPage >= totalPages - 2) {
+                    pagesToShow = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                } else {
+                    pagesToShow = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+                }
+            }
+
+            pagesToShow.forEach(p => {
+                if (p === '...') {
+                    const span = document.createElement('span');
+                    span.className = "px-2 text-xs font-bold text-slate-400";
+                    span.innerText = '...';
+                    navDiv.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.onclick = () => goToPage(p);
+                    btn.className = p === currentPage ? 
+                        "w-8 h-8 rounded-lg text-xs font-bold bg-brand-blue text-white shadow" : 
+                        "w-8 h-8 rounded-lg text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition";
+                    btn.innerText = p;
+                    navDiv.appendChild(btn);
+                }
+            });
         }
 
         function changePage(direction) {
-            currentPage += direction;
+            goToPage(currentPage + direction);
+        }
+
+        function goToPage(page) {
+            const allProfiles = [...liveStudents, ...sampleProfiles];
+            const totalPages = Math.ceil(allProfiles.length / itemsPerPage);
+            let targetPage = parseInt(page);
+            if (isNaN(targetPage)) return;
+            if (targetPage < 1) targetPage = 1;
+            if (targetPage > totalPages) targetPage = totalPages;
+            
+            currentPage = targetPage;
             renderProfiles();
             document.getElementById('studentsDirectory').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function jumpToPageInput(val) {
+            goToPage(val);
+        }
+
         function contactStudent(phone, isLive) {
             if (!isLive || !phone) {
-                alert("This is a sample profile for demonstration. Direct mobile numbers are protected and only available for students who register through the Online Form.");
+                alert("You are not authorised to access this information");
             } else {
                 const tutorPasscode = prompt("Enter Tutor Access Passcode:");
                 if (tutorPasscode) {

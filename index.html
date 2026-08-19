@@ -413,19 +413,37 @@
         </div>
     </div>
 
-    <!-- UNAUTHORIZED POPUP MODAL (For Dummy/Illustrative Student Profiles) -->
-    <div id="unauthorizedModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative">
-            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
-                <i class="fa-solid fa-ban"></i>
+    <!-- BEAUTIFUL BLUE & YELLOW PATCH CARD MODAL (Request Sent Notice) -->
+    <div id="unauthorizedModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <!-- Main Card Wrapper with Blue/Yellow Patch Glow -->
+        <div class="bg-gradient-to-br from-brand-dark via-slate-900 to-brand-dark rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-amber-400/40 text-center relative overflow-hidden">
+            
+            <!-- Decorative Yellow & Blue Background Glowing Patches -->
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-brand-blue/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Top Badge Icon Patch -->
+            <div class="relative z-10 w-16 h-16 bg-gradient-to-tr from-amber-400 to-yellow-300 text-brand-dark rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-amber-400/30 border border-yellow-200">
+                <i class="fa-solid fa-paper-plane"></i>
             </div>
-            <h3 class="text-xl font-black text-brand-dark tracking-tight">YOU ARE NOT AUTHORIZED</h3>
-            <p class="text-xs text-slate-600 mt-2 mb-6">
-                This profile is illustrative/dummy data. Direct contact features are exclusively restricted to verified platform members and premium registered tutors.
-            </p>
-            <button onclick="closeUnauthorizedModal()" class="w-full bg-brand-dark hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs tracking-wider">
-                UNDERSTOOD
-            </button>
+
+            <!-- Title Text -->
+            <div class="relative z-10 mb-6">
+                <span class="bg-amber-400/10 text-amber-300 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-amber-400/20 inline-block mb-3">
+                    Notification
+                </span>
+                <h3 class="text-xl font-black text-white tracking-tight drop-shadow uppercase leading-snug">
+                    THE REQUEST IS SENT TO THE TUTOR
+                </h3>
+            </div>
+
+            <!-- Action Button with Yellow Gradient Patch Look -->
+            <div class="relative z-10">
+                <button onclick="closeUnauthorizedModal()" class="w-full bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-brand-dark font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-xl transition transform active:scale-95">
+                    UNDERSTOOD
+                </button>
+            </div>
+
         </div>
     </div>
 
@@ -482,7 +500,7 @@
                         </div>
                         <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
                             <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>Verified Tutor</span>
-                            <button onclick="alert('Contact request sent to ${t.name}!')" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                            <button onclick="handleStudentContactClick()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
                                 CONNECT
                             </button>
                         </div>
@@ -523,7 +541,6 @@
             document.getElementById('prevBtn').disabled = currentPage === 1;
         }
 
-        // Fixed Function to trigger the Unauthorized Modal directly
         function handleStudentContactClick() {
             const modal = document.getElementById('unauthorizedModal');
             if (modal) {

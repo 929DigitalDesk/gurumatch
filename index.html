@@ -543,45 +543,52 @@
 
         // Student Directory Pagination Simulation
        
-// Student Directory Pagination Simulation
 function renderStudentsPage(page) {
-    const container = document.getElementById('studentGridContainer');
-    container.innerHTML = '';
-    
-    // Example: Agar aapke paas data ka array hai, toh usse map karein
-    // Filhaar, maine dikhane ke liye yahan ek dummy array add kiya hai
-    const students = [
-        { name: "Rahul Kumar" }, { name: "Priya Sharma" }, { name: "Amit Verma" },
-        { name: "Sneha Gupta" }, { name: "Vikram Singh" }, { name: "Anjali Rao" }
-    ];
-    
-    const streams = ['Arts', 'Science', 'Commerce'];
-    const subjects = ['Mathematics', 'Physics', 'Accountancy', 'Economics', 'English Literature'];
-    
-    for(let i = 1; i <= 6; i++) {
-        const id = (page - 1) * 6 + i;
-        const stream = streams[i % 3];
-        const subject = subjects[i % 5];
-        
-        // Yahan 'Student Candidate' ki jagah name variable use karein
-        const studentName = students[i-1] ? students[i-1].name : `Student Candidate #${id}`;
-        
-        container.innerHTML += `
-            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-black text-brand-blue bg-blue-50 px-2.5 py-1 rounded-lg">ID #STU-${1000 + id}</span>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${stream} Stream</span>
-                </div>
-                <h4 class="font-bold text-brand-dark text-base mb-1">${studentName}</h4>
-                <p class="text-xs text-slate-600 font-medium mb-3">Seeking tutor for: <strong>${subject}</strong></p>
-                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span><i class="fa-solid fa-lock text-slate-400 mr-1"></i> Phone Protected</span>
-                    <span class="text-emerald-600 font-bold">Verified User</span>
-                </div>
-            </div>
-        `;
-    }
-}
+            const container = document.getElementById('studentGridContainer');
+            container.innerHTML = '';
+            
+            // 20 realistic names ki list
+            const studentNames = [
+                "Aarav Mehta", "Ishita Sharma", "Rohan Gupta", "Sneha Iyer", "Aditya Verma", 
+                "Priya Kulkarni", "Vikram Singh", "Anjali Rao", "Karan Malhotra", "Meera Sen",
+                "Arjun Nair", "Tanvi Joshi", "Rahul Deshmukh", "Sana Khan", "Manish Yadav",
+                "Deepika Reddy", "Varun Thakur", "Swati Bose", "Nitin Aggarwal", "Pooja Singh"
+            ];
+            
+            const dataMap = {
+                'Arts': ['History', 'Geography', 'Political Science', 'Sociology'],
+                'Science': ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
+                'Commerce': ['Accountancy', 'Economics', 'Business Studies', 'Statistics']
+            };
+            
+            const streams = ['Arts', 'Science', 'Commerce'];
+            
+            for(let i = 0; i < 6; i++) {
+                // Har baar naya random data select karne ke liye
+                const randomName = studentNames[Math.floor(Math.random() * studentNames.length)];
+                const randomStream = streams[Math.floor(Math.random() * streams.length)];
+                const subjects = dataMap[randomStream];
+                const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+                
+                // Unique ID calculation
+                const id = (page - 1) * 6 + i + 1;
+                
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-black text-brand-blue bg-blue-50 px-2.5 py-1 rounded-lg">ID #STU-${1000 + id}</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${randomStream} Stream</span>
+                        </div>
+                        <h4 class="font-bold text-brand-dark text-base mb-1">${randomName}</h4>
+                        <p class="text-xs text-slate-600 font-medium mb-3">Seeking tutor for: <strong>${randomSubject}</strong></p>
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span><i class="fa-solid fa-lock text-slate-400 mr-1"></i> Phone Protected</span>
+                            <span class="text-emerald-600 font-bold">Verified User</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
         function changePage(direction) {
             currentPage += direction;
             if (currentPage < 1) currentPage = 1;

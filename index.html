@@ -19,7 +19,8 @@
                         brand: {
                             blue: '#2563EB',
                             dark: '#0F172A',
-                            lightBg: '#F8FAFC'
+                            lightBg: '#F8FAFC',
+                            nagpurOrange: '#F97316'
                         }
                     }
                 }
@@ -40,7 +41,7 @@
                 </div>
                 <div>
                     <span class="text-2xl font-black tracking-wide text-brand-dark">GURU <span class="text-brand-blue">MATCH</span></span>
-                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Verified Tutors & Students Hub</p>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Junior College Tutors & Students Hub</p>
                 </div>
             </div>
             <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
@@ -50,11 +51,15 @@
                 <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & REQUESTS</a>
             </nav>
             <div class="flex gap-2 items-center">
-                <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200">
-                    <i class="fa-solid fa-user-check mr-1"></i> <span id="navLoggedName"></span>
+                <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200 flex items-center gap-2">
+                    <span><i class="fa-solid fa-user-check mr-1"></i> <span id="navLoggedName"></span> (<span id="navLoggedRole" class="uppercase text-[10px]"></span>)</span>
+                    <button onclick="logoutUser()" class="text-red-600 hover:underline text-[10px] uppercase font-black ml-1">Logout</button>
                 </div>
+                <button id="navLoginBtn" onclick="openLoginModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-dark text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> LOGIN
+                </button>
                 <button onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> STAFF LOGIN
+                    <i class="fa-solid fa-lock"></i> STAFF
                 </button>
             </div>
         </div>
@@ -64,13 +69,13 @@
     <section id="home" class="bg-brand-blue text-white py-20 relative overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
             <span class="bg-white/10 text-white border border-white/20 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest inline-block mb-6 backdrop-blur-sm">
-                ⭐ Verified Education & Tutoring Platform
+                ⭐ Junior College (FYJC & SYJC) Hub
             </span>
             <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
                 Empowering Education with <span class="text-amber-300">GURU MATCH</span>
             </h1>
             <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
-                Find elite verified tutors, post your custom learning requests, and manage academics securely with automated credentials.
+                Find elite verified tutors for Junior College, post custom learning requests, and manage academics securely.
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
@@ -80,12 +85,12 @@
         </div>
     </section>
 
-    <!-- Tutors Listing Showcase Section (Paginated) -->
+    <!-- Tutors Listing Showcase Section -->
     <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
             <div>
                 <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Verified Tutors</h2>
-                <p class="text-slate-500 text-sm font-medium">Top-rated educators ready to mentor students (125 Tutors Loaded)</p>
+                <p class="text-slate-500 text-sm font-medium">Top-rated junior college educators (125 Tutors Loaded)</p>
             </div>
             <div class="flex flex-wrap items-center gap-3">
                 <span class="text-sm font-bold text-slate-700">FILTER SUBJECT:</span>
@@ -114,9 +119,7 @@
                 <i class="fa-solid fa-chevron-left"></i> PREVIOUS
             </button>
             
-            <div id="tutorPaginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1">
-                <!-- Rendered dynamically -->
-            </div>
+            <div id="tutorPaginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1"></div>
 
             <button id="tutorNextBtn" onclick="changeTutorPage(1)" class="bg-brand-blue text-white hover:bg-blue-700 px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-1">
                 NEXT <i class="fa-solid fa-chevron-right"></i>
@@ -134,10 +137,10 @@
     <section id="studentsDirectory" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
-                <h2 class="text-3xl font-black text-brand-dark tracking-tight">Registered Students Profiles</h2>
-                <p class="text-slate-500 text-sm font-medium">Browse student profiles across Arts, Science, & Commerce streams. Phone numbers are protected.</p>
+                <h2 class="text-3xl font-black text-brand-dark tracking-tight">Junior College Students Directory</h2>
+                <p class="text-slate-500 text-sm font-medium">Browse FYJC & SYJC student profiles across Science, Commerce & Arts. Phone numbers are protected.</p>
             </div>
-            <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1.5 rounded-full uppercase self-start md:self-auto">
+            <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full uppercase self-start md:self-auto">
                 1,200+ Profiles Listed
             </span>
         </div>
@@ -153,9 +156,7 @@
                 <i class="fa-solid fa-chevron-left"></i> PREVIOUS
             </button>
             
-            <div id="paginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1">
-                <!-- Rendered dynamically -->
-            </div>
+            <div id="paginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1"></div>
 
             <button id="nextBtn" onclick="changePage(1)" class="bg-brand-blue text-white hover:bg-blue-700 px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-1">
                 NEXT <i class="fa-solid fa-chevron-right"></i>
@@ -189,9 +190,9 @@
             <!-- Student Form Card -->
             <div id="studentFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
                 <div class="text-center mb-8">
-                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Academic Section</span>
-                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration & Login</h2>
-                    <p class="text-slate-600 text-sm mt-1">Register first to verify your identity and unlock learning request postings.</p>
+                    <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Junior College Section</span>
+                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration</h2>
+                    <p class="text-slate-600 text-sm mt-1">Register to verify your identity and unlock learning request postings.</p>
                 </div>
                 <form onsubmit="handleStudentFormSubmit(event)" class="space-y-5">
                     <div>
@@ -200,15 +201,23 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address (Login ID) *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address *</label>
                             <input type="email" id="stu_email" required placeholder="student@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number *</label>
-                            <input type="tel" id="stu_phone" required placeholder="+91 9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number (Login ID) *</label>
+                            <input type="tel" id="stu_phone" required placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Junior College Standard *</label>
+                            <select id="stu_std" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
+                                <option value="">Select Standard</option>
+                                <option value="FYJC (11th)">FYJC (11th Standard)</option>
+                                <option value="SYJC (12th)">SYJC (12th Standard)</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Stream *</label>
                             <select id="stu_stream" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
@@ -218,13 +227,13 @@
                                 <option value="Commerce">Commerce</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Required Subject(s) *</label>
-                            <input type="text" id="stu_subject" required placeholder="e.g. Mathematics, Physics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
-                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Junior College Subject(s) *</label>
+                        <input type="text" id="stu_subject" required placeholder="e.g. Physics, Chemistry, Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
                     </div>
                     <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md text-base tracking-wider">
-                        REGISTER & LOGIN AS STUDENT
+                        REGISTER STUDENT PROFILE
                     </button>
                 </form>
             </div>
@@ -244,7 +253,7 @@
                     </div>
                     <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
                         <div>
-                            <h4 class="font-black text-brand-dark text-base">Elite Tutor Verification Pass</h4>
+                            <h4 class="font-black text-brand-dark text-base">Elite Junior College Tutor Pass</h4>
                             <p class="text-xs text-slate-500 font-medium">Valid for 1 Full Year Profile Listing & Leads</p>
                         </div>
                         <div class="text-right">
@@ -254,43 +263,11 @@
                     </div>
                     <ul class="space-y-2 text-xs text-slate-700 font-medium mb-4">
                         <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Pay directly via UPI ID: <strong class="text-brand-blue">Verizon@upi</strong></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Verified Blue Badge on Tutor Marketplace</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Instant automated login credentials generation</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Marketplace Listing with optional verified tick badge</li>
                     </ul>
                     <div class="pt-2 border-t border-slate-100">
                         <button type="button" onclick="openUpiQrModal(200)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3.5 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
                             <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI QR & PAY ₹200
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Plan 2 Details Box -->
-                <div class="bg-white border-2 border-blue-500/40 rounded-2xl p-5 mb-6 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl tracking-widest uppercase">
-                        VERIFICATION BADGE
-                    </div>
-                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
-                        <div class="pr-2">
-                            <h4 class="font-black text-brand-dark text-base flex items-center gap-1.5">
-                                GET VERIFIED TICK <i class="fa-solid fa-circle-check text-blue-600"></i>
-                            </h4>
-                            <p class="text-xs text-slate-600 font-medium mt-1">
-                                Your profile details will be verified and a tick will be appeared against your profile.
-                            </p>
-                        </div>
-                        <div class="text-right whitespace-nowrap pl-2">
-                            <span class="text-2xl font-black text-blue-600">₹300</span>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase">For 30 Days</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-xs text-slate-700 font-medium mb-4">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Pay directly via UPI ID: <strong class="text-brand-blue">Verizon@upi</strong></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Prominent verified tick badge display on profile</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Valid for 30 days continuous listing</li>
-                    </ul>
-                    <div class="pt-2 border-t border-slate-100">
-                        <button type="button" onclick="openUpiQrModal(300)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3.5 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI QR & PAY ₹300
                         </button>
                     </div>
                 </div>
@@ -308,29 +285,29 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address (Login ID) *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address *</label>
                             <input type="email" id="t_email" required placeholder="tutor@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number *</label>
-                            <input type="tel" id="t_phone" required placeholder="+91 9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number (Login ID) *</label>
+                            <input type="tel" id="t_phone" required placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Rate / Hour (e.g. ₹700/hr) *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Rate / Hour *</label>
                             <input type="text" id="t_price" required placeholder="e.g. ₹700/hr" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Experience (e.g. 5 Years) *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Experience *</label>
                             <input type="text" id="t_exp" required placeholder="e.g. 5 Years" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
                         </div>
                     </div>
 
                     <div class="border border-brand-blue bg-blue-50/50 p-4 rounded-2xl">
                         <label class="block text-xs font-bold text-brand-blue uppercase tracking-wider mb-1.5">Enter UTR / Transaction Reference Number *</label>
-                        <input type="text" id="txnIdInput" required placeholder="Enter 12-digit UTR ID after successful payment to Verizon@upi" class="w-full border border-brand-blue rounded-xl p-3.5 text-sm focus:outline-none font-mono font-bold bg-white">
+                        <input type="text" id="txnIdInput" required placeholder="Enter 12-digit UTR ID after successful payment" class="w-full border border-brand-blue rounded-xl p-3.5 text-sm focus:outline-none font-mono font-bold bg-white">
                     </div>
 
                     <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md text-base tracking-wider">
@@ -343,7 +320,7 @@
                         <i class="fa-solid fa-circle-check text-emerald-600 text-2xl"></i>
                         <div>
                             <p class="font-bold text-sm">Payment Verified & Profile Registered Successfully!</p>
-                            <p class="text-xs text-emerald-700">Your custom hourly rate and details are now live on the marketplace.</p>
+                            <p class="text-xs text-emerald-700">Your profile is now live on the marketplace.</p>
                         </div>
                     </div>
                 </div>
@@ -352,26 +329,26 @@
             <!-- Learning Requests Form Card -->
             <div id="requirementFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
                 <div class="text-center mb-8">
-                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Verified Matchmaking</span>
+                    <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Verified Matchmaking</span>
                     <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Submit Learning Requests</h2>
                     <p class="text-slate-600 text-sm mt-1">Only registered & logged-in students can post learning requirements.</p>
                 </div>
 
                 <!-- Not Logged In Banner -->
-                <div id="notLoggedInAlert" class="bg-amber-50 border border-amber-300 p-6 rounded-2xl text-center mb-6">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-3xl mb-2"></i>
-                    <h4 class="font-bold text-amber-900 text-base">Authentication Required!</h4>
-                    <p class="text-xs text-amber-700 mt-1 mb-4">Please register in the Student tab first to verify your account before posting requests.</p>
-                    <button onclick="switchTab('student')" class="bg-brand-blue text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow">
-                        GO TO STUDENT REGISTRATION
+                <div id="notLoggedInAlert" class="bg-orange-50 border border-orange-300 p-6 rounded-2xl text-center mb-6">
+                    <i class="fa-solid fa-triangle-exclamation text-orange-600 text-3xl mb-2"></i>
+                    <h4 class="font-bold text-orange-900 text-base">Authentication Required!</h4>
+                    <p class="text-xs text-orange-700 mt-1 mb-4">Please login using your student WhatsApp number to post requirements.</p>
+                    <button onclick="openLoginModal()" class="bg-brand-blue text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow">
+                        LOGIN NOW VIA OTP
                     </button>
                 </div>
 
                 <!-- Logged In Form -->
                 <form id="protectedReqForm" onsubmit="handleRequirementSubmit(event)" class="space-y-4 hidden">
                     <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800 font-bold mb-4 flex items-center justify-between">
-                        <span>Posting as Verified Student: <span id="activeStudentNameDisplay" class="underline"></span></span>
-                        <button type="button" onclick="logoutStudent()" class="text-red-600 hover:underline">Switch Account</button>
+                        <span>Posting as Logged-in Student: <span id="activeStudentNameDisplay" class="underline"></span></span>
+                        <button type="button" onclick="logoutUser()" class="text-red-600 hover:underline">Logout</button>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject / Skill Needed *</label>
@@ -397,6 +374,48 @@
 
         </div>
     </section>
+
+    <!-- SIMULATED OTP LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold shadow-inner">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <h3 class="text-xl font-black text-brand-dark tracking-tight">Student / Tutor Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Enter your registered WhatsApp / Mobile Number.</p>
+            </div>
+
+            <!-- Step 1: Enter Mobile Number -->
+            <div id="otpStep1" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Mobile Number *</label>
+                    <input type="tel" id="loginPhoneInput" placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none font-bold">
+                </div>
+                <button type="button" onclick="sendSimulatedOtp()" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
+                    SEND OTP
+                </button>
+            </div>
+
+            <!-- Step 2: Verify OTP -->
+            <div id="otpStep2" class="space-y-3 hidden">
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+                    <p class="text-[11px] font-bold text-amber-800">OTP Sent! Use Code: <span id="generatedOtpDisplay" class="text-base text-brand-blue font-black underline tracking-widest ml-1"></span></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Enter 4-Digit OTP *</label>
+                    <input type="text" maxlength="4" id="otpCodeInput" placeholder="1234" class="w-full border border-slate-300 rounded-xl p-3 text-sm text-center tracking-widest font-black focus:border-brand-blue focus:outline-none">
+                </div>
+                <button type="button" onclick="verifySimulatedOtp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
+                    VERIFY & LOGIN
+                </button>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 text-center">
+                <button type="button" onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 text-xs font-bold">CANCEL</button>
+            </div>
+        </div>
+    </div>
 
     <!-- UPI QR Code Modal -->
     <div id="upiQrModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
@@ -453,20 +472,20 @@
 
     <!-- POPUP 1: TUTOR CONNECT MODAL -->
     <div id="tutorConnectModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-gradient-to-br from-brand-dark via-slate-900 to-brand-dark rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-blue-500/40 text-center relative overflow-hidden">
-            <div class="relative z-10 w-16 h-16 bg-gradient-to-tr from-blue-600 to-brand-blue text-white rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-brand-blue/30 border border-blue-400">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-blue-200 text-center relative overflow-hidden">
+            <div class="relative z-10 w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-inner border border-blue-200">
                 <i id="connectPopupIcon" class="fa-solid fa-paper-plane"></i>
             </div>
             <div class="relative z-10 mb-6">
-                <span id="connectPopupBadge" class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20 inline-block mb-3">
+                <span id="connectPopupBadge" class="bg-blue-100 text-blue-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-200 inline-block mb-3">
                     Notification
                 </span>
-                <h3 id="connectPopupText" class="text-xl font-black text-white tracking-tight drop-shadow uppercase leading-snug">
+                <h3 id="connectPopupText" class="text-xl font-black text-slate-900 tracking-tight uppercase leading-snug">
                     THE REQUEST IS SENT TO THE TUTOR
                 </h3>
             </div>
             <div class="relative z-10">
-                <button onclick="closeTutorConnectModal()" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-xl transition transform active:scale-95">
+                <button onclick="closeTutorConnectModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-md transition transform active:scale-95">
                     UNDERSTOOD
                 </button>
             </div>
@@ -475,20 +494,20 @@
 
     <!-- POPUP 2: STUDENT VIEW CONTACT MODAL -->
     <div id="studentAuthModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-gradient-to-br from-brand-dark via-slate-900 to-brand-dark rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-blue-500/40 text-center relative overflow-hidden">
-            <div class="relative z-10 w-16 h-16 bg-gradient-to-tr from-blue-600 to-brand-blue text-white rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-brand-blue/30 border border-blue-400">
+        <div class="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-orange-300 text-center relative overflow-hidden">
+            <div class="relative z-10 w-16 h-16 bg-yellow-300 text-orange-900 rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-md border border-yellow-400">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <div class="relative z-10 mb-6">
-                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20 inline-block mb-3">
+                <span class="bg-yellow-300 text-orange-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-yellow-400 inline-block mb-3 shadow-sm">
                     Access Restricted
                 </span>
-                <h3 class="text-xl font-black text-white tracking-tight drop-shadow uppercase leading-snug">
+                <h3 class="text-xl font-black text-orange-950 tracking-tight uppercase leading-snug">
                     YOU ARE NOT AUTHORIZED
                 </h3>
             </div>
             <div class="relative z-10">
-                <button onclick="closeStudentAuthModal()" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-xl transition transform active:scale-95">
+                <button onclick="closeStudentAuthModal()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-lg transition transform active:scale-95">
                     OKAY
                 </button>
             </div>
@@ -498,12 +517,21 @@
     <!-- Footer -->
     <footer class="bg-brand-dark text-slate-400 py-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs">
-            <p>&copy; 2026 GURU MATCH Platform. All Rights Reserved. Secure Academic Hub.</p>
+            <p>&copy; 2026 GURU MATCH Platform. All Rights Reserved. Junior College Hub.</p>
         </div>
     </footer>
 
     <!-- JavaScript Application Logic -->
     <script>
+        // Store registered users with explicit roles ('student' or 'tutor')
+        let registeredUsers = JSON.parse(localStorage.getItem('all_portal_users')) || [
+            { name: "Demo Student", phone: "9876543210", role: "student" },
+            { name: "Demo Tutor", phone: "9123456789", role: "tutor" }
+        ];
+
+        let activeSimulatedOtp = "";
+        let pendingLoginPhone = "";
+
         // 1. Tutors Data Generation (125 Tutors)
         const firstNames = ["Rajesh", "Ananya", "Vikram", "Priya", "Amit", "Neha", "Rahul", "Sneha", "Alok", "Pooja", "Manish", "Divya", "Suresh", "Kirti", "Karan", "Kavita", "Sanjay", "Ritu", "Deepak", "Sunita"];
         const lastNames = ["Sharma", "Iyer", "Malhotra", "Gupta", "Verma", "Mehta", "Sen", "Nair", "Patel", "Reddy", "Choudhury", "Bose", "Joshi", "Deshmukh", "Saxena", "Kapoor", "Mishra", "Aggarwal", "Pillai", "Das"];
@@ -517,6 +545,7 @@
             const rating = (4.5 + ((i * 3) % 6) * 0.1).toFixed(1);
             const priceVal = 400 + ((i * 50) % 700);
             const expYears = 3 + (i % 12);
+            const isVerifiedTutor = (i % 3 === 0 || i % 7 === 0);
 
             tutorsData.push({
                 id: i,
@@ -525,6 +554,7 @@
                 exp: `${expYears} Years`,
                 rating: rating > 5.0 ? "5.0" : rating,
                 price: `₹${priceVal}/hr`,
+                verified: isVerifiedTutor,
                 isDummy: true
             });
         }
@@ -535,6 +565,7 @@
 
         function renderTutors() {
             const grid = document.getElementById('tutorGrid');
+            if(!grid) return;
             grid.innerHTML = "";
             const filter = document.getElementById('subjectFilter').value;
             
@@ -554,21 +585,35 @@
                 grid.innerHTML = `<div class="col-span-3 text-center py-10 text-slate-500 font-bold">No tutors found for this subject.</div>`;
             } else {
                 paginatedTutors.forEach(t => {
+                    const verifiedBadgeHTML = t.verified ? `
+                        <span class="relative inline-flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px] shadow-sm ml-1" title="Verified Badge">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                    ` : '';
+
+                    const verifiedTextHTML = t.verified ? `
+                        <span class="text-[11px] font-bold text-blue-600 flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg shadow-sm border border-blue-100">
+                            <span class="inline-flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px]">
+                                <i class="fa-solid fa-check"></i>
+                            </span> Verified Tutor
+                        </span>
+                    ` : `<span class="text-[11px] font-bold text-blue-200">Junior College Faculty</span>`;
+
                     grid.innerHTML += `
-                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div class="bg-blue-700 text-white rounded-2xl p-6 shadow-md border border-blue-600 flex flex-col justify-between">
                             <div>
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">${t.subject}</span>
-                                    <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star mr-1"></i>${t.rating}</span>
+                                    <span class="bg-yellow-300 text-black text-xs font-black px-3 py-1 rounded-full shadow-sm">${t.subject}</span>
+                                    <span class="text-xs font-bold text-amber-300"><i class="fa-solid fa-star mr-1"></i>${t.rating}</span>
                                 </div>
-                                <h3 class="font-black text-brand-dark text-lg flex items-center gap-1.5">
-                                    ${t.name} <i class="fa-solid fa-circle-check text-blue-600 text-sm" title="Verified"></i>
+                                <h3 class="font-black text-white text-lg flex items-center">
+                                    ${t.name} ${verifiedBadgeHTML}
                                 </h3>
-                                <p class="text-xs text-slate-500 mt-1">Experience: ${t.exp} | Rate: <strong class="text-brand-dark">${t.price}</strong></p>
+                                <p class="text-xs text-blue-100 mt-1">Experience: ${t.exp} | Rate: <strong class="text-white">${t.price}</strong></p>
                             </div>
-                            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                                <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>Verified Tutor</span>
-                                <button onclick="handleTutorConnectClick(${t.id})" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                            <div class="mt-6 pt-4 border-t border-blue-600 flex items-center justify-between">
+                                ${verifiedTextHTML}
+                                <button onclick="handleTutorConnectClick(${t.id})" class="bg-white hover:bg-slate-100 text-blue-700 text-xs font-bold px-4 py-2 rounded-xl transition shadow">
                                     CONNECT
                                 </button>
                             </div>
@@ -577,7 +622,6 @@
                 });
             }
 
-            // Update Tutors Pagination UI
             document.getElementById('tutorPageJumpInput').value = currentTutorPage;
             document.getElementById('tutorPageJumpInput').max = totalTutorPages;
             document.getElementById('tutorTotalPagesText').textContent = `/ ${totalTutorPages}`;
@@ -589,6 +633,7 @@
 
         function renderTutorPaginationNumbers(totalTutorPages) {
             const numContainer = document.getElementById('tutorPaginationNumbers');
+            if(!numContainer) return;
             numContainer.innerHTML = "";
 
             let startPage = Math.max(1, currentTutorPage - 2);
@@ -638,19 +683,27 @@
         // 2. 1200+ Dummy Students Array Generation
         const studentFirstNames = ["Aarav", "Vivaan", "Aditya", "Vihaan", "Arjun", "Sai", "Reyansh", "Ayaan", "Krishna", "Ishaan", "Diya", "Saanvi", "Ananya", "Aadhya", "Pari", "Anika", "Navya", "Angel", "Riya", "Meera"];
         const studentLastNames = ["Patel", "Reddy", "Kumar", "Singh", "Sharma", "Gupta", "Verma", "Iyer", "Nair", "Mehta", "Joshi", "Das", "Sen", "Bose", "Choudhury", "Pillai", "Saxena", "Kapoor", "Mishra", "Deshmukh"];
+        const standardsList = ["FYJC (11th Std)", "SYJC (12th Std)"];
         const streamsList = ["Science", "Commerce", "Arts"];
-        const studentSubjects = ["Physics & Chemistry", "Accountancy & Economics", "History & Political Science", "Advanced Mathematics", "Business Studies", "English Literature", "Biology & Biotechnology", "Computer Science"];
+        const juniorCollegeSubjects = {
+            "Science": ["Physics, Chem, Math", "Physics, Chem, Biology", "Computer Science, Math", "Electronics, Physics"],
+            "Commerce": ["Book Keeping & Accountancy, Economics", "Secretarial Practice, Mathematics", "Organisation of Commerce & Management"],
+            "Arts": ["History, Political Science, Economics", "English Lit, Psychology, Sociology"]
+        };
 
         let allStudentsData = [];
         for (let i = 1; i <= 1200; i++) {
             const fName = studentFirstNames[(i * 3) % studentFirstNames.length];
             const lName = studentLastNames[(i * 7) % studentLastNames.length];
-            const stream = streamsList[i % streamsList.length];
-            const sub = studentSubjects[(i * 5) % studentSubjects.length];
+            const standard = standardsList[i % standardsList.length];
+            const stream = streamsList[(i * 2) % streamsList.length];
+            const subList = juniorCollegeSubjects[stream];
+            const sub = subList[i % subList.length];
 
             allStudentsData.push({
                 id: `GM-STU-${1000 + i}`,
                 name: `${fName} ${lName}`,
+                standard: standard,
                 stream: stream,
                 subject: sub
             });
@@ -662,6 +715,7 @@
 
         function renderStudentsDirectory() {
             const container = document.getElementById('studentGridContainer');
+            if(!container) return;
             container.innerHTML = "";
 
             const startIndex = (currentPage - 1) * itemsPerPage;
@@ -670,18 +724,22 @@
 
             paginatedStudents.forEach(s => {
                 container.innerHTML += `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="bg-[#F97316] text-white rounded-2xl p-6 shadow-md border border-orange-500 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-3">
-                                <span class="bg-indigo-50 text-indigo-600 text-xs font-bold px-3 py-1 rounded-full">${s.stream} Stream</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">ID: ${s.id}</span>
+                                <span class="bg-yellow-300 text-black text-xs font-black px-3 py-1 rounded-full shadow-sm">${s.standard} • ${s.stream}</span>
+                                <span class="text-[10px] font-bold text-orange-100 uppercase">ID: ${s.id}</span>
                             </div>
-                            <h3 class="font-black text-brand-dark text-lg">${s.name}</h3>
-                            <p class="text-xs text-slate-600 mt-1">Looking for: <strong class="text-brand-dark">${s.subject}</strong></p>
+                            <h3 class="font-black text-white text-lg">
+                                ${s.name}
+                            </h3>
+                            <p class="text-xs text-orange-100 mt-2">JC Subjects: <strong class="text-white">${s.subject}</strong></p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-lock text-amber-500 mr-1"></i> Protected Phone</span>
-                            <button onclick="openStudentAuthModal()" class="bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-xs font-bold px-4 py-2 rounded-xl transition">
+                        <div class="mt-6 pt-4 border-t border-orange-500 flex items-center justify-between">
+                            <span class="text-xs font-bold text-orange-100 flex items-center gap-1">
+                                <i class="fa-solid fa-shield-halved"></i> Protected Phone
+                            </span>
+                            <button onclick="openStudentAuthModal()" class="bg-white hover:bg-slate-100 text-orange-700 text-xs font-bold px-4 py-2 rounded-xl transition shadow">
                                 VIEW CONTACT
                             </button>
                         </div>
@@ -700,6 +758,7 @@
 
         function renderPaginationNumbers() {
             const numContainer = document.getElementById('paginationNumbers');
+            if(!numContainer) return;
             numContainer.innerHTML = "";
 
             let startPage = Math.max(1, currentPage - 2);
@@ -741,13 +800,12 @@
             }
         }
 
-        // Handle Smart Connect Button Click Logic for Tutors
         function handleTutorConnectClick(tutorId) {
-            const activeStudent = localStorage.getItem('active_student');
+            const activeUser = localStorage.getItem('active_user_name');
             const targetTutor = tutorsData.find(t => t.id === tutorId);
 
-            if (!activeStudent) {
-                showTutorConnectModal("Please Login to connect", "fa-user-lock", "Authentication Required");
+            if (!activeUser) {
+                showTutorConnectModal("Please Login first via OTP", "fa-user-lock", "Authentication Required");
                 return;
             }
 
@@ -796,7 +854,7 @@
             } else if (tab === 'requirement') {
                 document.getElementById('requirementFormCard').classList.remove('hidden');
                 document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-                checkStudentLoginState();
+                checkUserLoginState();
             }
         }
 
@@ -809,6 +867,113 @@
 
         function closeUpiQrModal() {
             document.getElementById('upiQrModal').classList.add('hidden');
+        }
+
+        // Login Modal Functions (Simulated OTP with Strict Role Verification)
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('otpStep1').classList.remove('hidden');
+            document.getElementById('otpStep2').classList.add('hidden');
+            document.getElementById('loginPhoneInput').value = "";
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function sendSimulatedOtp() {
+            const phone = document.getElementById('loginPhoneInput').value.trim();
+            if (!phone || phone.length < 10) {
+                alert('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+
+            // Check if mobile number is registered in system
+            let foundUser = registeredUsers.find(u => u.phone === phone);
+            if (!foundUser) {
+                alert('This mobile number is not registered yet! Please register first as a Student or Tutor.');
+                return;
+            }
+
+            pendingLoginPhone = phone;
+            // Generate random 4-digit simulated OTP
+            activeSimulatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            document.getElementById('generatedOtpDisplay').textContent = activeSimulatedOtp;
+            document.getElementById('otpStep1').classList.add('hidden');
+            document.getElementById('otpStep2').classList.remove('hidden');
+            document.getElementById('otpCodeInput').value = "";
+        }
+
+        function verifySimulatedOtp() {
+            const enteredOtp = document.getElementById('otpCodeInput').value.trim();
+            if (enteredOtp !== activeSimulatedOtp) {
+                alert('Invalid OTP code. Please enter the correct code shown above.');
+                return;
+            }
+
+            // Fetch user record to secure role consistency
+            let foundUser = registeredUsers.find(u => u.phone === pendingLoginPhone);
+            if (!foundUser) {
+                alert('Authentication failed: User record not found.');
+                return;
+            }
+
+            // Save active session details with strict role enforcement
+            localStorage.setItem('active_user_name', foundUser.name);
+            localStorage.setItem('active_user_phone', foundUser.phone);
+            localStorage.setItem('active_user_role', foundUser.role); // 'student' or 'tutor'
+
+            alert(`Login Successful! Welcome back, ${foundUser.name} (${foundUser.role.toUpperCase()})`);
+            closeLoginModal();
+            updateAuthBadge();
+            checkUserLoginState();
+        }
+
+        function updateAuthBadge() {
+            const active = localStorage.getItem('active_user_name');
+            const role = localStorage.getItem('active_user_role');
+            const loginBtn = document.getElementById('navLoginBtn');
+            const badge = document.getElementById('currentUserBadge');
+
+            if (active) {
+                badge.classList.remove('hidden');
+                loginBtn.classList.add('hidden');
+                document.getElementById('navLoggedName').textContent = active;
+                document.getElementById('navLoggedRole').textContent = role || 'user';
+            } else {
+                badge.classList.add('hidden');
+                loginBtn.classList.remove('hidden');
+            }
+        }
+
+        function checkUserLoginState() {
+            const active = localStorage.getItem('active_user_name');
+            const role = localStorage.getItem('active_user_role');
+            
+            // Only allow posting requirements if logged in as a student
+            if (active && role === 'student') {
+                document.getElementById('notLoggedInAlert').classList.add('hidden');
+                document.getElementById('protectedReqForm').classList.remove('hidden');
+                document.getElementById('activeStudentNameDisplay').textContent = active;
+            } else {
+                document.getElementById('notLoggedInAlert').classList.remove('hidden');
+                document.getElementById('protectedReqForm').classList.add('hidden');
+                if (active && role === 'tutor') {
+                    document.querySelector('#notLoggedInAlert p').textContent = "You are logged in as a Tutor. Please login using a Student account to post requirements.";
+                } else {
+                    document.querySelector('#notLoggedInAlert p').textContent = "Please login using your student WhatsApp number to post requirements.";
+                }
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('active_user_name');
+            localStorage.removeItem('active_user_phone');
+            localStorage.removeItem('active_user_role');
+            updateAuthBadge();
+            checkUserLoginState();
+            alert('Logged out successfully.');
         }
 
         function openStaffLoginModal() {
@@ -834,38 +999,27 @@
         function handleStudentFormSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('stu_name').value;
-            localStorage.setItem('active_student', name);
-            alert(`Welcome ${name}! Student registration successful.`);
+            const phone = document.getElementById('stu_phone').value;
+
+            // Check if phone already registered as tutor
+            let existing = registeredUsers.find(u => u.phone === phone);
+            if (existing && existing.role === 'tutor') {
+                alert('Error: This mobile number is already registered as a Tutor. A tutor account cannot be registered as a student.');
+                return;
+            }
+
+            if (!existing) {
+                registeredUsers.push({ name, phone, role: 'student' });
+                localStorage.setItem('all_portal_users', JSON.stringify(registeredUsers));
+            }
+
+            localStorage.setItem('active_user_name', name);
+            localStorage.setItem('active_user_phone', phone);
+            localStorage.setItem('active_user_role', 'student');
+
+            alert(`Student Registration & Session Login Successful for ${name}!`);
             updateAuthBadge();
             switchTab('requirement');
-        }
-
-        function updateAuthBadge() {
-            const active = localStorage.getItem('active_student');
-            if (active) {
-                document.getElementById('currentUserBadge').classList.remove('hidden');
-                document.getElementById('navLoggedName').textContent = active;
-            } else {
-                document.getElementById('currentUserBadge').classList.add('hidden');
-            }
-        }
-
-        function checkStudentLoginState() {
-            const active = localStorage.getItem('active_student');
-            if (active) {
-                document.getElementById('notLoggedInAlert').classList.add('hidden');
-                document.getElementById('protectedReqForm').classList.remove('hidden');
-                document.getElementById('activeStudentNameDisplay').textContent = active;
-            } else {
-                document.getElementById('notLoggedInAlert').classList.remove('hidden');
-                document.getElementById('protectedReqForm').classList.add('hidden');
-            }
-        }
-
-        function logoutStudent() {
-            localStorage.removeItem('active_student');
-            updateAuthBadge();
-            checkStudentLoginState();
         }
 
         function handleTutorFormSubmit(e) {
@@ -874,6 +1028,23 @@
             const subject = document.getElementById('t_subject').value;
             const price = document.getElementById('t_price').value;
             const exp = document.getElementById('t_exp').value;
+            const phone = document.getElementById('t_phone').value;
+
+            // Check if phone already registered as student
+            let existing = registeredUsers.find(u => u.phone === phone);
+            if (existing && existing.role === 'student') {
+                alert('Error: This mobile number is already registered as a Student. Students cannot register as tutors with the same number.');
+                return;
+            }
+
+            if (!existing) {
+                registeredUsers.push({ name, phone, role: 'tutor' });
+                localStorage.setItem('all_portal_users', JSON.stringify(registeredUsers));
+            }
+
+            localStorage.setItem('active_user_name', name);
+            localStorage.setItem('active_user_phone', phone);
+            localStorage.setItem('active_user_role', 'tutor');
 
             const newTutor = {
                 id: tutorsData.length + 1,
@@ -882,6 +1053,7 @@
                 exp: exp,
                 rating: "5.0",
                 price: price.includes('/') ? price : price + '/hr',
+                verified: true,
                 isDummy: false
             };
 
@@ -890,6 +1062,7 @@
 
             document.getElementById('tutorRegForm').classList.add('hidden');
             document.getElementById('tutorPostDashboard').classList.remove('hidden');
+            updateAuthBadge();
         }
 
         function handleRequirementSubmit(e) {

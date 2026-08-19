@@ -415,7 +415,7 @@
 
     <!-- UNAUTHORIZED POPUP MODAL (For Dummy/Illustrative Student Profiles) -->
     <div id="unauthorizedModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative animate-bounce-short">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative">
             <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
                 <i class="fa-solid fa-ban"></i>
             </div>
@@ -457,7 +457,7 @@
 
         let currentPage = 1;
         const itemsPerPage = 6;
-        const totalPages = 200; // Simulated large database pages
+        const totalPages = 200;
 
         function renderTutors(filter = "All") {
             const grid = document.getElementById('tutorGrid');
@@ -495,11 +495,7 @@
             const container = document.getElementById('studentGridContainer');
             container.innerHTML = "";
 
-            // Generate mix of dynamic stored students + dummy list for the current page simulation
             let listToDisplay = [...dummyStudents];
-            
-            // Fetch any registered local students
-            const localRegistered = JSON.parse(localStorage.getItem('gm_students') || '[]');
 
             listToDisplay.forEach(s => {
                 container.innerHTML += `
@@ -514,7 +510,7 @@
                         </div>
                         <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-lock text-amber-500 mr-1"></i> Protected Phone</span>
-                            <button onclick="handleStudentContactClick(${s.isDummy})" class="bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-xs font-bold px-4 py-2 rounded-xl transition">
+                            <button onclick="handleStudentContactClick()" class="bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-xs font-bold px-4 py-2 rounded-xl transition">
                                 VIEW CONTACT
                             </button>
                         </div>
@@ -522,23 +518,24 @@
                 `;
             });
 
-            // Update pagination UI numbers
             document.getElementById('pageJumpInput').value = currentPage;
             document.getElementById('totalPagesText').textContent = `/ ${totalPages}`;
             document.getElementById('prevBtn').disabled = currentPage === 1;
         }
 
-        function handleStudentContactClick(isDummy) {
-            if (isDummy) {
-                // Show Unauthorized popup modal for dummy student profiles
-                document.getElementById('unauthorizedModal').classList.remove('hidden');
-            } else {
-                alert('Access granted: Contact details revealed for registered student.');
+        // Fixed Function to trigger the Unauthorized Modal directly
+        function handleStudentContactClick() {
+            const modal = document.getElementById('unauthorizedModal');
+            if (modal) {
+                modal.classList.remove('hidden');
             }
         }
 
         function closeUnauthorizedModal() {
-            document.getElementById('unauthorizedModal').classList.add('hidden');
+            const modal = document.getElementById('unauthorizedModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
         }
 
         function changePage(direction) {
@@ -561,7 +558,6 @@
             renderTutors(val);
         }
 
-        // Tab Switching Logic
         function switchTab(tab) {
             document.getElementById('studentFormCard').classList.add('hidden');
             document.getElementById('tutorFormCard').classList.add('hidden');
@@ -584,7 +580,6 @@
             }
         }
 
-        // UPI QR Modal Controls
         function openUpiQrModal(amount) {
             document.getElementById('modalPayAmountText').textContent = `₹${amount}`;
             document.getElementById('dynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=Verizon@upi%26pn=GuruMatch%26am=${amount}%26cu=INR`;
@@ -596,7 +591,6 @@
             document.getElementById('upiQrModal').classList.add('hidden');
         }
 
-        // Staff Login Modal Controls
         function openStaffLoginModal() {
             document.getElementById('staffLoginModal').classList.remove('hidden');
         }
@@ -617,11 +611,9 @@
             }
         }
 
-        // Student Registration Handler
         function handleStudentFormSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('stu_name').value;
-            const email = document.getElementById('stu_email').value;
             localStorage.setItem('active_student', name);
             alert(`Welcome ${name}! Student registration successful.`);
             updateAuthBadge();
@@ -668,7 +660,6 @@
             e.target.reset();
         }
 
-        // Initialize on load
         window.onload = function() {
             renderTutors();
             renderStudentsDirectory();

@@ -210,7 +210,7 @@
                     <p class="text-slate-600 text-sm mt-1">Review plan details, complete payment via UPI app, and get verified instantly.</p>
                 </div>
 
-                <!-- Plan Details Box -->
+                <!-- Plan 1 Details Box -->
                 <div class="bg-white border-2 border-brand-blue/30 rounded-2xl p-5 mb-6 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-bl-xl tracking-widest uppercase">
                         RECOMMENDED PLAN
@@ -231,8 +231,39 @@
                         <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Instant automated login credentials generation</li>
                     </ul>
                     <div class="pt-2 border-t border-slate-100">
-                        <button type="button" onclick="openUpiQrModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3.5 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
+                        <button type="button" onclick="openUpiQrModal(200)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3.5 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
                             <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI QR & PAY ₹200
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Plan 2 Details Box: GET VERIFIED TICK -->
+                <div class="bg-white border-2 border-blue-500/40 rounded-2xl p-5 mb-6 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl tracking-widest uppercase">
+                        VERIFICATION BADGE
+                    </div>
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
+                        <div class="pr-2">
+                            <h4 class="font-black text-brand-dark text-base flex items-center gap-1.5">
+                                GET VERIFIED TICK <i class="fa-solid fa-circle-check text-blue-600"></i>
+                            </h4>
+                            <p class="text-xs text-slate-600 font-medium mt-1">
+                                Your profile details will be verified and a tick will be appeared against your profile.
+                            </p>
+                        </div>
+                        <div class="text-right whitespace-nowrap pl-2">
+                            <span class="text-2xl font-black text-blue-600">₹300</span>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">For 30 Days</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-700 font-medium mb-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Pay directly via UPI ID: <strong class="text-brand-blue">Verizon@upi</strong></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Prominent verified tick badge display on profile</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Valid for 30 days continuous listing</li>
+                    </ul>
+                    <div class="pt-2 border-t border-slate-100">
+                        <button type="button" onclick="openUpiQrModal(300)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3.5 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI QR & PAY ₹300
                         </button>
                     </div>
                 </div>
@@ -333,7 +364,7 @@
     <div id="upiQrModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative">
             <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full uppercase">Instant UPI Payment</span>
-            <h3 class="text-xl font-black text-brand-dark mt-2 tracking-tight">Scan & Pay ₹200</h3>
+            <h3 class="text-xl font-black text-brand-dark mt-2 tracking-tight">Scan & Pay <span id="modalPayAmountText">₹200</span></h3>
             <p class="text-xs text-slate-500 mb-4">Use GPay, PhonePe, Paytm, or BHIM to pay securely</p>
             
             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mb-4 shadow-inner">
@@ -728,8 +759,22 @@
             document.getElementById("protectedReqForm").reset();
         }
 
-        // UPI Modal Functions
-        function openUpiQrModal() {
+        // UPI Modal Functions (Dynamic Amount)
+        function openUpiQrModal(amount = 200) {
+            const modalAmountDisplay = document.getElementById("modalPayAmountText");
+            if (modalAmountDisplay) {
+                modalAmountDisplay.innerText = `₹${amount}`;
+            }
+
+            const upiUrl = `upi://pay?pa=Verizon@upi&pn=GuruMatch&am=${amount}&cu=INR`;
+            const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+
+            const dynamicQrImg = document.getElementById("dynamicQrImg");
+            const upiDeepLink = document.getElementById("upiAppDeepLink");
+
+            if (dynamicQrImg) dynamicQrImg.src = qrImgUrl;
+            if (upiDeepLink) upiDeepLink.href = upiUrl;
+
             document.getElementById("upiQrModal").classList.remove("hidden");
         }
         function closeUpiQrModal() {

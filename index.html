@@ -80,14 +80,14 @@
         </div>
     </section>
 
-    <!-- Tutors Listing Showcase Section -->
+    <!-- Tutors Listing Showcase Section (Paginated) -->
     <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
             <div>
                 <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Verified Tutors</h2>
-                <p class="text-slate-500 text-sm font-medium">Top-rated educators ready to mentor students</p>
+                <p class="text-slate-500 text-sm font-medium">Top-rated educators ready to mentor students (125 Tutors Loaded)</p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
                 <span class="text-sm font-bold text-slate-700">FILTER SUBJECT:</span>
                 <select id="subjectFilter" onchange="filterTutors()" class="bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-bold text-brand-dark focus:outline-none focus:border-brand-blue">
                     <option value="All">All Subjects</option>
@@ -103,8 +103,30 @@
             </div>
         </div>
 
+        <!-- Tutors Grid Container -->
         <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Rendered via JS -->
+        </div>
+
+        <!-- Tutors Pagination Controls -->
+        <div class="flex flex-wrap justify-center items-center gap-3 mt-10">
+            <button id="tutorPrevBtn" onclick="changeTutorPage(-1)" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-5 py-2.5 rounded-xl text-xs font-bold disabled:opacity-50 transition flex items-center gap-1">
+                <i class="fa-solid fa-chevron-left"></i> PREVIOUS
+            </button>
+            
+            <div id="tutorPaginationNumbers" class="flex items-center gap-1.5 overflow-x-auto py-1">
+                <!-- Rendered dynamically -->
+            </div>
+
+            <button id="tutorNextBtn" onclick="changeTutorPage(1)" class="bg-brand-blue text-white hover:bg-blue-700 px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-1">
+                NEXT <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="flex items-center gap-2 border-l border-slate-300 pl-3 ml-2">
+                <span class="text-xs font-bold text-slate-600">Go to Page:</span>
+                <input type="number" id="tutorPageJumpInput" min="1" value="1" onchange="jumpToTutorPageInput(this.value)" class="w-16 border border-slate-300 rounded-lg p-1.5 text-xs text-center font-bold focus:outline-none focus:border-brand-blue bg-white">
+                <span id="tutorTotalPagesText" class="text-xs font-bold text-slate-500">/ 21</span>
+            </div>
         </div>
     </section>
 
@@ -116,7 +138,7 @@
                 <p class="text-slate-500 text-sm font-medium">Browse student profiles across Arts, Science, & Commerce streams. Phone numbers are protected.</p>
             </div>
             <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1.5 rounded-full uppercase self-start md:self-auto">
-                1,197+ Profiles Listed
+                1,200+ Profiles Listed
             </span>
         </div>
 
@@ -125,7 +147,7 @@
             <!-- Rendered via JS -->
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination Controls -->
         <div class="flex flex-wrap justify-center items-center gap-3 mt-10">
             <button id="prevBtn" onclick="changePage(-1)" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-5 py-2.5 rounded-xl text-xs font-bold disabled:opacity-50 transition flex items-center gap-1">
                 <i class="fa-solid fa-chevron-left"></i> PREVIOUS
@@ -429,17 +451,12 @@
         </div>
     </div>
 
-    <!-- POPUP 1: TUTOR CONNECT MODAL (Dynamic Message Popup) -->
+    <!-- POPUP 1: TUTOR CONNECT MODAL -->
     <div id="tutorConnectModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
         <div class="bg-gradient-to-br from-brand-dark via-slate-900 to-brand-dark rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-blue-500/40 text-center relative overflow-hidden">
-            
-            <div class="absolute -top-12 -left-12 w-32 h-32 bg-brand-blue/30 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
-
             <div class="relative z-10 w-16 h-16 bg-gradient-to-tr from-blue-600 to-brand-blue text-white rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-brand-blue/30 border border-blue-400">
                 <i id="connectPopupIcon" class="fa-solid fa-paper-plane"></i>
             </div>
-
             <div class="relative z-10 mb-6">
                 <span id="connectPopupBadge" class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20 inline-block mb-3">
                     Notification
@@ -448,27 +465,20 @@
                     THE REQUEST IS SENT TO THE TUTOR
                 </h3>
             </div>
-
             <div class="relative z-10">
                 <button onclick="closeTutorConnectModal()" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-xl transition transform active:scale-95">
                     UNDERSTOOD
                 </button>
             </div>
-
         </div>
     </div>
 
     <!-- POPUP 2: STUDENT VIEW CONTACT MODAL -->
     <div id="studentAuthModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
         <div class="bg-gradient-to-br from-brand-dark via-slate-900 to-brand-dark rounded-3xl shadow-2xl max-w-sm w-full p-8 border-2 border-blue-500/40 text-center relative overflow-hidden">
-            
-            <div class="absolute -top-12 -left-12 w-32 h-32 bg-brand-blue/30 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
-
             <div class="relative z-10 w-16 h-16 bg-gradient-to-tr from-blue-600 to-brand-blue text-white rounded-2xl flex items-center justify-center mx-auto mb-5 text-2xl shadow-lg shadow-brand-blue/30 border border-blue-400">
                 <i class="fa-solid fa-lock"></i>
             </div>
-
             <div class="relative z-10 mb-6">
                 <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20 inline-block mb-3">
                     Access Restricted
@@ -477,13 +487,11 @@
                     YOU ARE NOT AUTHORIZED
                 </h3>
             </div>
-
             <div class="relative z-10">
                 <button onclick="closeStudentAuthModal()" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-black py-3.5 rounded-xl text-xs tracking-widest uppercase shadow-xl transition transform active:scale-95">
                     OKAY
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -496,7 +504,7 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // 120 Diverse Dummy Tutors with various rates, ratings, and subjects
+        // 1. Tutors Data Generation (125 Tutors)
         const firstNames = ["Rajesh", "Ananya", "Vikram", "Priya", "Amit", "Neha", "Rahul", "Sneha", "Alok", "Pooja", "Manish", "Divya", "Suresh", "Kirti", "Karan", "Kavita", "Sanjay", "Ritu", "Deepak", "Sunita"];
         const lastNames = ["Sharma", "Iyer", "Malhotra", "Gupta", "Verma", "Mehta", "Sen", "Nair", "Patel", "Reddy", "Choudhury", "Bose", "Joshi", "Deshmukh", "Saxena", "Kapoor", "Mishra", "Aggarwal", "Pillai", "Das"];
         const subjectsList = ["Mathematics", "Physics", "Chemistry", "Biology", "English", "Computer Science", "Economics", "Accountancy"];
@@ -506,8 +514,8 @@
             const fName = firstNames[(i * 7) % firstNames.length];
             const lName = lastNames[(i * 13) % lastNames.length];
             const subject = subjectsList[(i * 3) % subjectsList.length];
-            const rating = (4.5 + ((i * 3) % 6) * 0.1).toFixed(1); // Generates ratings between 4.5 and 5.0
-            const priceVal = 400 + ((i * 50) % 700); // Rates between ₹400 and ₹1100
+            const rating = (4.5 + ((i * 3) % 6) * 0.1).toFixed(1);
+            const priceVal = 400 + ((i * 50) % 700);
             const expYears = 3 + (i % 12);
 
             tutorsData.push({
@@ -521,65 +529,152 @@
             });
         }
 
-        // Dummy Student Profiles
-        const dummyStudents = [
-            { id: 'd1', name: "Aarav Patel", stream: "Science", subject: "Physics & Chemistry", phone: "+91 98765 43210" },
-            { id: 'd2', name: "Sneha Gupta", stream: "Commerce", subject: "Accountancy & Economics", phone: "+91 91234 56789" },
-            { id: 'd3', name: "Rohan Verma", stream: "Arts", subject: "History & Political Science", phone: "+91 99887 76655" },
-            { id: 'd4', name: "Priya Nair", stream: "Science", subject: "Mathematics", phone: "+91 94455 66778" },
-            { id: 'd5', name: "Kabir Mehta", stream: "Commerce", subject: "Business Studies", phone: "+91 92233 44556" },
-            { id: 'd6', name: "Ananya Sen", stream: "Arts", subject: "English Literature", phone: "+91 97711 22334" }
-        ];
+        // Tutors Pagination State
+        let currentTutorPage = 1;
+        const tutorsPerPage = 6;
 
-        let currentPage = 1;
-        const itemsPerPage = 6;
-        const totalPages = 200;
-
-        function renderTutors(filter = "All") {
+        function renderTutors() {
             const grid = document.getElementById('tutorGrid');
             grid.innerHTML = "";
+            const filter = document.getElementById('subjectFilter').value;
+            
             let filtered = tutorsData;
             if (filter !== "All") {
                 filtered = tutorsData.filter(t => t.subject.toLowerCase() === filter.toLowerCase());
             }
 
-            filtered.forEach(t => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">${t.subject}</span>
-                                <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star mr-1"></i>${t.rating}</span>
+            const totalTutorPages = Math.ceil(filtered.length / tutorsPerPage) || 1;
+            if (currentTutorPage > totalTutorPages) currentTutorPage = 1;
+
+            const startIndex = (currentTutorPage - 1) * tutorsPerPage;
+            const endIndex = startIndex + tutorsPerPage;
+            const paginatedTutors = filtered.slice(startIndex, endIndex);
+
+            if (paginatedTutors.length === 0) {
+                grid.innerHTML = `<div class="col-span-3 text-center py-10 text-slate-500 font-bold">No tutors found for this subject.</div>`;
+            } else {
+                paginatedTutors.forEach(t => {
+                    grid.innerHTML += `
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">${t.subject}</span>
+                                    <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star mr-1"></i>${t.rating}</span>
+                                </div>
+                                <h3 class="font-black text-brand-dark text-lg flex items-center gap-1.5">
+                                    ${t.name} <i class="fa-solid fa-circle-check text-blue-600 text-sm" title="Verified"></i>
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-1">Experience: ${t.exp} | Rate: <strong class="text-brand-dark">${t.price}</strong></p>
                             </div>
-                            <h3 class="font-black text-brand-dark text-lg flex items-center gap-1.5">
-                                ${t.name} <i class="fa-solid fa-circle-check text-blue-600 text-sm" title="Verified"></i>
-                            </h3>
-                            <p class="text-xs text-slate-500 mt-1">Experience: ${t.exp} | Rate: <strong class="text-brand-dark">${t.price}</strong></p>
+                            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>Verified Tutor</span>
+                                <button onclick="handleTutorConnectClick(${t.id})" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                                    CONNECT
+                                </button>
+                            </div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-shield-halved mr-1"></i>Verified Tutor</span>
-                            <button onclick="handleTutorConnectClick(${t.id})" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
-                                CONNECT
-                            </button>
-                        </div>
-                    </div>
+                    `;
+                });
+            }
+
+            // Update Tutors Pagination UI
+            document.getElementById('tutorPageJumpInput').value = currentTutorPage;
+            document.getElementById('tutorPageJumpInput').max = totalTutorPages;
+            document.getElementById('tutorTotalPagesText').textContent = `/ ${totalTutorPages}`;
+            document.getElementById('tutorPrevBtn').disabled = currentTutorPage === 1;
+            document.getElementById('tutorNextBtn').disabled = currentTutorPage === totalTutorPages;
+
+            renderTutorPaginationNumbers(totalTutorPages);
+        }
+
+        function renderTutorPaginationNumbers(totalTutorPages) {
+            const numContainer = document.getElementById('tutorPaginationNumbers');
+            numContainer.innerHTML = "";
+
+            let startPage = Math.max(1, currentTutorPage - 2);
+            let endPage = Math.min(totalTutorPages, startPage + 4);
+
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                const isActive = p === currentTutorPage;
+                numContainer.innerHTML += `
+                    <button onclick="goToTutorPage(${p})" class="w-9 h-9 rounded-xl text-xs font-bold transition ${isActive ? 'bg-brand-blue text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+                        ${p}
+                    </button>
                 `;
+            }
+        }
+
+        function goToTutorPage(page) {
+            currentTutorPage = page;
+            renderTutors();
+        }
+
+        function changeTutorPage(direction) {
+            currentTutorPage += direction;
+            renderTutors();
+        }
+
+        function jumpToTutorPageInput(val) {
+            let p = parseInt(val);
+            const filter = document.getElementById('subjectFilter').value;
+            let filtered = filter === "All" ? tutorsData : tutorsData.filter(t => t.subject.toLowerCase() === filter.toLowerCase());
+            const totalTutorPages = Math.ceil(filtered.length / tutorsPerPage) || 1;
+
+            if (p >= 1 && p <= totalTutorPages) {
+                currentTutorPage = p;
+                renderTutors();
+            }
+        }
+
+        function filterTutors() {
+            currentTutorPage = 1;
+            renderTutors();
+        }
+
+        // 2. 1200+ Dummy Students Array Generation
+        const studentFirstNames = ["Aarav", "Vivaan", "Aditya", "Vihaan", "Arjun", "Sai", "Reyansh", "Ayaan", "Krishna", "Ishaan", "Diya", "Saanvi", "Ananya", "Aadhya", "Pari", "Anika", "Navya", "Angel", "Riya", "Meera"];
+        const studentLastNames = ["Patel", "Reddy", "Kumar", "Singh", "Sharma", "Gupta", "Verma", "Iyer", "Nair", "Mehta", "Joshi", "Das", "Sen", "Bose", "Choudhury", "Pillai", "Saxena", "Kapoor", "Mishra", "Deshmukh"];
+        const streamsList = ["Science", "Commerce", "Arts"];
+        const studentSubjects = ["Physics & Chemistry", "Accountancy & Economics", "History & Political Science", "Advanced Mathematics", "Business Studies", "English Literature", "Biology & Biotechnology", "Computer Science"];
+
+        let allStudentsData = [];
+        for (let i = 1; i <= 1200; i++) {
+            const fName = studentFirstNames[(i * 3) % studentFirstNames.length];
+            const lName = studentLastNames[(i * 7) % studentLastNames.length];
+            const stream = streamsList[i % streamsList.length];
+            const sub = studentSubjects[(i * 5) % studentSubjects.length];
+
+            allStudentsData.push({
+                id: `GM-STU-${1000 + i}`,
+                name: `${fName} ${lName}`,
+                stream: stream,
+                subject: sub
             });
         }
+
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        const totalPages = Math.ceil(allStudentsData.length / itemsPerPage);
 
         function renderStudentsDirectory() {
             const container = document.getElementById('studentGridContainer');
             container.innerHTML = "";
 
-            let listToDisplay = [...dummyStudents];
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedStudents = allStudentsData.slice(startIndex, endIndex);
 
-            listToDisplay.forEach(s => {
+            paginatedStudents.forEach(s => {
                 container.innerHTML += `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-3">
                                 <span class="bg-indigo-50 text-indigo-600 text-xs font-bold px-3 py-1 rounded-full">${s.stream} Stream</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">ID: GM-STU-${Math.floor(1000 + Math.random() * 9000)}</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">ID: ${s.id}</span>
                             </div>
                             <h3 class="font-black text-brand-dark text-lg">${s.name}</h3>
                             <p class="text-xs text-slate-600 mt-1">Looking for: <strong class="text-brand-dark">${s.subject}</strong></p>
@@ -595,8 +690,55 @@
             });
 
             document.getElementById('pageJumpInput').value = currentPage;
+            document.getElementById('pageJumpInput').max = totalPages;
             document.getElementById('totalPagesText').textContent = `/ ${totalPages}`;
             document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+            renderPaginationNumbers();
+        }
+
+        function renderPaginationNumbers() {
+            const numContainer = document.getElementById('paginationNumbers');
+            numContainer.innerHTML = "";
+
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                const isActive = p === currentPage;
+                numContainer.innerHTML += `
+                    <button onclick="goToPage(${p})" class="w-9 h-9 rounded-xl text-xs font-bold transition ${isActive ? 'bg-brand-blue text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+                        ${p}
+                    </button>
+                `;
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderStudentsDirectory();
+            document.getElementById('studentsDirectory').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            renderStudentsDirectory();
+            document.getElementById('studentsDirectory').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function jumpToPageInput(val) {
+            let p = parseInt(val);
+            if (p >= 1 && p <= totalPages) {
+                currentPage = p;
+                renderStudentsDirectory();
+            }
         }
 
         // Handle Smart Connect Button Click Logic for Tutors
@@ -604,19 +746,16 @@
             const activeStudent = localStorage.getItem('active_student');
             const targetTutor = tutorsData.find(t => t.id === tutorId);
 
-            // Rule 1: If user is not logged in as student
             if (!activeStudent) {
                 showTutorConnectModal("Please Login to connect", "fa-user-lock", "Authentication Required");
                 return;
             }
 
-            // Rule 2: If logged in, but clicking on a Dummy/Default profile
             if (targetTutor && targetTutor.isDummy) {
                 showTutorConnectModal("Full Busy unable to take New Assignments", "fa-triangle-exclamation", "Notice");
                 return;
             }
 
-            // Rule 3: If logged in student clicks on a Real Registered Tutor profile
             showTutorConnectModal("THE REQUEST IS SENT TO THE TUTOR", "fa-paper-plane", "Notification");
         }
 
@@ -631,33 +770,12 @@
             document.getElementById('tutorConnectModal').classList.add('hidden');
         }
 
-        // Student Auth Popup Handlers
         function openStudentAuthModal() {
             document.getElementById('studentAuthModal').classList.remove('hidden');
         }
 
         function closeStudentAuthModal() {
             document.getElementById('studentAuthModal').classList.add('hidden');
-        }
-
-        function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            renderStudentsDirectory();
-        }
-
-        function jumpToPageInput(val) {
-            let p = parseInt(val);
-            if (p >= 1 && p <= totalPages) {
-                currentPage = p;
-                renderStudentsDirectory();
-            }
-        }
-
-        function filterTutors() {
-            const val = document.getElementById('subjectFilter').value;
-            renderTutors(val);
         }
 
         function switchTab(tab) {
@@ -750,7 +868,6 @@
             checkStudentLoginState();
         }
 
-        // Handle Real Tutor Registration -> Added with isDummy: false so they accept direct requests
         function handleTutorFormSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('t_name').value;
@@ -765,7 +882,7 @@
                 exp: exp,
                 rating: "5.0",
                 price: price.includes('/') ? price : price + '/hr',
-                isDummy: false // Real registered tutor can accept connection directly
+                isDummy: false
             };
 
             tutorsData.unshift(newTutor); 

@@ -94,13 +94,13 @@
                     <div>
                         <span class="bg-purple-100 text-purple-700 font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest">Admin Panel</span>
                         <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Staff Control & Verification Center</h2>
-                        <p class="text-slate-500 text-sm">Review student registrations, check UTR payments, and manage verified badges.</p>
+                        <p class="text-slate-500 text-sm">Review student registrations, check ₹200 Plan payments, and grant ₹300 Verified Ticks.</p>
                     </div>
                 </div>
 
                 <div class="flex gap-2 mb-6 border-b border-slate-200 pb-4">
                     <button onclick="switchAdminTab('students')" id="adminTabStudentsBtn" class="bg-brand-blue text-white px-5 py-2.5 rounded-xl text-xs font-bold transition">Manage Students</button>
-                    <button onclick="switchAdminTab('tutors')" id="adminTabTutorsBtn" class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition hover:bg-slate-200">Manage Tutors & UTR</button>
+                    <button onclick="switchAdminTab('tutors')" id="adminTabTutorsBtn" class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition hover:bg-slate-200">Manage Tutors & Payments</button>
                 </div>
 
                 <!-- Admin Students Panel -->
@@ -122,14 +122,14 @@
 
                 <!-- Admin Tutors Panel -->
                 <div id="adminTutorsPanel" class="overflow-x-auto hidden">
-                    <h3 class="font-black text-lg mb-4 text-brand-dark">Tutor Applications & UTR Payment Verification</h3>
+                    <h3 class="font-black text-lg mb-4 text-brand-dark">Tutor Applications & Payment Verification</h3>
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-black">
                                 <th class="p-3.5 rounded-l-xl">Tutor Name</th>
-                                <th class="p-3.5">Subject Expertise</th>
-                                <th class="p-3.5">UTR Number</th>
-                                <th class="p-3.5">Status</th>
+                                <th class="p-3.5">Subject</th>
+                                <th class="p-3.5">UTR / Payment Ref</th>
+                                <th class="p-3.5">Payment Status</th>
                                 <th class="p-3.5 rounded-r-xl text-center">Actions</th>
                             </tr>
                         </thead>
@@ -143,8 +143,8 @@
         <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
                 <div>
-                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Verified Tutors</h2>
-                    <p class="text-slate-500 text-sm font-medium">Top-rated junior college educators</p>
+                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Tutors Directory</h2>
+                    <p class="text-slate-500 text-sm font-medium">Junior college educators with active plans and verified badges</p>
                 </div>
             </div>
             <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -169,7 +169,7 @@
                         <i class="fa-solid fa-user-graduate mr-1"></i>STUDENT REGISTRATION
                     </button>
                     <button id="tabTutorBtn" onclick="switchTab('tutor')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
-                        <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR REGISTRATION & UTR
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR REGISTRATION & FEES
                     </button>
                 </div>
 
@@ -224,8 +224,8 @@
                 <!-- Tutor Registration Form Card -->
                 <div id="tutorFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & UTR</h2>
-                        <p class="text-xs text-slate-500 mt-1">Submit your details along with your payment UTR number for verification.</p>
+                        <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & Payment</h2>
+                        <p class="text-xs text-slate-500 mt-1">Submit your UTR number (₹200 for Plan Fees / ₹300 for Verified Badge).</p>
                     </div>
                     <form onsubmit="handleTutorFormSubmit(event)" class="space-y-4">
                         <div>
@@ -309,8 +309,8 @@
         ];
 
         let tutors = JSON.parse(localStorage.getItem('gm_tutors')) || [
-            { id: 1, name: "Dr. Ramesh Iyer", subject: "Mathematics", utr: "UTR987654321", verified: true },
-            { id: 2, name: "Prof. Anjali Deshmukh", subject: "Physics", utr: "UTR123456789", verified: false }
+            { id: 1, name: "Dr. Ramesh Iyer", subject: "Mathematics", utr: "UTR987654321", planPaid: true, verified: true },
+            { id: 2, name: "Prof. Anjali Deshmukh", subject: "Physics", utr: "UTR123456789", planPaid: true, verified: false }
         ];
 
         function saveData() {
@@ -318,17 +318,14 @@
             localStorage.setItem('gm_tutors', JSON.stringify(tutors));
         }
 
-        // ==========================================
-        // 🔑 CUSTOMIZE YOUR ADMIN LOGIN HERE:
-        // ==========================================
+        // 🔑 ADMIN LOGIN HANDLER
         function handleStaffLogin(event) {
             event.preventDefault();
             const email = document.getElementById('staffEmailInput').value.trim();
             const pass = document.getElementById('staffPassInput').value.trim();
 
-            // Yahan apna custom email aur password badal dein:
-            const MY_CUSTOM_EMAIL = "ajakbar@msn.com"; 
-            const MY_CUSTOM_PASSWORD = "Sakina@1329007/";
+            const MY_CUSTOM_EMAIL = "admin@gurumatch.com"; 
+            const MY_CUSTOM_PASSWORD = "admin123";
 
             if(email === MY_CUSTOM_EMAIL && pass === MY_CUSTOM_PASSWORD) {
                 localStorage.setItem('currentUser', JSON.stringify({ name: "Admin Staff", role: "Staff", email: email }));
@@ -339,7 +336,6 @@
                 alert("Invalid Staff Email or Password!");
             }
         }
-        // ==========================================
 
         function switchTab(tab) {
             document.getElementById('studentFormCard').classList.add('hidden');
@@ -440,7 +436,7 @@
             };
             students.push(newStu);
             saveData();
-            alert("Student Registered Successfully! It is now visible in the directory.");
+            alert("Student Registered Successfully!");
             event.target.reset();
             renderDirectories();
             if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
@@ -453,17 +449,18 @@
                 name: document.getElementById('t_name').value.trim(),
                 subject: document.getElementById('t_subject').value.trim(),
                 utr: document.getElementById('t_utr').value.trim(),
-                verified: false
+                planPaid: true, // By default when they submit UTR, Plan Fees Paid is active
+                verified: false  // Verified tick is false until admin checks bank and grants it
             };
             tutors.push(newTut);
             saveData();
-            alert("Tutor Application Submitted! Admin will verify your UTR and grant verification tick.");
+            alert("Tutor Application Submitted Successfully!");
             event.target.reset();
             if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
         }
 
         function deleteStudent(id) {
-            if(confirm("Are you sure you want to delete this fake registration?")) {
+            if(confirm("Are you sure you want to delete this registration?")) {
                 students = students.filter(s => s.id !== id);
                 saveData();
                 renderDirectories();
@@ -495,9 +492,12 @@
             tutorGrid.innerHTML = tutors.map(t => `
                 <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
                     <div>
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between mb-3 flex-wrap gap-1">
                             <span class="text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1 rounded-xl">${t.subject}</span>
-                            ${t.verified ? '<span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-circle-check mr-1"></i> Verified</span>' : '<span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">Pending Verification</span>'}
+                            <div class="flex gap-1 items-center">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">Plan Fees Paid</span>
+                                ${t.verified ? '<span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-circle-check mr-1"></i> Verified</span>' : ''}
+                            </div>
                         </div>
                         <h3 class="text-xl font-black text-brand-dark mb-1">${t.name}</h3>
                         <p class="text-xs text-slate-500">UTR Ref: ${t.utr}</p>
@@ -541,7 +541,8 @@
                     <td class="p-3.5 text-xs">${t.subject}</td>
                     <td class="p-3.5 text-xs font-black text-brand-blue">${t.utr}</td>
                     <td class="p-3.5 text-xs">
-                        ${t.verified ? '<span class="text-emerald-600 font-bold"><i class="fa-solid fa-check"></i> Verified</span>' : '<span class="text-amber-600 font-bold">Unverified</span>'}
+                        <span class="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded"><i class="fa-solid fa-circle-check"></i> Plan Fees Paid</span>
+                        ${t.verified ? '<br><span class="text-emerald-600 font-bold mt-1 inline-block"><i class="fa-solid fa-check-double"></i> Verified Tick Granted</span>' : '<br><span class="text-amber-600 font-bold mt-1 inline-block">Unverified Tick</span>'}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         <button onclick="toggleTutorVerification(${t.id})" class="${t.verified ? 'bg-amber-50 text-amber-700' : 'bg-emerald-600 text-white'} px-3 py-1.5 rounded-xl text-xs font-bold transition">

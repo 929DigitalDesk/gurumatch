@@ -1,26 +1,405 @@
-<!-- NEW: EMAIL BASED STAFF LOGIN MODAL -->
-<div id="staffLoginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
-        <button onclick="closeStaffLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-        <div class="text-center mb-4">
-            <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold">
-                <i class="fa-solid fa-lock"></i>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GURU MATCH - Elite Tutoring Platform</title>
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Roboto"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#2563EB',
+                            dark: '#0F172A',
+                            lightBg: '#F8FAFC',
+                            nagpurOrange: '#F97316'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-brand-lightBg text-brand-dark font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white text-brand-dark sticky top-0 z-50 shadow-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-brand-blue text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
+                    GM
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-wide text-brand-dark">GURU <span class="text-brand-blue">MATCH</span></span>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Junior College Tutors & Students Hub</p>
+                </div>
             </div>
-            <h3 class="text-xl font-black text-brand-dark">Staff / Admin Login</h3>
-            <p class="text-xs text-slate-500 mt-1">Login with your official email address.</p>
+            <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
+                <a href="#home" class="hover:text-brand-blue transition">HOME</a>
+                <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
+                <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS DIRECTORY</a>
+                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & REQUESTS</a>
+            </nav>
+            <div class="flex gap-2 items-center">
+                <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200 flex items-center gap-2">
+                    <span><i class="fa-solid fa-user-check mr-1"></i> <span id="navLoggedName"></span> (<span id="navLoggedRole" class="uppercase text-[10px]"></span>)</span>
+                    <button onclick="logoutUser()" class="text-red-600 hover:underline text-[10px] uppercase font-black ml-1">Logout</button>
+                </div>
+                <button id="navLoginBtn" onclick="openLoginModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-dark text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> LOGIN
+                </button>
+                <button onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> STAFF
+                </button>
+            </div>
         </div>
-        <form onsubmit="handleStaffLogin(event)" class="space-y-3">
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Email *</label>
-                <input type="email" id="staffEmailInput" required placeholder="admin@gurumatch.com" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
+    </header>
+
+    <!-- Hero Banner -->
+    <section id="home" class="bg-brand-blue text-white py-20 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+            <span class="bg-white/15 text-white border border-white/20 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest inline-block mb-6 backdrop-blur-sm">
+                ⭐ Junior College (FYJC & SYJC) Hub
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
+                Empowering Education with <span class="text-amber-300">GURU MATCH</span>
+            </h1>
+            <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
+                Find elite verified tutors for Junior College, post custom learning requests, and manage academics securely.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
+                    GET STARTED <i class="fa-solid fa-arrow-down ml-2"></i>
+                </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Tutors Listing Showcase Section -->
+    <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
             <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
-                <input type="password" id="staffPassInput" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
+                <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Verified Tutors</h2>
+                <p class="text-slate-500 text-sm font-medium">Top-rated junior college educators</p>
             </div>
-            <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
-                LOGIN AS STAFF
-            </button>
-        </form>
+            <div class="flex flex-wrap items-center gap-3">
+                <span class="text-sm font-bold text-slate-700">FILTER SUBJECT:</span>
+                <select id="subjectFilter" onchange="filterTutors()" class="bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-bold text-brand-dark focus:outline-none focus:border-brand-blue">
+                    <option value="All">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="English">English</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Economics">Economics</option>
+                    <option value="Accountancy">Accountancy</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tutors Grid Container -->
+        <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Rendered via JS -->
+        </div>
+    </section>
+
+    <!-- STUDENT PROFILES DIRECTORY -->
+    <section id="studentsDirectory" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
+        <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+            <div>
+                <h2 class="text-3xl font-black text-brand-dark tracking-tight">Junior College Students Directory</h2>
+                <p class="text-slate-500 text-sm font-medium">Browse FYJC & SYJC student profiles. Phone numbers are protected.</p>
+            </div>
+        </div>
+        <div id="studentGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Rendered via JS -->
+        </div>
+    </section>
+
+    <!-- Registration & Learning Requests Section -->
+    <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="grid grid-cols-3 bg-slate-100 p-1.5 rounded-2xl shadow-inner mb-8 border border-slate-200 gap-1">
+                <button id="tabStudentBtn" onclick="switchTab('student')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide">
+                    <i class="fa-solid fa-user-graduate mr-1"></i>STUDENT
+                </button>
+                <button id="tabTutorBtn" onclick="switchTab('tutor')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
+                    <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR
+                </button>
+                <button id="tabRequirementBtn" onclick="switchTab('requirement')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
+                    <i class="fa-solid fa-clipboard-list mr-1"></i>LEARNING REQUESTS
+                </button>
+            </div>
+
+            <!-- Student Form Card -->
+            <div id="studentFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration</h2>
+                </div>
+                <form onsubmit="handleStudentFormSubmit(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Student Full Name *</label>
+                        <input type="text" id="stu_name" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address *</label>
+                            <input type="email" id="stu_email" required placeholder="student@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Mobile Number (Login ID) *</label>
+                            <input type="tel" id="stu_phone" required placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Standard *</label>
+                            <select id="stu_std" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                                <option value="FYJC (11th)">FYJC (11th)</option>
+                                <option value="SYJC (12th)">SYJC (12th)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Stream *</label>
+                            <select id="stu_stream" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                                <option value="Science">Science</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Arts">Arts</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject(s) *</label>
+                        <input type="text" id="stu_subject" required placeholder="e.g. Physics, Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md">
+                        REGISTER STUDENT PROFILE
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tutor Form Card -->
+            <div id="tutorFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration</h2>
+                </div>
+                <form id="tutorRegForm" onsubmit="handleTutorFormSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Full Name *</label>
+                        <input type="text" id="t_name" required placeholder="Enter tutor name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject Expertise *</label>
+                        <input type="text" id="t_subject" required placeholder="e.g. Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md">
+                        SUBMIT TUTOR APPLICATION
+                    </button>
+                </form>
+            </div>
+
+            <!-- Learning Requests Form Card -->
+            <div id="requirementFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
+                <div id="notLoggedInAlert" class="bg-orange-50 border border-orange-300 p-6 rounded-2xl text-center mb-6">
+                    <h4 class="font-bold text-orange-900 text-base">Authentication Required!</h4>
+                    <p class="text-xs text-orange-700 mt-1 mb-4">Please login to post requirements.</p>
+                    <button onclick="openLoginModal()" class="bg-brand-blue text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow">LOGIN NOW</button>
+                </div>
+                <form id="protectedReqForm" onsubmit="handleRequirementSubmit(event)" class="space-y-4 hidden">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800 font-bold mb-4">
+                        Posting as: <span id="activeStudentNameDisplay"></span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject Needed *</label>
+                        <input type="text" id="req_subject" required class="w-full border border-slate-300 rounded-xl p-3 text-sm bg-white">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl shadow-md">POST REQUEST</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIMULATED OTP LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-4">
+                <h3 class="text-xl font-black text-brand-dark">Student / Tutor Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Enter registered Mobile Number.</p>
+            </div>
+            <div id="otpStep1" class="space-y-3">
+                <input type="tel" id="loginPhoneInput" placeholder="Mobile Number" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold">
+                <button type="button" onclick="sendSimulatedOtp()" class="w-full bg-brand-blue text-white font-bold py-3 rounded-xl text-xs">SEND OTP</button>
+            </div>
+            <div id="otpStep2" class="space-y-3 hidden">
+                <p class="text-xs text-center">OTP: <span id="generatedOtpDisplay" class="font-bold text-brand-blue"></span></p>
+                <input type="text" maxlength="4" id="otpCodeInput" placeholder="Enter OTP" class="w-full border border-slate-300 rounded-xl p-3 text-sm text-center font-black">
+                <button type="button" onclick="verifySimulatedOtp()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl text-xs">VERIFY & LOGIN</button>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- NEW: EMAIL BASED STAFF LOGIN MODAL -->
+    <div id="staffLoginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
+            <button onclick="closeStaffLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-black text-brand-dark">Staff / Admin Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Login with your official email address.</p>
+            </div>
+            <form onsubmit="handleStaffLogin(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Email *</label>
+                    <input type="email" id="staffEmailInput" required placeholder="admin@gurumatch.com" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                    <input type="password" id="staffPassInput" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
+                </div>
+                <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
+                    LOGIN AS STAFF
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-8 text-center text-xs">
+        <p>&copy; GURU MATCH. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Tab switching logic
+        function switchTab(tab) {
+            document.getElementById('studentFormCard').classList.add('hidden');
+            document.getElementById('tutorFormCard').classList.add('hidden');
+            document.getElementById('requirementFormCard').classList.add('hidden');
+            
+            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+            document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+
+            if(tab === 'student') {
+                document.getElementById('studentFormCard').classList.remove('hidden');
+                document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+            } else if(tab === 'tutor') {
+                document.getElementById('tutorFormCard').classList.remove('hidden');
+                document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+            } else if(tab === 'requirement') {
+                document.getElementById('requirementFormCard').classList.remove('hidden');
+                document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+            }
+        }
+
+        // Modal Controls
+        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+
+        function openStaffLoginModal() { document.getElementById('staffLoginModal').classList.remove('hidden'); }
+        function closeStaffLoginModal() { document.getElementById('staffLoginModal').classList.add('hidden'); }
+
+        // Email-Based Staff Login Handler
+        function handleStaffLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('staffEmailInput').value.trim();
+            const pass = document.getElementById('staffPassInput').value.trim();
+
+            // Example validation (You can connect this to your backend or database)
+            if(email === "admin@gurumatch.com" && pass === "admin123") {
+                localStorage.setItem('currentUser', JSON.stringify({ name: "Admin Staff", role: "Staff", email: email }));
+                alert("Staff Login Successful!");
+                closeStaffLoginModal();
+                checkAuthStatus();
+            } else {
+                alert("Invalid Staff Email or Password! (Try admin@gurumatch.com / admin123)");
+            }
+        }
+
+        let generatedOtp = "";
+        function sendSimulatedOtp() {
+            const phone = document.getElementById('loginPhoneInput').value.trim();
+            if(phone.length < 10) { alert("Please enter valid mobile number"); return; }
+            generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+            document.getElementById('generatedOtpDisplay').innerText = generatedOtp;
+            document.getElementById('otpStep1').classList.add('hidden');
+            document.getElementById('otpStep2').classList.remove('hidden');
+        }
+
+        function verifySimulatedOtp() {
+            const entered = document.getElementById('otpCodeInput').value.trim();
+            if(entered === generatedOtp) {
+                const phone = document.getElementById('loginPhoneInput').value.trim();
+                localStorage.setItem('currentUser', JSON.stringify({ name: "Student User", role: "Student", phone: phone }));
+                alert("Login Successful!");
+                closeLoginModal();
+                checkAuthStatus();
+            } else {
+                alert("Incorrect OTP!");
+            }
+        }
+
+        function checkAuthStatus() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if(user) {
+                document.getElementById('currentUserBadge').classList.remove('hidden');
+                document.getElementById('navLoginBtn').classList.add('hidden');
+                document.getElementById('navLoggedName').innerText = user.name;
+                document.getElementById('navLoggedRole').innerText = user.role;
+
+                if(user.role === 'Student') {
+                    document.getElementById('notLoggedInAlert').classList.add('hidden');
+                    document.getElementById('protectedReqForm').classList.remove('hidden');
+                    document.getElementById('activeStudentNameDisplay').innerText = user.name;
+                }
+            } else {
+                document.getElementById('currentUserBadge').classList.add('hidden');
+                document.getElementById('navLoginBtn').classList.remove('hidden');
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            alert("Logged out successfully!");
+            location.reload();
+        }
+
+        // Form Submissions
+        function handleStudentFormSubmit(event) {
+            event.preventDefault();
+            alert("Student Registered Successfully!");
+            event.target.reset();
+        }
+
+        function handleTutorFormSubmit(event) {
+            event.preventDefault();
+            alert("Tutor Application Submitted Successfully!");
+            event.target.reset();
+        }
+
+        function handleRequirementSubmit(event) {
+            event.preventDefault();
+            alert("Learning Request Posted Successfully!");
+            event.target.reset();
+        }
+
+        window.onload = function() {
+            checkAuthStatus();
+        }
+    </script>
+</body>
+</html>

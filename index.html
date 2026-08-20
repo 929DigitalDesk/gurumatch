@@ -65,6 +65,36 @@
         </div>
     </header>
 
+    <!-- Staff Admin Control Center Dashboard (Hidden by default) -->
+    <section id="staffDashboardSection" class="max-w-7xl mx-auto px-4 py-8 hidden w-full">
+        <div class="bg-brand-dark text-white rounded-3xl p-8 shadow-2xl border border-slate-700">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-6 pb-4 border-b border-slate-700 gap-4">
+                <div>
+                    <span class="bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest inline-block mb-1">Restricted Admin Access</span>
+                    <h2 class="text-2xl font-black">Staff Control Center Dashboard</h2>
+                    <p class="text-xs text-slate-400">Welcome back, Admin. System monitoring and management active.</p>
+                </div>
+                <button onclick="logoutUser()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow transition">
+                    LOGOUT STAFF SESSION
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-xs font-bold uppercase mb-1">Total Tutors Loaded</h3>
+                    <p class="text-3xl font-black text-brand-blue" id="adminTotalTutors">125</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-xs font-bold uppercase mb-1">Total Students Listed</h3>
+                    <p class="text-3xl font-black text-amber-400" id="adminTotalStudents">1,200</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-xs font-bold uppercase mb-1">System Status</h3>
+                    <p class="text-3xl font-black text-emerald-400">Active & Secure</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Hero Banner -->
     <section id="home" class="bg-brand-blue text-white py-20 relative overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
@@ -636,7 +666,6 @@
                 grid.innerHTML = `<div class="col-span-3 text-center py-10 text-slate-500 font-bold">No tutors found for this subject.</div>`;
             } else {
                 paginatedTutors.forEach(t => {
-                    // Updated: Verified tick and text are now Blue (bg-blue-600 / text-blue-600)
                     const verifiedBadgeHTML = t.verified ? `
                         <span class="relative inline-flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px] shadow-sm ml-1" title="Verified Badge">
                             <i class="fa-solid fa-check"></i>
@@ -925,7 +954,6 @@
             document.getElementById('upiQrModal').classList.add('hidden');
         }
 
-        // Login Modal Functions (Simulated OTP with Strict Role Verification)
         function openLoginModal() {
             document.getElementById('loginModal').classList.remove('hidden');
             document.getElementById('otpStep1').classList.remove('hidden');
@@ -944,7 +972,6 @@
                 return;
             }
 
-            // Check if mobile number is registered in system
             let foundUser = registeredUsers.find(u => u.phone === phone);
             if (!foundUser) {
                 closeLoginModal();
@@ -953,7 +980,6 @@
             }
 
             pendingLoginPhone = phone;
-            // Generate random 4-digit simulated OTP
             activeSimulatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
             
             document.getElementById('generatedOtpDisplay').textContent = activeSimulatedOtp;
@@ -969,17 +995,15 @@
                 return;
             }
 
-            // Fetch user record to secure role consistency
             let foundUser = registeredUsers.find(u => u.phone === pendingLoginPhone);
             if (!foundUser) {
                 alert('Authentication failed: User record not found.');
                 return;
             }
 
-            // Save active session details with strict role enforcement
             localStorage.setItem('active_user_name', foundUser.name);
             localStorage.setItem('active_user_phone', foundUser.phone);
-            localStorage.setItem('active_user_role', foundUser.role); // 'student' or 'tutor'
+            localStorage.setItem('active_user_role', foundUser.role);
 
             alert(`Login Successful! Welcome back, ${foundUser.name} (${foundUser.role.toUpperCase()})`);
             closeLoginModal();
@@ -992,15 +1016,24 @@
             const role = localStorage.getItem('active_user_role');
             const loginBtn = document.getElementById('navLoginBtn');
             const badge = document.getElementById('currentUserBadge');
+            const staffDashboard = document.getElementById('staffDashboardSection');
 
             if (active) {
                 badge.classList.remove('hidden');
                 loginBtn.classList.add('hidden');
                 document.getElementById('navLoggedName').textContent = active;
                 document.getElementById('navLoggedRole').textContent = role || 'user';
+
+                // Agar role Staff hai toh dashboard show karein
+                if (role === 'Staff') {
+                    if(staffDashboard) staffDashboard.classList.remove('hidden');
+                } else {
+                    if(staffDashboard) staffDashboard.classList.add('hidden');
+                }
             } else {
                 badge.classList.add('hidden');
                 loginBtn.classList.remove('hidden');
+                if(staffDashboard) staffDashboard.classList.add('hidden');
             }
         }
 
@@ -1008,7 +1041,6 @@
             const active = localStorage.getItem('active_user_name');
             const role = localStorage.getItem('active_user_role');
             
-            // Only allow posting requirements if logged in as a student
             if (active && role === 'student') {
                 document.getElementById('notLoggedInAlert').classList.add('hidden');
                 document.getElementById('protectedReqForm').classList.remove('hidden');
@@ -1045,9 +1077,19 @@
             e.preventDefault();
             const u = document.getElementById('staffUserInput').value;
             const p = document.getElementById('staffPassInput').value;
+            
             if (u === 'admin' && p === 'admin123') {
+                // Save staff session data properly
+                localStorage.setItem('active_user_name', 'System Admin');
+                localStorage.setItem('active_user_role', 'Staff');
+                
                 alert('Staff Login Successful!');
                 closeStaffLoginModal();
+                updateAuthBadge();
+                
+                // Scroll smoothly to Staff Dashboard
+                const staffSec = document.getElementById('staffDashboardSection');
+                if(staffSec) staffSec.scrollIntoView({ behavior: 'smooth' });
             } else {
                 alert('Invalid Staff Credentials.');
             }
@@ -1058,10 +1100,9 @@
             const name = document.getElementById('stu_name').value;
             const phone = document.getElementById('stu_phone').value;
 
-            // Check if phone already registered as tutor
             let existing = registeredUsers.find(u => u.phone === phone);
             if (existing && existing.role === 'tutor') {
-                alert('Error: This mobile number is already registered as a Tutor. A tutor account cannot be registered as a student.');
+                alert('Error: This mobile number is already registered as a Tutor.');
                 return;
             }
 
@@ -1087,10 +1128,9 @@
             const exp = document.getElementById('t_exp').value;
             const phone = document.getElementById('t_phone').value;
 
-            // Check if phone already registered as student
             let existing = registeredUsers.find(u => u.phone === phone);
             if (existing && existing.role === 'student') {
-                alert('Error: This mobile number is already registered as a Student. Students cannot register as tutors with the same number.');
+                alert('Error: This mobile number is already registered as a Student.');
                 return;
             }
 

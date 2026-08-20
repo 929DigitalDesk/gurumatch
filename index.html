@@ -1135,4 +1135,292 @@
         };
     </script>
 </body>
-</html>
+</html><!-- STAFF LOGIN MODAL -->
+<div id="staffLoginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
+        <div class="text-center mb-4">
+            <div class="w-12 h-12 bg-brand-dark text-white rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold shadow-inner">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-black text-brand-dark tracking-tight">Staff Portal Login</h3>
+            <p class="text-xs text-slate-500 mt-1">Enter authorized staff credentials.</p>
+        </div>
+        <form onsubmit="handleStaffLogin(event)" class="space-y-3">
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Username *</label>
+                <input type="text" id="staffUsername" required placeholder="admin" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none font-bold">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                <input type="password" id="staffPassword" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none font-bold">
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button type="button" onclick="closeStaffLoginModal()" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl text-xs">CANCEL</button>
+                <button type="submit" class="w-1/2 bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs shadow-md">LOGIN</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- UPI QR MODAL -->
+<div id="upiQrModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 text-center relative">
+        <h3 class="text-lg font-black text-brand-dark mb-1">Scan & Pay via UPI</h3>
+        <p class="text-xs text-slate-500 mb-4">Pay <span id="upiAmountText" class="font-bold text-brand-blue"></span> to <strong class="text-brand-dark">Verizon@upi</strong></p>
+        <div class="bg-slate-100 p-4 rounded-2xl inline-block mb-4 border border-slate-200">
+            <i class="fa-solid fa-qrcode text-7xl text-brand-dark"></i>
+        </div>
+        <p class="text-[11px] text-slate-600 font-medium mb-4">After payment, copy your 12-digit UTR transaction reference ID and paste it into the registration form.</p>
+        <button onclick="closeUpiQrModal()" class="w-full bg-brand-blue text-white font-bold py-3 rounded-xl text-xs">CLOSE & ENTER UTR</button>
+    </div>
+</div>
+
+<script>
+    // Mock Data and State Management
+    let currentUser = null;
+    let currentOtp = null;
+
+    // Sample Tutors Data
+    const tutorsData = Array.from({ length: 125 }, (_, index) => ({
+        id: index + 1,
+        name: `Tutor ${index + 1} (JC Expert)`,
+        subject: ['Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'Computer Science', 'Economics', 'Accountancy'][index % 8],
+        price: `₹${500 + (index * 50) % 1000}/hr`,
+        exp: `${2 + (index % 8)} Years`,
+        phone: `98765${String(index).padStart(5, '0')}`,
+        verified: index % 2 === 0
+    }));
+
+    // Sample Students Data
+    const studentsData = Array.from({ length: 1200 }, (_, index) => ({
+        id: index + 1,
+        name: `Student ${index + 1}`,
+        std: index % 2 === 0 ? "FYJC (11th)" : "SYJC (12th)",
+        stream: ['Science', 'Commerce', 'Arts'][index % 3],
+        subject: 'Junior College Core',
+        phone: `91234${String(index).padStart(5, '0')}`
+    }));
+
+    let currentTutorPage = 1;
+    let currentStudentPage = 1;
+    const itemsPerPage = 6;
+
+    // Initialize Page
+    window.onload = function() {
+        renderTutors();
+        renderStudents();
+    };
+
+    // Render Tutors
+    function renderTutors() {
+        const grid = document.getElementById('tutorGrid');
+        const filter = document.getElementById('subjectFilter').value;
+        
+        let filtered = tutorsData;
+        if(filter !== 'All') {
+            filtered = tutorsData.filter(t => t.subject === filter);
+        }
+
+        const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+        if(currentTutorPage > totalPages) currentTutorPage = 1;
+
+        const start = (currentTutorPage - 1) * itemsPerPage;
+        const slice = filtered.slice(start, start + itemsPerPage);
+
+        grid.innerHTML = slice.map(t => `
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center font-bold text-lg">
+                        ${t.name.charAt(0)}
+                    </div>
+                    ${t.verified ? '<span class="bg-blue-100 text-brand-blue text-[10px] font-bold px-2.5 py-1 rounded-full"><i class="fa-solid fa-check"></i> Verified</span>' : ''}
+                </div>
+                <h3 class="font-black text-brand-dark text-base mb-1">${t.name}</h3>
+                <p class="text-xs font-bold text-brand-blue mb-3">${t.subject}</p>
+                <div class="text-xs text-slate-500 space-y-1 mb-4">
+                    <p>Exp: <strong class="text-slate-700">${t.exp}</strong></p>
+                    <p>Rate: <strong class="text-slate-700">${t.price}</strong></p>
+                </div>
+                <a href="https://wa.me/91${t.phone}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> CONTACT TUTOR
+                </a>
+            </div>
+        `).join('');
+
+        document.getElementById('tutorTotalPagesText').innerText = `/ ${totalPages}`;
+        document.getElementById('tutorPrevBtn').disabled = currentTutorPage === 1;
+        document.getElementById('tutorNextBtn').disabled = currentTutorPage === totalPages;
+    }
+
+    function filterTutors() {
+        currentTutorPage = 1;
+        renderTutors();
+    }
+
+    function changeTutorPage(dir) {
+        currentTutorPage += dir;
+        renderTutors();
+    }
+
+    // Render Students Directory
+    function renderStudents() {
+        const grid = document.getElementById('studentGridContainer');
+        const totalPages = Math.ceil(studentsData.length / itemsPerPage);
+        const start = (currentStudentPage - 1) * itemsPerPage;
+        const slice = studentsData.slice(start, start + itemsPerPage);
+
+        grid.innerHTML = slice.map(s => `
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="bg-orange-50 text-orange-700 text-[10px] font-bold px-2.5 py-1 rounded-full">${s.std}</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase">${s.stream}</span>
+                </div>
+                <h3 class="font-black text-brand-dark text-base mb-1">${s.name}</h3>
+                <p class="text-xs text-slate-500 mb-4">Focus: <strong class="text-slate-700">${s.subject}</strong></p>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-medium"><i class="fa-solid fa-lock text-[10px] mr-1"></i> Phone Protected</span>
+                    <span class="font-bold text-brand-blue">Login to View</span>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('totalPagesText').innerText = `/ ${totalPages}`;
+        document.getElementById('prevBtn').disabled = currentStudentPage === 1;
+        document.getElementById('nextBtn').disabled = currentStudentPage === totalPages;
+    }
+
+    function changePage(dir) {
+        currentStudentPage += dir;
+        renderStudents();
+    }
+
+    // Tabs Switcher
+    function switchTab(tab) {
+        document.getElementById('studentFormCard').classList.add('hidden');
+        document.getElementById('tutorFormCard').classList.add('hidden');
+        document.getElementById('requirementFormCard').classList.add('hidden');
+        
+        document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+        document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+        document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+
+        if(tab === 'student') {
+            document.getElementById('studentFormCard').classList.remove('hidden');
+            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+        } else if(tab === 'tutor') {
+            document.getElementById('tutorFormCard').classList.remove('hidden');
+            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+        } else if(tab === 'requirement') {
+            document.getElementById('requirementFormCard').classList.remove('hidden');
+            document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
+        }
+    }
+
+    // Modal Controls
+    function openLoginModal() {
+        document.getElementById('loginModal').classList.remove('hidden');
+        document.getElementById('otpStep1').classList.remove('hidden');
+        document.getElementById('otpStep2').classList.add('hidden');
+    }
+    function closeLoginModal() {
+        document.getElementById('loginModal').classList.add('hidden');
+    }
+    function openStaffLoginModal() {
+        document.getElementById('staffLoginModal').classList.remove('hidden');
+    }
+    function closeStaffLoginModal() {
+        document.getElementById('staffLoginModal').classList.add('hidden');
+    }
+    function openUpiQrModal(amt) {
+        document.getElementById('upiAmountText').innerText = `₹${amt}`;
+        document.getElementById('upiQrModal').classList.remove('hidden');
+    }
+    function closeUpiQrModal() {
+        document.getElementById('upiQrModal').classList.add('hidden');
+    }
+
+    // OTP Flow
+    function sendSimulatedOtp() {
+        const phone = document.getElementById('loginPhoneInput').value.trim();
+        if(!phone || phone.length < 10) {
+            alert("Please enter a valid mobile number.");
+            return;
+        }
+        currentOtp = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('generatedOtpDisplay').innerText = currentOtp;
+        document.getElementById('otpStep1').classList.add('hidden');
+        document.getElementById('otpStep2').classList.remove('hidden');
+    }
+
+    function verifySimulatedOtp() {
+        const enteredOtp = document.getElementById('otpCodeInput').value.trim();
+        if(enteredOtp === String(currentOtp)) {
+            alert("Login Successful!");
+            currentUser = { name: "Verified User", role: "Student" };
+            updateAuthUI();
+            closeLoginModal();
+        } else {
+            alert("Invalid OTP. Please try again.");
+        }
+    }
+
+    function updateAuthUI() {
+        if(currentUser) {
+            document.getElementById('currentUserBadge').classList.remove('hidden');
+            document.getElementById('navLoggedName').innerText = currentUser.name;
+            document.getElementById('navLoggedRole').innerText = currentUser.role;
+            document.getElementById('navLoginBtn').classList.add('hidden');
+            
+            document.getElementById('notLoggedInAlert').classList.add('hidden');
+            document.getElementById('protectedReqForm').classList.remove('hidden');
+            document.getElementById('activeStudentNameDisplay').innerText = currentUser.name;
+        } else {
+            document.getElementById('currentUserBadge').classList.add('hidden');
+            document.getElementById('navLoginBtn').classList.remove('hidden');
+            document.getElementById('notLoggedInAlert').classList.remove('hidden');
+            document.getElementById('protectedReqForm').classList.add('hidden');
+        }
+    }
+
+    function logoutUser() {
+        currentUser = null;
+        updateAuthUI();
+        alert("Logged out successfully.");
+    }
+
+    // Staff Login Handler
+    function handleStaffLogin(event) {
+        event.preventDefault();
+        const user = document.getElementById('staffUsername').value.trim();
+        const pass = document.getElementById('staffPassword').value.trim();
+
+        if(user === "admin" && pass === "admin123") {
+            alert("Staff Login Successful!");
+            closeStaffLoginModal();
+            currentUser = { name: "Staff Admin", role: "Staff" };
+            updateAuthUI();
+        } else {
+            alert("Invalid Credentials! (Default: admin / admin123)");
+        }
+    }
+
+    // Form Submissions
+    function handleStudentFormSubmit(event) {
+        event.preventDefault();
+        alert("Student Registered Successfully!");
+        event.target.reset();
+    }
+
+    function handleTutorFormSubmit(event) {
+        event.preventDefault();
+        alert("Tutor Application Submitted Successfully!");
+        document.getElementById('tutorRegForm').classList.add('hidden');
+        document.getElementById('tutorPostDashboard').classList.remove('hidden');
+    }
+
+    function handleRequirementSubmit(event) {
+        event.preventDefault();
+        alert("Learning Request Posted Successfully!");
+        event.target.reset();
+    }
+</script>

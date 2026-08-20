@@ -780,13 +780,13 @@
         let pendingLoginPhone = "";
 
         // 1. Tutors Data Generation (125 Tutors)
-   // 1. Tutors Data Generation (125 Tutors)
+ // 1. Tutors Data Generation (125 Tutors)
         const firstNames = ["Rajesh", "Ananya", "Vikram", "Priya", "Amit", "Neha", "Rahul", "Sneha", "Alok", "Pooja", "Manish", "Divya", "Suresh", "Kirti", "Karan", "Kavita", "Sanjay", "Ritu", "Deepak", "Sunita"];
         const lastNames = ["Sharma", "Iyer", "Malhotra", "Gupta", "Verma", "Mehta", "Sen", "Nair", "Patel", "Reddy", "Choudhury", "Bose", "Joshi", "Deshmukh", "Saxena", "Kapoor", "Mishra", "Aggarwal", "Pillai", "Das"];
         const subjectsList = ["Mathematics", "Physics", "Chemistry", "Biology", "English", "Computer Science", "Economics", "Accountancy"];
 
-        // Changed key to _v2 so it forces a fresh data generation for you
-        let tutorsData = JSON.parse(localStorage.getItem('saved_tutors_data_v2')) || [];
+        // Changed key to _v3 to force fresh random data generation
+        let tutorsData = JSON.parse(localStorage.getItem('saved_tutors_data_v3')) || [];
         if (tutorsData.length === 0) {
             for (let i = 1; i <= 125; i++) {
                 const fName = firstNames[(i * 7) % firstNames.length];
@@ -796,9 +796,10 @@
                 const priceVal = 400 + ((i * 50) % 700);
                 const expYears = 3 + (i % 12);
                 
-                // NEW LOGIC: Separate Paid and Verified Status
-                let isPaid = (i % 2 !== 0); // 50% tutors default PAID honge (website pe dikhenge)
-                let isVerifiedTutor = (i % 4 === 0); // Har 4th tutor ko hi Verified Tick milega
+                // NEW RANDOM LOGIC:
+                // Math.random() generates a random decimal between 0 and 1.
+                let isPaid = Math.random() > 0.3; // Approx 70% chance to be PAID randomly
+                let isVerifiedTutor = Math.random() > 0.7; // Approx 30% chance to get the Verified Tick randomly
                 
                 // Agar verified hai toh obviously paid bhi hona chahiye
                 if (isVerifiedTutor) isPaid = true;
@@ -823,7 +824,7 @@
         }
 
         function saveTutorsStorage() {
-            localStorage.setItem('saved_tutors_data_v2', JSON.stringify(tutorsData));
+            localStorage.setItem('saved_tutors_data_v3', JSON.stringify(tutorsData));
         }
 
         // Students Data Storage

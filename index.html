@@ -48,7 +48,8 @@
                 <a href="#home" class="hover:text-brand-blue transition">HOME</a>
                 <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
                 <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS DIRECTORY</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & REQUESTS</a>
+                <a href="#learningRequestsSection" class="hover:text-brand-blue transition">LEARNING REQUESTS</a>
+                <a href="#registrationSection" class="hover:text-brand-blue transition">REGISTER</a>
             </nav>
             <div class="flex gap-2 items-center">
                 <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200 flex items-center gap-2">
@@ -105,7 +106,7 @@
 
                 <!-- Admin Students Panel -->
                 <div id="adminStudentsPanel" class="overflow-x-auto">
-                    <h3 class="font-black text-lg mb-4 text-brand-dark">Registered Students List (Approve / Delete Fake Entries)</h3>
+                    <h3 class="font-black text-lg mb-4 text-brand-dark">Registered Students List</h3>
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-black">
@@ -128,8 +129,8 @@
                             <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-black">
                                 <th class="p-3.5 rounded-l-xl">Tutor Name</th>
                                 <th class="p-3.5">Subject</th>
-                                <th class="p-3.5">UTR / Payment Ref</th>
-                                <th class="p-3.5">Payment Status</th>
+                                <th class="p-3.5">UTR / Ref</th>
+                                <th class="p-3.5">Status Check</th>
                                 <th class="p-3.5 rounded-r-xl text-center">Actions</th>
                             </tr>
                         </thead>
@@ -144,7 +145,7 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
                 <div>
                     <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Tutors Directory</h2>
-                    <p class="text-slate-500 text-sm font-medium">Junior college educators with active plans and verified badges</p>
+                    <p class="text-slate-500 text-sm font-medium">Junior college educators</p>
                 </div>
             </div>
             <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -159,6 +160,17 @@
                 </div>
             </div>
             <div id="studentGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- LEARNING REQUESTS SECTION -->
+        <section id="learningRequestsSection" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
+            <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Student Learning Requests</h2>
+                    <p class="text-slate-500 text-sm font-medium">Active tutoring requirements posted by students.</p>
+                </div>
+            </div>
+            <div id="learningRequestsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
         <!-- Registration Section -->
@@ -177,7 +189,7 @@
                 <div id="studentFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration</h2>
-                        <p class="text-xs text-slate-500 mt-1">Register your profile to appear in the directory.</p>
+                        <p class="text-xs text-slate-500 mt-1">Register your profile and post your learning requirements.</p>
                     </div>
                     <form onsubmit="handleStudentFormSubmit(event)" class="space-y-5">
                         <div>
@@ -215,8 +227,12 @@
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject(s) Needed *</label>
                             <input type="text" id="stu_subject" required placeholder="e.g. Physics, Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
                         </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Learning Request Details / Message *</label>
+                            <textarea id="stu_request_desc" required rows="3" placeholder="Describe your specific tutoring needs or timings..." class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white focus:outline-none focus:border-brand-blue"></textarea>
+                        </div>
                         <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md">
-                            REGISTER STUDENT PROFILE
+                            REGISTER STUDENT & POST REQUEST
                         </button>
                     </form>
                 </div>
@@ -225,7 +241,7 @@
                 <div id="tutorFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & Payment</h2>
-                        <p class="text-xs text-slate-500 mt-1">Submit your UTR number (₹200 for Plan Fees / ₹300 for Verified Badge).</p>
+                        <p class="text-xs text-slate-500 mt-1">Submit your UTR number (₹200 Plan / ₹300 Verified Badge).</p>
                     </div>
                     <form onsubmit="handleTutorFormSubmit(event)" class="space-y-4">
                         <div>
@@ -258,7 +274,6 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-xl font-black text-brand-dark">Staff / Admin Login</h3>
-                <p class="text-xs text-slate-500 mt-1">Login with your official email address.</p>
             </div>
             <form onsubmit="handleStaffLogin(event)" class="space-y-3">
                 <div>
@@ -282,7 +297,6 @@
             <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center mb-4">
                 <h3 class="text-xl font-black text-brand-dark">User Login</h3>
-                <p class="text-xs text-slate-500 mt-1">Enter registered Mobile Number.</p>
             </div>
             <div id="otpStep1" class="space-y-3">
                 <input type="tel" id="loginPhoneInput" placeholder="Mobile Number" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold">
@@ -304,8 +318,8 @@
     <!-- JavaScript Logic -->
     <script>
         let students = JSON.parse(localStorage.getItem('gm_students')) || [
-            { id: 1, name: "Aarav Sharma", email: "aarav@gmail.com", phone: "9876543210", std: "SYJC (12th)", stream: "Science", subject: "Physics, Mathematics" },
-            { id: 2, name: "Sneha Patil", email: "sneha@gmail.com", phone: "9123456789", std: "FYJC (11th)", stream: "Commerce", subject: "Accountancy" }
+            { id: 1, name: "Aarav Sharma", email: "aarav@gmail.com", phone: "9876543210", std: "SYJC (12th)", stream: "Science", subject: "Physics, Mathematics", requestDesc: "Need experienced tutor for board exam preparation." },
+            { id: 2, name: "Sneha Patil", email: "sneha@gmail.com", phone: "9123456789", std: "FYJC (11th)", stream: "Commerce", subject: "Accountancy", requestDesc: "Looking for weekly conceptual classes." }
         ];
 
         let tutors = JSON.parse(localStorage.getItem('gm_tutors')) || [
@@ -318,7 +332,7 @@
             localStorage.setItem('gm_tutors', JSON.stringify(tutors));
         }
 
-        // 🔑 ADMIN LOGIN HANDLER
+        // 🔑 CUSTOMIZE ADMIN LOGIN HERE
         function handleStaffLogin(event) {
             event.preventDefault();
             const email = document.getElementById('staffEmailInput').value.trim();
@@ -432,11 +446,12 @@
                 phone: document.getElementById('stu_phone').value.trim(),
                 std: document.getElementById('stu_std').value,
                 stream: document.getElementById('stu_stream').value,
-                subject: document.getElementById('stu_subject').value.trim()
+                subject: document.getElementById('stu_subject').value.trim(),
+                requestDesc: document.getElementById('stu_request_desc').value.trim()
             };
             students.push(newStu);
             saveData();
-            alert("Student Registered Successfully!");
+            alert("Student Registered & Learning Request Posted Successfully!");
             event.target.reset();
             renderDirectories();
             if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
@@ -449,13 +464,14 @@
                 name: document.getElementById('t_name').value.trim(),
                 subject: document.getElementById('t_subject').value.trim(),
                 utr: document.getElementById('t_utr').value.trim(),
-                planPaid: true, // By default when they submit UTR, Plan Fees Paid is active
-                verified: false  // Verified tick is false until admin checks bank and grants it
+                planPaid: true, 
+                verified: false  
             };
             tutors.push(newTut);
             saveData();
             alert("Tutor Application Submitted Successfully!");
             event.target.reset();
+            renderDirectories();
             if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
         }
 
@@ -488,23 +504,21 @@
         }
 
         function renderDirectories() {
+            // Tutors public card
             const tutorGrid = document.getElementById('tutorGrid');
             tutorGrid.innerHTML = tutors.map(t => `
                 <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3 flex-wrap gap-1">
                             <span class="text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1 rounded-xl">${t.subject}</span>
-                            <div class="flex gap-1 items-center">
-                                <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">Plan Fees Paid</span>
-                                ${t.verified ? '<span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-circle-check mr-1"></i> Verified</span>' : ''}
-                            </div>
+                            ${t.verified ? '<span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-circle-check mr-1"></i> Verified Tutor</span>' : ''}
                         </div>
                         <h3 class="text-xl font-black text-brand-dark mb-1">${t.name}</h3>
-                        <p class="text-xs text-slate-500">UTR Ref: ${t.utr}</p>
                     </div>
                 </div>
             `).join('');
 
+            // Students directory grid
             const studentGrid = document.getElementById('studentGridContainer');
             studentGrid.innerHTML = students.map(s => `
                 <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
@@ -515,6 +529,21 @@
                         <h3 class="text-xl font-black text-brand-dark mb-1">${s.name}</h3>
                         <p class="text-xs text-slate-600 mb-2"><i class="fa-solid fa-book mr-1 text-brand-blue"></i> Needs: <strong>${s.subject}</strong></p>
                         <p class="text-xs text-slate-400">Email: ${s.email}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Learning Requests grid
+            const reqGrid = document.getElementById('learningRequestsGrid');
+            reqGrid.innerHTML = students.map(s => `
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold bg-amber-50 text-amber-700 px-3 py-1 rounded-xl">${s.std} (${s.stream})</span>
+                            <span class="text-[10px] font-bold text-slate-400">Posted by ${s.name}</span>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-dark mb-1">${s.subject}</h3>
+                        <p class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">${s.requestDesc || 'No additional description provided.'}</p>
                     </div>
                 </div>
             `).join('');
@@ -540,9 +569,9 @@
                     <td class="p-3.5 font-bold">${t.name}</td>
                     <td class="p-3.5 text-xs">${t.subject}</td>
                     <td class="p-3.5 text-xs font-black text-brand-blue">${t.utr}</td>
-                    <td class="p-3.5 text-xs">
-                        <span class="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded"><i class="fa-solid fa-circle-check"></i> Plan Fees Paid</span>
-                        ${t.verified ? '<br><span class="text-emerald-600 font-bold mt-1 inline-block"><i class="fa-solid fa-check-double"></i> Verified Tick Granted</span>' : '<br><span class="text-amber-600 font-bold mt-1 inline-block">Unverified Tick</span>'}
+                    <td class="p-3.5 text-xs space-y-1">
+                        <span class="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded inline-block"><i class="fa-solid fa-circle-check"></i> Plan Fees Paid</span><br>
+                        ${t.verified ? '<span class="text-emerald-600 font-bold inline-block"><i class="fa-solid fa-check-double"></i> Verified Tick Granted</span>' : '<span class="text-amber-600 font-bold inline-block">Unverified</span>'}
                     </td>
                     <td class="p-3.5 text-center flex items-center justify-center gap-2">
                         <button onclick="toggleTutorVerification(${t.id})" class="${t.verified ? 'bg-amber-50 text-amber-700' : 'bg-emerald-600 text-white'} px-3 py-1.5 rounded-xl text-xs font-bold transition">

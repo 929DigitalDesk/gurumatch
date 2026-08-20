@@ -3,676 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GURU MATCH - Elite Tutoring Platform & Admin Control</title>
-    <!-- Google Fonts: Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>Guru Match - Find Verified Tutors & Students</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Roboto"', 'sans-serif'],
-                    },
                     colors: {
                         brand: {
-                            blue: '#2563EB',      /* Solid Blue */
-                            dark: '#0F172A',
-                            lightBg: '#F8FAFC'
+                            dark: '#0f172a',
+                            blue: '#2563eb',
+                            orange: '#f97316'
                         }
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-brand-lightBg text-brand-dark font-sans antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="bg-white text-brand-dark sticky top-0 z-50 shadow-md border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-brand-blue text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
-                    GM
-                </div>
-                <div>
-                    <span class="text-2xl font-black tracking-wide text-brand-dark">GURU <span class="text-brand-blue">MATCH</span></span>
-                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Verified Tutors & Students Hub</p>
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-brand-dark text-white font-black text-xl px-3 py-1.5 rounded-xl tracking-wider">
+                    GURU<span class="text-brand-orange">MATCH</span>
                 </div>
             </div>
-            <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
-                <a href="#home" class="hover:text-brand-blue transition">HOME</a>
-                <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & LEARNING REQUESTS</a>
-            </nav>
-            <div class="flex gap-2 items-center">
-                <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200">
-                    <i class="fa-solid fa-user-check mr-1"></i> <span id="navLoggedName"></span>
-                </div>
-                <button onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> STAFF / ADMIN LOGIN
+            <div class="flex items-center gap-3">
+                <button onclick="openLoginModal()" class="bg-brand-dark hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs tracking-wider shadow-sm transition">
+                    LOGIN / SIGNUP
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section id="home" class="bg-brand-blue text-white py-20 relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-            <span class="bg-white/10 text-white border border-white/20 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest inline-block mb-6 backdrop-blur-sm">
-                ⭐ Verified Education & Tutoring Platform
-            </span>
-            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
-                Empowering Education with <span class="text-amber-300">GURU MATCH</span>
-            </h1>
-            <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
-                Find elite verified tutors, post custom learning requests, and manage academics securely.
-            </p>
-            <div class="flex justify-center gap-4">
-                <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
-                    GET STARTED <i class="fa-solid fa-arrow-down ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tutors Listing Showcase Section -->
-    <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
-            <div>
-                <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Verified Tutors</h2>
-                <p class="text-slate-500 text-sm font-medium">Top-rated educators ready to mentor students</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <span class="text-sm font-bold text-slate-700">FILTER SUBJECT:</span>
-                <select id="subjectFilter" onchange="filterTutors()" class="bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-bold text-brand-dark focus:outline-none focus:border-brand-blue">
-                    <option value="All">All Subjects</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Physics">Physics</option>
-                    <option value="English">English</option>
-                </select>
-            </div>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- Hero Section / Title -->
+        <div class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-black text-brand-dark mb-3">Find Your Perfect <span class="text-brand-blue">Match</span></h1>
+            <p class="text-slate-600 text-sm max-w-xl mx-auto">Connect directly with verified tutors or students in your area seamlessly.</p>
         </div>
 
-        <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Rendered via JS -->
-        </div>
-    </section>
-
-    <!-- Registration & Learning Requests Section -->
-    <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
-        <div class="max-w-3xl mx-auto px-4">
-            
-            <!-- Tabs -->
-            <div class="grid grid-cols-3 bg-slate-100 p-1.5 rounded-2xl shadow-inner mb-8 border border-slate-200 gap-1">
-                <button id="tabStudentBtn" onclick="switchTab('student')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide">
-                    <i class="fa-solid fa-user-graduate mr-1"></i>STUDENT
+        <!-- Tabs Switcher -->
+        <div class="flex justify-center mb-8">
+            <div class="bg-slate-200 p-1 rounded-2xl flex gap-1">
+                <button id="tabTutors" onclick="switchTab('tutors')" class="px-6 py-2.5 rounded-xl text-xs font-bold transition-all bg-white text-brand-dark shadow-sm">
+                    Find Tutors
                 </button>
-                <button id="tabTutorBtn" onclick="switchTab('tutor')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
-                    <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR
-                </button>
-                <button id="tabRequirementBtn" onclick="switchTab('requirement')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
-                    <i class="fa-solid fa-clipboard-list mr-1"></i>LEARNING REQUESTS
+                <button id="tabStudents" onclick="switchTab('students')" class="px-6 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-brand-dark">
+                    Find Students
                 </button>
             </div>
-
-            <!-- Student Form Card -->
-            <div id="studentFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
-                <div class="text-center mb-8">
-                    <span class="bg-blue-100 text-brand-blue text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Academic Section</span>
-                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration & Login</h2>
-                    <p class="text-slate-600 text-sm mt-1">Register first to verify your identity and unlock learning request postings.</p>
-                </div>
-                <form onsubmit="handleStudentFormSubmit(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Student Full Name *</label>
-                        <input type="text" id="stu_name" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address (Login ID) *</label>
-                            <input type="email" id="stu_email" required placeholder="student@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number *</label>
-                            <input type="tel" id="stu_phone" required placeholder="+91 9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Class / Standard / Course *</label>
-                            <input type="text" id="stu_class" required placeholder="e.g. 10th Standard / B.Tech" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Required Subject(s) *</label>
-                            <input type="text" id="stu_subject" required placeholder="e.g. Mathematics, Physics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-bold bg-white">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md text-base tracking-wider">
-                        REGISTER & LOGIN AS STUDENT
-                    </button>
-                </form>
-            </div>
-
-            <!-- Tutor Form Card -->
-            <div id="tutorFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
-                <div class="text-center mb-8">
-                    <span class="bg-red-100 text-red-600 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Verification Portal</span>
-                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & Payment</h2>
-                    <p class="text-slate-600 text-sm mt-1">Complete payment of ₹200 via UPI and submit UTR for manual admin verification.</p>
-                </div>
-
-                <!-- Plan Details Box -->
-                <div class="bg-white border-2 border-brand-blue/30 rounded-2xl p-5 mb-6 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-bl-xl tracking-widest uppercase">
-                        VERIFICATION PASS
-                    </div>
-                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
-                        <div>
-                            <h4 class="font-black text-brand-dark text-base">Elite Tutor Verification Pass</h4>
-                            <p class="text-xs text-slate-500 font-medium">Valid for 1 Full Year Profile Listing</p>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-2xl font-black text-brand-blue">₹200</span>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase">One-time fee</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-2 text-xs text-slate-700 font-medium mb-4">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Pay directly via UPI ID: <strong class="text-brand-blue">Verizon@upi</strong></li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Manual bank review by Admin for activation</li>
-                    </ul>
-                    <button type="button" onclick="openUpiQrModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3 rounded-xl shadow transition text-xs text-center flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-qrcode text-base"></i> OPEN UPI QR & PAY ₹200
-                    </button>
-                </div>
-
-                <form id="tutorRegForm" onsubmit="handleTutorFormSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Full Name *</label>
-                            <input type="text" id="t_name" required placeholder="Enter tutor name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject Expertise *</label>
-                            <input type="text" id="t_subject" required placeholder="e.g. Advanced Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address (Login ID) *</label>
-                            <input type="email" id="t_email" required placeholder="tutor@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp Number *</label>
-                            <input type="tel" id="t_phone" required placeholder="+91 9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none font-medium bg-white">
-                        </div>
-                    </div>
-
-                    <div class="border border-brand-blue bg-blue-50/50 p-4 rounded-2xl">
-                        <label class="block text-xs font-bold text-brand-blue uppercase tracking-wider mb-1.5">Enter UTR / Transaction Reference Number *</label>
-                        <input type="text" id="txnIdInput" required placeholder="Enter 12-digit UTR ID after paying to Verizon@upi" class="w-full border border-brand-blue rounded-xl p-3.5 text-sm focus:outline-none font-mono font-bold bg-white">
-                    </div>
-
-                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md text-base tracking-wider">
-                        SUBMIT TUTOR APPLICATION FOR ADMIN REVIEW
-                    </button>
-                </form>
-            </div>
-
-            <!-- Learning Requests Form Card -->
-            <div id="requirementFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
-                <div class="text-center mb-8">
-                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">Verified Matchmaking</span>
-                    <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Submit Learning Requests</h2>
-                    <p class="text-slate-600 text-sm mt-1">Only registered & logged-in students can post requirements.</p>
-                </div>
-
-                <div id="notLoggedInAlert" class="bg-amber-50 border border-amber-300 p-6 rounded-2xl text-center mb-6">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-3xl mb-2"></i>
-                    <h4 class="font-bold text-amber-900 text-base">Authentication Required!</h4>
-                    <p class="text-xs text-amber-700 mt-1 mb-4">Please register in the Student tab first before posting requests.</p>
-                    <button onclick="switchTab('student')" class="bg-brand-blue text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow">
-                        GO TO STUDENT REGISTRATION
-                    </button>
-                </div>
-
-                <form id="protectedReqForm" onsubmit="handleRequirementSubmit(event)" class="space-y-4 hidden">
-                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800 font-bold mb-4 flex items-center justify-between">
-                        <span>Posting as Student: <span id="activeStudentNameDisplay" class="underline"></span></span>
-                        <button type="button" onclick="logoutStudent()" class="text-red-600 hover:underline">Switch Account</button>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject / Skill Needed *</label>
-                        <input type="text" id="req_subject" required placeholder="e.g. Physics / Python Coding" class="w-full border border-slate-300 rounded-xl p-3 text-sm bg-white focus:outline-none focus:border-brand-blue">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mode of Learning *</label>
-                        <select id="req_mode" required class="w-full border border-slate-300 rounded-xl p-3 text-sm bg-white font-bold focus:outline-none">
-                            <option value="Online">Online Tuition</option>
-                            <option value="Home Tutor">Home Tutor (Offline)</option>
-                            <option value="Hybrid">Hybrid / Both</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Detailed Description *</label>
-                        <textarea id="req_desc" rows="3" required placeholder="Mention timing, budget per month, etc." class="w-full border border-slate-300 rounded-xl p-3 text-sm bg-white focus:outline-none"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-md tracking-wider">
-                        POST VERIFIED LEARNING REQUEST
-                    </button>
-                </form>
-            </div>
-
         </div>
-    </section>
 
-    <!-- UPI QR Code Modal -->
-    <div id="upiQrModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 text-center relative">
-            <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full uppercase">Instant UPI Payment</span>
-            <h3 class="text-xl font-black text-brand-dark mt-2 tracking-tight">Scan & Pay ₹200</h3>
-            <p class="text-xs text-slate-500 mb-4">Use GPay, PhonePe, Paytm, or BHIM</p>
-            
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mb-4 shadow-inner">
-                <img id="dynamicQrImg" src="" alt="UPI QR Code" class="w-48 h-48 mx-auto rounded-lg">
-            </div>
-
-            <div class="space-y-3 mb-5">
-                <p class="text-xs font-bold text-slate-700">UPI ID: <span class="text-brand-blue font-mono">Verizon@upi</span></p>
-                <a id="upiAppDeepLink" href="#" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition shadow text-center">
-                    <i class="fa-solid fa-mobile-screen-button mr-1"></i> PAY VIA UPI APP
-                </a>
-            </div>
-
-            <button type="button" onclick="closeUpiQrModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs">
-                DONE & CLOSE
-            </button>
-        </div>
-    </div>
-
-    <!-- Staff Login Modal -->
-    <div id="staffLoginModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
-            <div class="text-center mb-4">
-                <div class="w-10 h-10 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center mx-auto mb-2 text-lg font-bold">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-xl font-black text-brand-dark tracking-tight">Admin Portal Login</h3>
-                <p class="text-xs text-slate-500 mt-1">Username: <span class="font-bold text-brand-blue">admin_master</span><br>Password: <span class="font-bold text-brand-blue">Secure#GURU@2026</span></p>
-            </div>
-            <form onsubmit="handleStaffLogin(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Username *</label>
-                    <input type="text" id="staffUserInput" required placeholder="admin_master" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+        <!-- Tutors Grid Section (Now with Student Orange Theme) -->
+        <div id="tutorsSection" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Sample Tutor Card 1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-orange-200 relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                    Verified Tutor
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
-                    <input type="password" id="staffPassInput" required placeholder="Secure#GURU@2026" class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:border-brand-blue focus:outline-none">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center font-black text-lg">
+                            R
+                        </div>
+                        <div>
+                            <h3 class="font-black text-brand-dark text-base">Rahul Sharma</h3>
+                            <p class="text-xs text-orange-600 font-bold">Mathematics & Physics</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-slate-600 mb-4 font-medium bg-orange-50/50 p-2.5 rounded-xl border border-orange-100">
+                        <span><i class="fa-solid fa-indian-rupee-sign text-orange-600 mr-0.5"></i> 500/hr</span>
+                        <span><i class="fa-solid fa-clock text-orange-600 mr-1"></i> 5 Yrs Exp</span>
+                    </div>
                 </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeStaffLoginModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs">CANCEL</button>
-                    <button type="submit" class="w-1/2 bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">LOGIN</button>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Active</span>
+                    <button onclick="alert('Contacting Tutor...')" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow">
+                        Contact Tutor
+                    </button>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <!-- Admin Dashboard Modal with Fee Tick & Delete Controls -->
-    <div id="staffPanelModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden overflow-y-auto p-4 md:p-8">
-        <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 md:p-8 relative my-8">
-            <button onclick="closeStaffPanelModal()" class="absolute top-6 right-6 w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-700">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 border-b border-slate-200 pb-4 gap-4">
+            <!-- Sample Tutor Card 2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-orange-200 relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                    Verified Tutor
+                </div>
                 <div>
-                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Admin Bank & User Control Dashboard</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-brand-dark tracking-tight mt-1">Manage Registered Users & UTR Payments</h2>
-                    <p class="text-slate-500 text-sm">Verify tutor bank UTRs, grant fee received ticks, and delete fake entries.</p>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center font-black text-lg">
+                            P
+                        </div>
+                        <div>
+                            <h3 class="font-black text-brand-dark text-base">Priya Verma</h3>
+                            <p class="text-xs text-orange-600 font-bold">Chemistry & Biology</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-slate-600 mb-4 font-medium bg-orange-50/50 p-2.5 rounded-xl border border-orange-100">
+                        <span><i class="fa-solid fa-indian-rupee-sign text-orange-600 mr-0.5"></i> 600/hr</span>
+                        <span><i class="fa-solid fa-clock text-orange-600 mr-1"></i> 3 Yrs Exp</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
-                    <span class="text-xs font-bold text-emerald-700">Admin Session Active</span>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Active</span>
+                    <button onclick="alert('Contacting Tutor...')" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow">
+                        Contact Tutor
+                    </button>
                 </div>
-            </div>
-
-            <div class="flex gap-3 mb-6">
-                <button onclick="switchStaffTab('users')" id="staffTabUsersBtn" class="bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">Students & Tutors Directory</button>
-                <button onclick="switchStaffTab('reqs')" id="staffTabReqsBtn" class="bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold">Learning Requests</button>
-            </div>
-
-            <!-- Users / Tutors Table View -->
-            <div id="staffUsersView" class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="bg-slate-100 text-xs text-slate-700 uppercase">
-                            <th class="p-3.5">User & Role</th>
-                            <th class="p-3.5">Details</th>
-                            <th class="p-3.5">UTR / Bank Ref</th>
-                            <th class="p-3.5 text-center">₹200 Fee Received Tick</th>
-                            <th class="p-3.5 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="verificationTableBody"></tbody>
-                </table>
-            </div>
-
-            <!-- Learning Requests Table View -->
-            <div id="staffReqsView" class="overflow-x-auto hidden">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="bg-slate-100 text-xs text-slate-700 uppercase">
-                            <th class="p-3.5">Student Name</th>
-                            <th class="p-3.5">Subject Needed</th>
-                            <th class="p-3.5">Mode</th>
-                            <th class="p-3.5">Description</th>
-                            <th class="p-3.5">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requirementsTableBody"></tbody>
-                </table>
             </div>
         </div>
-    </div>
+
+        <!-- Students Grid Section (Now with Tutor Blue Theme) -->
+        <div id="studentsSection" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+            <!-- Sample Student Card 1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-blue-200 relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                    CBSE - Class 12
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center font-black text-lg">
+                            A
+                        </div>
+                        <div>
+                            <h3 class="font-black text-brand-dark text-base">Aman Verma</h3>
+                            <p class="text-xs text-brand-blue font-bold">Science Stream</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-600 mb-4 font-medium"><i class="fa-solid fa-book-open mr-1.5 text-brand-blue"></i> Subjects: Physics, Math</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-slate-500"><i class="fa-solid fa-phone-slash mr-1"></i> Phone Protected</span>
+                    <button onclick="alert('Viewing Student Profile...')" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sample Student Card 2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-blue-200 relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                    ICSE - Class 10
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center font-black text-lg">
+                            S
+                        </div>
+                        <div>
+                            <h3 class="font-black text-brand-dark text-base">Sneha Gupta</h3>
+                            <p class="text-xs text-brand-blue font-bold">General Stream</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-600 mb-4 font-medium"><i class="fa-solid fa-book-open mr-1.5 text-brand-blue"></i> Subjects: English, Social Studies</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-slate-500"><i class="fa-solid fa-phone-slash mr-1"></i> Phone Protected</span>
+                    <button onclick="alert('Viewing Student Profile...')" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-brand-dark text-slate-300 py-10 border-t border-slate-800 text-center text-xs">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="text-base font-bold text-white mb-1 tracking-wide">GURU MATCH PLATFORM</p>
-            <p class="text-slate-500">&copy; 2026 GURU MATCH. All rights reserved.</p>
-        </div>
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 GURU MATCH. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Application Logic -->
-    <script>
-        const STAFF_CONFIG = {
-            user: "admin_master",
-            pass: "Secure#GURU@2026"
-        };
-
-        // Persistent Storage setup
-        let registeredUsers = JSON.parse(localStorage.getItem('guruMatchUsers')) || [
-            { id: 1, name: "Rahul Verma", email: "rahul@gmail.com", role: "Student", details: "12th Standard", txn: "N/A", feeReceived: true },
-            { id: 2, name: "Anjali Gupta", email: "anjali@gmail.com", role: "Tutor", details: "Mathematics", txn: "UTR9823741029", feeReceived: false }
-        ];
-
-        let learningRequirements = JSON.parse(localStorage.getItem('guruMatchReqs')) || [
-            { name: "Rahul Verma", subject: "Physics (NEET)", mode: "Online", desc: "Need experienced tutor for mechanics." }
-        ];
-
-        let loggedInStudent = JSON.parse(localStorage.getItem('guruMatchActiveStudent')) || null;
-
-        const tutors = [
-            { id: 1, name: "Anjali Gupta", subject: "Mathematics", experience: "6 Years", location: "Nagpur", rating: 4.9, reviewsCount: 28, isSponsored: true },
-            { id: 2, name: "Vikram Mehta", subject: "Physics", experience: "8 Years", location: "Mumbai", rating: 4.8, reviewsCount: 34, isSponsored: false },
-            { id: 3, name: "Neha Sharma", subject: "English", experience: "4 Years", location: "Delhi NCR", rating: 4.7, reviewsCount: 19, isSponsored: false }
-        ];
-
-        function renderTutors(data) {
-            const container = document.getElementById('tutorGrid');
-            container.innerHTML = '';
-            data.forEach(tutor => {
-                container.innerHTML += `
-                    <div class="bg-white border ${tutor.isSponsored ? 'border-brand-blue ring-2 ring-brand-blue/10' : 'border-slate-200'} rounded-3xl p-6 shadow-sm flex flex-col justify-between relative">
-                        ${tutor.isSponsored ? '<span class="absolute top-4 right-4 bg-brand-blue text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow"><i class="fa-solid fa-bolt mr-1"></i>SPONSORED</span>' : ''}
-                        <div>
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-12 h-12 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center font-bold text-xl shadow-sm">
-                                    ${tutor.name.charAt(0)}
-                                </div>
-                                <div>
-                                    <h3 class="font-bold text-brand-dark text-lg">${tutor.name}</h3>
-                                    <p class="text-xs text-brand-blue font-bold">${tutor.subject} • ${tutor.experience} Exp.</p>
-                                </div>
-                            </div>
-                            <p class="text-xs text-slate-500 font-bold mb-3"><i class="fa-solid fa-location-dot text-brand-blue mr-1.5"></i>${tutor.location}</p>
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-700">⭐ ${tutor.rating}</span>
-                                <span class="text-xs text-slate-400">(${tutor.reviewsCount} reviews)</span>
-                            </div>
-                        </div>
-                        <button onclick="alert('Inquiry sent successfully!')" class="w-full bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold py-3 rounded-xl transition shadow tracking-wider">
-                            CONTACT TUTOR
-                        </button>
-                    </div>
-                `;
-            });
-        }
-
-        function filterTutors() {
-            const subject = document.getElementById('subjectFilter').value;
-            const filtered = subject === 'All' ? tutors : tutors.filter(t => t.subject === subject);
-            renderTutors(filtered);
-        }
-
-        function switchTab(tab) {
-            const studentCard = document.getElementById('studentFormCard');
-            const tutorCard = document.getElementById('tutorFormCard');
-            const reqCard = document.getElementById('requirementFormCard');
-            const studentBtn = document.getElementById('tabStudentBtn');
-            const tutorBtn = document.getElementById('tabTutorBtn');
-            const reqBtn = document.getElementById('tabRequirementBtn');
-
-            studentCard.classList.add('hidden');
-            tutorCard.classList.add('hidden');
-            reqCard.classList.add('hidden');
-            studentBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-            tutorBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-            reqBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-
-            if (tab === 'student') {
-                studentCard.classList.remove('hidden');
-                studentBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-            } else if (tab === 'tutor') {
-                tutorCard.classList.remove('hidden');
-                tutorBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-            } else if (tab === 'requirement') {
-                reqCard.classList.remove('hidden');
-                reqBtn.className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-                checkStudentLoginState();
-            }
-        }
-
-        function checkStudentLoginState() {
-            const alertBox = document.getElementById('notLoggedInAlert');
-            const formBox = document.getElementById('protectedReqForm');
-            const badge = document.getElementById('currentUserBadge');
-            const nameDisplay = document.getElementById('activeStudentNameDisplay');
-            const navName = document.getElementById('navLoggedName');
-
-            if (loggedInStudent) {
-                alertBox.classList.add('hidden');
-                formBox.classList.remove('hidden');
-                nameDisplay.innerText = loggedInStudent.name;
-                navName.innerText = loggedInStudent.name;
-                badge.classList.remove('hidden');
-            } else {
-                alertBox.classList.remove('hidden');
-                formBox.classList.add('hidden');
-                badge.classList.add('hidden');
-            }
-        }
-
-        function logoutStudent() {
-            loggedInStudent = null;
-            localStorage.removeItem('guruMatchActiveStudent');
-            checkStudentLoginState();
-        }
-
-        window.onload = function() {
-            renderTutors(tutors);
-            updateStaffTables();
-            checkStudentLoginState();
-        };
-
-        function openUpiQrModal() {
-            const upiString = "upi://pay?pa=Verizon@upi&pn=GuruMatch&am=200&cu=INR&tn=TutorRegistrationFee";
-            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiString)}`;
-            document.getElementById('dynamicQrImg').src = qrImageUrl;
-            document.getElementById('upiAppDeepLink').href = upiString;
-            document.getElementById('upiQrModal').classList.remove('hidden');
-        }
-
-        function closeUpiQrModal() { document.getElementById('upiQrModal').classList.add('hidden'); }
-        function openStaffLoginModal() { document.getElementById('staffLoginModal').classList.remove('hidden'); }
-        function closeStaffLoginModal() { document.getElementById('staffLoginModal').classList.add('hidden'); }
-
-        function handleStaffLogin(e) {
-            e.preventDefault();
-            const inputUser = document.getElementById('staffUserInput').value;
-            const inputPass = document.getElementById('staffPassInput').value;
+    <!-- Login / Signup Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 relative shadow-xl">
+            <h3 class="text-lg font-black text-brand-dark mb-2">Welcome to Guru Match</h3>
+            <p class="text-xs text-slate-500 mb-4">Enter your mobile number to get started.</p>
             
-            if (inputUser === STAFF_CONFIG.user && inputPass === STAFF_CONFIG.pass) {
-                closeStaffLoginModal();
-                document.getElementById('staffPanelModal').classList.remove('hidden');
-                document.getElementById('staffUserInput').value = '';
-                document.getElementById('staffPassInput').value = '';
+            <div id="step1Phone" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mobile Number *</label>
+                    <input type="text" id="phoneInput" placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3 text-sm focus:border-brand-blue focus:outline-none">
+                </div>
+                <button type="button" onclick="sendSimulatedOtp()" class="w-full bg-brand-dark hover:bg-slate-800 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
+                    SEND OTP
+                </button>
+            </div>
+
+            <!-- Step 2: Verify OTP -->
+            <div id="step2Otp" class="space-y-4 hidden">
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-800 text-center mb-2">
+                    <p class="font-bold">Simulated OTP Sent!</p>
+                    <p class="text-[10px] mt-0.5">Use code: <strong id="simulatedOtpCode" class="text-brand-dark">1234</strong></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Enter 4-Digit OTP *</label>
+                    <input type="text" id="otpCodeInput" maxlength="4" placeholder="1234" class="w-full border border-slate-300 rounded-xl p-3 text-sm text-center font-bold tracking-widest focus:border-brand-blue focus:outline-none">
+                </div>
+                <button type="button" onclick="verifySimulatedOtp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
+                    VERIFY & LOGIN
+                </button>
+            </div>
+
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-sm font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Handling Tabs & Modal -->
+    <script>
+        function switchTab(tab) {
+            const tutorsSec = document.getElementById('tutorsSection');
+            const studentsSec = document.getElementById('studentsSection');
+            const tabTutors = document.getElementById('tabTutors');
+            const tabStudents = document.getElementById('tabStudents');
+
+            if (tab === 'tutors') {
+                tutorsSec.classList.remove('hidden');
+                studentsSec.classList.add('hidden');
+                tabTutors.className = "px-6 py-2.5 rounded-xl text-xs font-bold transition-all bg-white text-brand-dark shadow-sm";
+                tabStudents.className = "px-6 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-brand-dark";
             } else {
-                alert("Access Denied! Incorrect Username or Password.");
-            }
-        }
-        function closeStaffPanelModal() { document.getElementById('staffPanelModal').classList.add('hidden'); }
-
-        // Admin Action: Delete User (Fake/Spam)
-        function deleteUser(index) {
-            if(confirm("Kya aap sach mein is user ko delete karna chahte hain?")) {
-                registeredUsers.splice(index, 1);
-                localStorage.setItem('guruMatchUsers', JSON.stringify(registeredUsers));
-                updateStaffTables();
+                studentsSec.classList.remove('hidden');
+                tutorsSec.classList.add('hidden');
+                tabStudents.className = "px-6 py-2.5 rounded-xl text-xs font-bold transition-all bg-white text-brand-dark shadow-sm";
+                tabTutors.className = "px-6 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-brand-dark";
             }
         }
 
-        // Admin Action: Toggle Fee Received Checkbox
-        function toggleFeeReceived(index) {
-            registeredUsers[index].feeReceived = !registeredUsers[index].feeReceived;
-            localStorage.setItem('guruMatchUsers', JSON.stringify(registeredUsers));
-            updateStaffTables();
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
         }
 
-        function deleteRequest(index) {
-            if(confirm("Kya aap is learning request ko delete karna chahte hain?")) {
-                learningRequirements.splice(index, 1);
-                localStorage.setItem('guruMatchReqs', JSON.stringify(learningRequirements));
-                updateStaffTables();
-            }
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
         }
 
-        function handleStudentFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('stu_name').value;
-            const email = document.getElementById('stu_email').value;
-
-            loggedInStudent = { name, email };
-            localStorage.setItem('guruMatchActiveStudent', JSON.stringify(loggedInStudent));
-
-            registeredUsers.push({ name, email, role: 'Student', details: document.getElementById('stu_class').value, txn: 'N/A', feeReceived: true });
-            localStorage.setItem('guruMatchUsers', JSON.stringify(registeredUsers));
-
-            alert(`Student Registration Successful & Logged In!`);
-            e.target.reset();
-            updateStaffTables();
-            switchTab('requirement');
-        }
-
-        function handleTutorFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('t_name').value;
-            const email = document.getElementById('t_email').value;
-            const subject = document.getElementById('t_subject').value;
-            const txnId = document.getElementById('txnIdInput').value.trim();
-
-            if (!txnId) { alert("Kripya UTR Transaction Number dalein!"); return; }
-
-            registeredUsers.push({ name, email, role: 'Tutor', details: subject, txn: txnId, feeReceived: false });
-            localStorage.setItem('guruMatchUsers', JSON.stringify(registeredUsers));
-
-            alert(`Tutor Application Submitted Successfully!\nAdmin will check your UTR in bank and approve verification.`);
-            e.target.reset();
-            updateStaffTables();
-        }
-
-        function handleRequirementSubmit(e) {
-            e.preventDefault();
-            if (!loggedInStudent) {
-                alert("Please login as a student first!");
-                switchTab('student');
+        function sendSimulatedOtp() {
+            const phone = document.getElementById('phoneInput').value;
+            if(phone.length < 10) {
+                alert('Please enter a valid 10-digit mobile number.');
                 return;
             }
-
-            const req = {
-                name: loggedInStudent.name,
-                subject: document.getElementById('req_subject').value,
-                mode: document.getElementById('req_mode').value,
-                desc: document.getElementById('req_desc').value
-            };
-            learningRequirements.push(req);
-            localStorage.setItem('guruMatchReqs', JSON.stringify(learningRequirements));
-            alert("Learning request posted successfully!");
-            document.getElementById('protectedReqForm').reset();
-            updateStaffTables();
+            document.getElementById('step1Phone').classList.add('hidden');
+            document.getElementById('step2Otp').classList.remove('hidden');
         }
 
-        function switchStaffTab(type) {
-            const usersView = document.getElementById('staffUsersView');
-            const reqsView = document.getElementById('staffReqsView');
-            const uBtn = document.getElementById('staffTabUsersBtn');
-            const rBtn = document.getElementById('staffTabReqsBtn');
-
-            if (type === 'users') {
-                usersView.classList.remove('hidden');
-                reqsView.classList.add('hidden');
-                uBtn.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                rBtn.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+        function verifySimulatedOtp() {
+            const otp = document.getElementById('otpCodeInput').value;
+            if(otp === '1234') {
+                alert('Login Successful!');
+                closeLoginModal();
             } else {
-                reqsView.classList.remove('hidden');
-                usersView.classList.add('hidden');
-                rBtn.className = "bg-brand-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow";
-                uBtn.className = "bg-slate-100 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold";
+                alert('Invalid OTP. Please use 1234.');
             }
-        }
-
-        function updateStaffTables() {
-            const userTable = document.getElementById('verificationTableBody');
-            userTable.innerHTML = '';
-            registeredUsers.forEach((user, index) => {
-                userTable.innerHTML += `
-                    <tr class="border-b border-slate-100">
-                        <td class="p-3.5 font-bold">${user.name} <span class="text-[10px] px-2 py-0.5 rounded bg-blue-50 text-brand-blue font-bold">${user.role}</span><br><span class="text-xs font-normal text-slate-500">${user.email}</span></td>
-                        <td class="p-3.5 text-xs text-slate-600">${user.details}</td>
-                        <td class="p-3.5 font-mono text-slate-700 font-bold text-xs">${user.txn}</td>
-                        <td class="p-3.5 text-center">
-                            <input type="checkbox" ${user.feeReceived ? 'checked' : ''} onclick="toggleFeeReceived(${index})" class="w-5 h-5 text-brand-blue rounded cursor-pointer accent-brand-blue">
-                            <span class="block text-[10px] ${user.feeReceived ? 'text-emerald-600 font-bold' : 'text-slate-400'}">${user.feeReceived ? 'Verified Received ✓' : 'Pending Fee'}</span>
-                        </td>
-                        <td class="p-3.5 text-center">
-                            <button onclick="deleteUser(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow flex items-center gap-1 mx-auto">
-                                <i class="fa-solid fa-trash"></i> DELETE
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            const reqTable = document.getElementById('requirementsTableBody');
-            reqTable.innerHTML = '';
-            learningRequirements.forEach((req, index) => {
-                reqTable.innerHTML += `
-                    <tr class="border-b border-slate-100">
-                        <td class="p-3.5 font-bold">${req.name}</td>
-                        <td class="p-3.5 text-brand-blue font-bold">${req.subject}</td>
-                        <td class="p-3.5">${req.mode}</td>
-                        <td class="p-3.5 text-xs text-slate-600">${req.desc}</td>
-                        <td class="p-3.5">
-                            <button onclick="deleteRequest(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow flex items-center gap-1">
-                                <i class="fa-solid fa-trash"></i> DELETE
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
         }
     </script>
 </body>

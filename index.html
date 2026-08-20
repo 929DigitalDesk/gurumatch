@@ -34,10 +34,9 @@
 
     <!-- Header / Navbar -->
     <header class="bg-white text-brand-dark sticky top-0 z-50 shadow-md border-b border-slate-200 w-full">
-        <!-- Changed height to h-16 on mobile for better proportions, and adjusted padding -->
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between relative">
             
-            <!-- Left Side: Logo & Name (Added shrink-0 so it doesn't crush) -->
+            <!-- Left Side: Logo & Name -->
             <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 <div class="w-8 h-8 sm:w-12 sm:h-12 bg-brand-blue text-white rounded-lg sm:rounded-xl flex items-center justify-center font-black text-sm sm:text-xl shadow">
                     GM
@@ -47,17 +46,24 @@
                     <p class="hidden sm:block text-[10px] text-slate-500 font-bold tracking-widest uppercase">Junior College Tutors & Students Hub</p>
                 </div>
             </div>
-            
-            <!-- Navbar Links (Only visible in Public Mode on desktop) -->
-            <nav id="publicNavbarLinks" class="hidden lg:flex gap-6 text-sm font-bold text-slate-600">
-                <a href="#home" class="hover:text-brand-blue transition">HOME</a>
-                <a href="#tutors" class="hover:text-brand-blue transition">EXPLORE TUTORS</a>
-                <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS DIRECTORY</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">PORTAL & REQUESTS</a>
-            </nav>
 
-            <!-- Right Side: Buttons (Added shrink-0 and reduced padding for mobile) -->
+            <!-- Right Side: Buttons & Dropdown Menu -->
             <div class="flex gap-1.5 sm:gap-2 items-center shrink-0">
+                
+                <!-- NEW MENU DROPDOWN -->
+                <div id="publicMenuWrapper" class="relative">
+                    <button onclick="toggleNavMenu()" class="bg-white border border-slate-300 hover:bg-slate-50 text-brand-dark text-[10px] sm:text-xs font-bold px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl transition shadow-sm flex items-center gap-1 sm:gap-2">
+                        <i class="fa-solid fa-bars"></i> <span class="hidden sm:inline">MENU</span>
+                    </button>
+                    <!-- Dropdown Links -->
+                    <nav id="publicNavbarLinks" class="absolute top-full right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 flex-col hidden z-50">
+                        <a href="#home" onclick="closeNavMenu()" class="block px-5 py-3 text-xs sm:text-sm font-bold text-slate-600 hover:bg-brand-blue hover:text-white transition">HOME</a>
+                        <a href="#tutors" onclick="closeNavMenu()" class="block px-5 py-3 text-xs sm:text-sm font-bold text-slate-600 hover:bg-brand-blue hover:text-white transition">EXPLORE TUTORS</a>
+                        <a href="#studentsDirectory" onclick="closeNavMenu()" class="block px-5 py-3 text-xs sm:text-sm font-bold text-slate-600 hover:bg-brand-blue hover:text-white transition">STUDENTS DIRECTORY</a>
+                        <a href="#registrationSection" onclick="closeNavMenu()" class="block px-5 py-3 text-xs sm:text-sm font-bold text-slate-600 hover:bg-brand-blue hover:text-white transition">PORTAL & REQUESTS</a>
+                    </nav>
+                </div>
+
                 <div id="currentUserBadge" class="hidden text-[9px] sm:text-xs font-bold bg-blue-50 text-brand-blue px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border border-blue-200 flex items-center gap-1 sm:gap-2">
                     <span class="truncate max-w-[60px] sm:max-w-none"><i class="fa-solid fa-user-check mr-1 hidden sm:inline"></i> <span id="navLoggedName"></span></span> 
                     <button onclick="logoutUser()" class="text-red-600 hover:underline text-[8px] sm:text-[10px] uppercase font-black ml-1 border-l border-blue-200 pl-1 sm:pl-2">Logout</button>
@@ -1115,14 +1121,33 @@
             document.getElementById('successPopupModal').classList.add('hidden');
         }
 
+        // --- NEW NAV MENU TOGGLE LOGIC ---
+        function toggleNavMenu() {
+            const menu = document.getElementById('publicNavbarLinks');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        }
+
+        function closeNavMenu() {
+            const menu = document.getElementById('publicNavbarLinks');
+            menu.classList.add('hidden');
+            menu.classList.remove('flex');
+        }
+        // ---------------------------------
+
         function switchTab(tab) {
             document.getElementById('studentFormCard').classList.add('hidden');
             document.getElementById('tutorFormCard').classList.add('hidden');
             document.getElementById('requirementFormCard').classList.add('hidden');
 
-            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-            document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
+            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark hover:bg-slate-200 text-center tracking-wide";
+            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark hover:bg-slate-200 text-center tracking-wide";
+            document.getElementById('tabRequirementBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark hover:bg-slate-200 text-center tracking-wide";
 
             if (tab === 'student') {
                 document.getElementById('studentFormCard').classList.remove('hidden');
@@ -1285,7 +1310,7 @@
             const isStaff = localStorage.getItem('is_staff_logged') === 'true';
             const dash = document.getElementById('staffAdminDashboard');
             const publicContent = document.getElementById('publicWebsiteContent');
-            const publicNav = document.getElementById('publicNavbarLinks');
+            const publicMenuWrapper = document.getElementById('publicMenuWrapper'); // HIDE MENU IN ADMIN MODE
             const navStaffBtn = document.getElementById('navStaffBtn');
             const stickyLogout = document.getElementById('stickyAdminLogout');
 
@@ -1293,7 +1318,7 @@
                 // Show only Staff Dashboard, Hide Homepage and Navbar links
                 dash.classList.remove('hidden');
                 publicContent.classList.add('hidden');
-                if(publicNav) publicNav.classList.add('hidden');
+                if(publicMenuWrapper) publicMenuWrapper.classList.add('hidden');
                 if(navStaffBtn) navStaffBtn.classList.add('hidden');
                 if(stickyLogout) stickyLogout.classList.remove('hidden');
                 renderAdminQueue();
@@ -1301,7 +1326,7 @@
                 // Restore normal Website view
                 dash.classList.add('hidden');
                 publicContent.classList.remove('hidden');
-                if(publicNav) publicNav.classList.remove('hidden');
+                if(publicMenuWrapper) publicMenuWrapper.classList.remove('hidden');
                 if(navStaffBtn) navStaffBtn.classList.remove('hidden');
                 if(stickyLogout) stickyLogout.classList.add('hidden');
             }

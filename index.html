@@ -636,21 +636,21 @@
                 grid.innerHTML = `<div class="col-span-3 text-center py-10 text-slate-500 font-bold">No tutors found for this subject.</div>`;
             } else {
                 paginatedTutors.forEach(t => {
+                    // Updated: Verified tick and text are now Blue (bg-blue-600 / text-blue-600)
                     const verifiedBadgeHTML = t.verified ? `
-                        <span class="relative inline-flex items-center justify-center w-4 h-4 bg-orange-600 text-white rounded-full text-[9px] shadow-sm ml-1" title="Verified Badge">
+                        <span class="relative inline-flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px] shadow-sm ml-1" title="Verified Badge">
                             <i class="fa-solid fa-check"></i>
                         </span>
                     ` : '';
 
                     const verifiedTextHTML = t.verified ? `
-                        <span class="text-[11px] font-bold text-orange-600 flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg shadow-sm border border-orange-100">
-                            <span class="inline-flex items-center justify-center w-4 h-4 bg-orange-600 text-white rounded-full text-[9px]">
+                        <span class="text-[11px] font-bold text-blue-600 flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg shadow-sm border border-blue-100">
+                            <span class="inline-flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px]">
                                 <i class="fa-solid fa-check"></i>
                             </span> Verified Tutor
                         </span>
                     ` : `<span class="text-[11px] font-bold text-orange-200">Junior College Faculty</span>`;
 
-                    // SWAPPED COLOR: Tutors are now Orange (bg-[#F97316])
                     grid.innerHTML += `
                         <div class="bg-[#F97316] text-white rounded-2xl p-6 shadow-md border border-orange-500 flex flex-col justify-between">
                             <div>
@@ -775,7 +775,6 @@
             const paginatedStudents = allStudentsData.slice(startIndex, endIndex);
 
             paginatedStudents.forEach(s => {
-                // SWAPPED COLOR: Students are now Blue (bg-blue-700)
                 container.innerHTML += `
                     <div class="bg-blue-700 text-white rounded-2xl p-6 shadow-md border border-blue-600 flex flex-col justify-between">
                         <div>

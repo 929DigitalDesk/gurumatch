@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GURU MATCH - Elite Tutoring Platform</title>
+    <title>GURU MATCH - Junior College Hub</title>
     <!-- Google Fonts: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
@@ -20,7 +20,7 @@
                             blue: '#2563EB',
                             dark: '#0F172A',
                             lightBg: '#F8FAFC',
-                            nagpurOrange: '#F97316'
+                            orange: '#F97316'
                         }
                     }
                 }
@@ -30,573 +30,325 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-brand-lightBg text-brand-dark font-sans antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navbar -->
-    <header class="bg-white text-brand-dark sticky top-0 z-50 shadow-md border-b border-slate-200">
+    <header class="bg-white text-slate-900 sticky top-0 z-50 shadow-sm border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-brand-blue text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
+                <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
                     GM
                 </div>
                 <div>
-                    <span class="text-2xl font-black tracking-wide text-brand-dark">GURU <span class="text-brand-blue">MATCH</span></span>
+                    <span class="text-2xl font-black tracking-wide text-slate-900">GURU <span class="text-blue-600">MATCH</span></span>
                     <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Junior College Tutors & Students Hub</p>
                 </div>
             </div>
             <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
-                <a href="#home" class="hover:text-brand-blue transition">HOME</a>
-                <a href="#tutors" class="hover:text-brand-blue transition">TUTORS</a>
-                <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS</a>
-                <a href="#learningRequestsSection" class="hover:text-brand-blue transition">LEARNING REQUESTS</a>
-                <a href="#registrationSection" class="hover:text-brand-blue transition">REGISTER</a>
+                <a href="#home" class="hover:text-blue-600 transition">HOME</a>
+                <a href="#tutors" class="hover:text-blue-600 transition">TUTORS (150)</a>
+                <a href="#studentsDirectory" class="hover:text-blue-600 transition">STUDENTS (1197)</a>
+                <a href="#formsAndRequests" class="hover:text-blue-600 transition">REGISTRATION & REQUESTS</a>
             </nav>
-            <div class="flex gap-2 items-center">
-                <div id="currentUserBadge" class="hidden text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-xl border border-blue-200 flex items-center gap-2">
-                    <span><i class="fa-solid fa-user-check mr-1"></i> <span id="navLoggedName"></span> (<span id="navLoggedRole" class="uppercase text-[10px]"></span>)</span>
-                    <button onclick="logoutUser()" class="text-red-600 hover:underline text-[10px] uppercase font-black ml-1">Logout</button>
-                </div>
-                <button id="navLoginBtn" onclick="openLoginModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-dark text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> LOGIN
-                </button>
-                <button id="navStaffBtn" onclick="openStaffLoginModal()" class="bg-brand-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> STAFF
-                </button>
-            </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
     <main class="flex-grow">
         <!-- Hero Banner -->
-        <section id="home" class="bg-brand-blue text-white py-20 relative overflow-hidden">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                <span class="bg-white/15 text-white border border-white/20 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest inline-block mb-6 backdrop-blur-sm">
-                    ⭐ Junior College (FYJC & SYJC) Hub
+        <section id="home" class="bg-blue-600 text-white py-16 relative overflow-hidden text-center">
+            <div class="max-w-4xl mx-auto px-4">
+                <span class="bg-white/15 text-white border border-white/20 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest inline-block mb-4 backdrop-blur-sm">
+                    ⭐ Junior College (FYJC & SYJC) Platform
                 </span>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">
-                    Empowering Education with <span class="text-amber-300">GURU MATCH</span>
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
+                    Find 150+ Tutors & 1197+ Student Profiles
                 </h1>
-                <p class="text-slate-100 max-w-2xl mx-auto text-base md:text-lg mb-10 font-normal">
-                    Find elite verified tutors for Junior College, post custom learning requests, and connect seamlessly.
+                <p class="text-slate-100 max-w-xl mx-auto text-sm md:text-base font-normal">
+                    The ultimate destination connecting Junior College students with verified expert tutors in Mumbai & Nagpur.
                 </p>
-                <div class="flex justify-center gap-4">
-                    <a href="#registrationSection" class="bg-white text-brand-blue hover:bg-slate-100 font-bold px-8 py-4 rounded-xl transition shadow-xl text-base tracking-wider">
-                        GET STARTED <i class="fa-solid fa-arrow-down ml-2"></i>
-                    </a>
-                </div>
             </div>
         </section>
 
-        <!-- ADMIN DASHBOARD SECTION (Staff Only) -->
-        <section id="adminDashboardSection" class="max-w-7xl mx-auto px-4 py-12 hidden">
-            <div class="bg-white border border-slate-200 rounded-3xl shadow-xl p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-slate-200 gap-4">
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+            <!-- 1. TUTORS SECTION (150 Blue Profiles Grid) -->
+            <section id="tutors">
+                <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-200">
                     <div>
-                        <span class="bg-purple-100 text-purple-700 font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest">Admin Panel</span>
-                        <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Staff Control & Verification Center</h2>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Tutors Directory <span class="text-blue-600 text-lg font-bold">(150 Profiles)</span></h2>
+                        <p class="text-slate-500 text-xs font-medium">Verified elite educators for FYJC & SYJC</p>
                     </div>
                 </div>
-
-                <div class="flex gap-2 mb-6 border-b border-slate-200 pb-4">
-                    <button onclick="switchAdminTab('students')" id="adminTabStudentsBtn" class="bg-brand-blue text-white px-5 py-2.5 rounded-xl text-xs font-bold transition">Manage Students</button>
-                    <button onclick="switchAdminTab('tutors')" id="adminTabTutorsBtn" class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition hover:bg-slate-200">Manage Tutors & Payments</button>
-                </div>
-
-                <!-- Admin Students Panel -->
-                <div id="adminStudentsPanel" class="overflow-x-auto">
-                    <h3 class="font-black text-lg mb-4 text-brand-dark">Registered Students List</h3>
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-black">
-                                <th class="p-3.5 rounded-l-xl">Name</th>
-                                <th class="p-3.5">Email / Phone</th>
-                                <th class="p-3.5">Standard / Stream</th>
-                                <th class="p-3.5">Subject Needed</th>
-                                <th class="p-3.5 rounded-r-xl text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminStudentsTableBody" class="text-sm divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-
-                <!-- Admin Tutors Panel -->
-                <div id="adminTutorsPanel" class="overflow-x-auto hidden">
-                    <h3 class="font-black text-lg mb-4 text-brand-dark">Tutor Applications & UPI Verification</h3>
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-black">
-                                <th class="p-3.5 rounded-l-xl">Tutor Name</th>
-                                <th class="p-3.5">Subject</th>
-                                <th class="p-3.5">UTR / Ref</th>
-                                <th class="p-3.5">Payment Status</th>
-                                <th class="p-3.5 rounded-r-xl text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminTutorsTableBody" class="text-sm divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1. TUTOR DIRECTORY SECTION (Home Page) -->
-        <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
-            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
-                <div>
-                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Featured Tutors Directory</h2>
-                    <p class="text-slate-500 text-sm font-medium">Explore verified Junior College educators</p>
-                </div>
-            </div>
-            <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </section>
-
-        <!-- 2. STUDENTS DIRECTORY SECTION (Home Page) -->
-        <section id="studentsDirectory" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
-            <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-                <div>
-                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Junior College Students Directory</h2>
-                    <p class="text-slate-500 text-sm font-medium">Browse registered FYJC & SYJC student profiles.</p>
-                </div>
-            </div>
-            <div id="studentGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </section>
-
-        <!-- 3. LEARNING REQUESTS SECTION (Home Page) -->
-        <section id="learningRequestsSection" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
-            <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-                <div>
-                    <h2 class="text-3xl font-black text-brand-dark tracking-tight">Student Learning Requests</h2>
-                    <p class="text-slate-500 text-sm font-medium">Active tutoring requirements posted by students.</p>
-                </div>
-            </div>
-            <div id="learningRequestsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </section>
-
-        <!-- 4. REGISTRATION SECTION (Student & Tutor Forms with Pay via UPI) -->
-        <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
-            <div class="max-w-3xl mx-auto px-4">
-                <!-- Tab Switching Buttons -->
-                <div class="grid grid-cols-2 bg-slate-100 p-1.5 rounded-2xl shadow-inner mb-8 border border-slate-200 gap-1">
-                    <button id="tabStudentBtn" onclick="switchTab('student')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide">
-                        <i class="fa-solid fa-user-graduate mr-1"></i>STUDENT REGISTRATION
-                    </button>
-                    <button id="tabTutorBtn" onclick="switchTab('tutor')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide">
-                        <i class="fa-solid fa-chalkboard-user mr-1"></i>TUTOR REGISTRATION & FEES
-                    </button>
-                </div>
-
-                <!-- Student Registration Form Card -->
-                <div id="studentFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Student Registration</h2>
-                        <p class="text-xs text-slate-500 mt-1">Register your profile and post your learning requirements.</p>
-                    </div>
-                    <form onsubmit="handleStudentFormSubmit(event)" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Sample Tutor Card (Blue Themed) -->
+                    <div class="bg-blue-600 text-white border border-blue-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Student Full Name *</label>
-                            <input type="text" id="stu_name" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address *</label>
-                                <input type="email" id="stu_email" required placeholder="student@gmail.com" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-blue-500/55 px-2 py-0.5 rounded text-white uppercase tracking-wider">Physics</span>
+                                <i class="fa-solid fa-circle-check text-amber-300 text-xs"></i>
                             </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Mobile Number *</label>
-                                <input type="tel" id="stu_phone" required placeholder="9876543210" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:border-brand-blue focus:outline-none bg-white">
-                            </div>
+                            <h3 class="font-black text-base mb-1">Prof. Rajesh Sharma</h3>
+                            <p class="text-xs text-blue-100">FYJC / SYJC Science</p>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="mt-4 pt-2 border-t border-blue-500/40 flex justify-between items-center text-[11px]">
+                            <span class="font-bold text-amber-200">⭐ 4.9 (120+ reviews)</span>
+                            <span class="underline cursor-pointer font-bold">Connect</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600 text-white border border-blue-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-blue-500/55 px-2 py-0.5 rounded text-white uppercase tracking-wider">Mathematics</span>
+                                <i class="fa-solid fa-circle-check text-amber-300 text-xs"></i>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Dr. Sneha Kulkarni</h3>
+                            <p class="text-xs text-blue-100">Calculus & Algebra</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-blue-500/40 flex justify-between items-center text-[11px]">
+                            <span class="font-bold text-amber-200">⭐ 5.0 (95+ reviews)</span>
+                            <span class="underline cursor-pointer font-bold">Connect</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600 text-white border border-blue-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-blue-500/55 px-2 py-0.5 rounded text-white uppercase tracking-wider">Accounts</span>
+                                <i class="fa-solid fa-circle-check text-amber-300 text-xs"></i>
+                            </div>
+                            <h3 class="font-black text-base mb-1">CA Amit Mehta</h3>
+                            <p class="text-xs text-blue-100">Commerce Stream</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-blue-500/40 flex justify-between items-center text-[11px]">
+                            <span class="font-bold text-amber-200">⭐ 4.8 (80+ reviews)</span>
+                            <span class="underline cursor-pointer font-bold">Connect</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600 text-white border border-blue-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-blue-500/55 px-2 py-0.5 rounded text-white uppercase tracking-wider">Chemistry</span>
+                                <i class="fa-solid fa-circle-check text-amber-300 text-xs"></i>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Prof. Priya Deshmukh</h3>
+                            <p class="text-xs text-blue-100">Organic & Inorganic</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-blue-500/40 flex justify-between items-center text-[11px]">
+                            <span class="font-bold text-amber-200">⭐ 4.9 (110+ reviews)</span>
+                            <span class="underline cursor-pointer font-bold">Connect</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600 text-white border border-blue-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-blue-500/55 px-2 py-0.5 rounded text-white uppercase tracking-wider">Economics</span>
+                                <i class="fa-solid fa-circle-check text-amber-300 text-xs"></i>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Rohan Verma</h3>
+                            <p class="text-xs text-blue-100">Arts & Commerce</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-blue-500/40 flex justify-between items-center text-[11px]">
+                            <span class="font-bold text-amber-200">⭐ 4.7 (65+ reviews)</span>
+                            <span class="underline cursor-pointer font-bold">Connect</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. STUDENTS DIRECTORY SECTION (1197 Orange Profiles Grid) -->
+            <section id="studentsDirectory">
+                <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-200">
+                    <div>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Students Directory <span class="text-amber-600 text-lg font-bold">(1197 Profiles)</span></h2>
+                        <p class="text-slate-500 text-xs font-medium">Registered FYJC & SYJC student profiles</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Sample Student Card (Orange Themed) -->
+                    <div class="bg-amber-500 text-white border border-amber-600 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-amber-600/70 px-2 py-0.5 rounded text-white uppercase tracking-wider">SYJC Science</span>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Aarav Patil</h3>
+                            <p class="text-xs text-amber-100">Needs: Physics & Maths</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-amber-600/40 flex justify-between items-center text-[11px]">
+                            <span class="font-medium">Nagpur</span>
+                            <span class="underline cursor-pointer font-bold">View</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-500 text-white border border-amber-600 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-amber-600/70 px-2 py-0.5 rounded text-white uppercase tracking-wider">FYJC Commerce</span>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Tanvi Joshi</h3>
+                            <p class="text-xs text-amber-100">Needs: Bookkeeping</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-amber-600/40 flex justify-between items-center text-[11px]">
+                            <span class="font-medium">Mumbai</span>
+                            <span class="underline cursor-pointer font-bold">View</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-500 text-white border border-amber-600 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-amber-600/70 px-2 py-0.5 rounded text-white uppercase tracking-wider">SYJC Science</span>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Kunal Shinde</h3>
+                            <p class="text-xs text-amber-100">Needs: Chemistry</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-amber-600/40 flex justify-between items-center text-[11px]">
+                            <span class="font-medium">Pune</span>
+                            <span class="underline cursor-pointer font-bold">View</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-500 text-white border border-amber-600 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-amber-600/70 px-2 py-0.5 rounded text-white uppercase tracking-wider">FYJC Arts</span>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Neha Gawande</h3>
+                            <p class="text-xs text-amber-100">Needs: Economics</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-amber-600/40 flex justify-between items-center text-[11px]">
+                            <span class="font-medium">Nagpur</span>
+                            <span class="underline cursor-pointer font-bold">View</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-500 text-white border border-amber-600 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] font-bold bg-amber-600/70 px-2 py-0.5 rounded text-white uppercase tracking-wider">SYJC Commerce</span>
+                            </div>
+                            <h3 class="font-black text-base mb-1">Sahil Deshmukh</h3>
+                            <p class="text-xs text-amber-100">Needs: Economics</p>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-amber-600/40 flex justify-between items-center text-[11px]">
+                            <span class="font-medium">Mumbai</span>
+                            <span class="underline cursor-pointer font-bold">View</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. FORMS AND LEARNING REQUESTS LAYOUT (Side-by-Side as requested) -->
+            <section id="formsAndRequests" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Student Registration Form -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                    <div class="mb-4 pb-2 border-b border-slate-100">
+                        <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md uppercase tracking-wider">Form A</span>
+                        <h3 class="text-lg font-black text-slate-900 mt-1">Student Registration</h3>
+                    </div>
+                    <form class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                            <input type="text" placeholder="Student name" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:border-blue-600">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Standard *</label>
-                                <select id="stu_std" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
-                                    <option value="FYJC (11th)">FYJC (11th)</option>
-                                    <option value="SYJC (12th)">SYJC (12th)</option>
+                                <label class="block font-bold text-slate-700 uppercase mb-1">Standard *</label>
+                                <select class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50">
+                                    <option>FYJC (11th)</option>
+                                    <option>SYJC (12th)</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Stream *</label>
-                                <select id="stu_stream" required class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
-                                    <option value="Science">Science</option>
-                                    <option value="Commerce">Commerce</option>
-                                    <option value="Arts">Arts</option>
+                                <label class="block font-bold text-slate-700 uppercase mb-1">Stream *</label>
+                                <select class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50">
+                                    <option>Science</option>
+                                    <option>Commerce</option>
+                                    <option>Arts</option>
                                 </select>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject(s) Needed *</label>
-                            <input type="text" id="stu_subject" required placeholder="e.g. Physics, Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                            <label class="block font-bold text-slate-700 uppercase mb-1">Subject Needed *</label>
+                            <input type="text" placeholder="e.g. Mathematics" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50">
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Learning Request Details / Message *</label>
-                            <textarea id="stu_request_desc" required rows="3" placeholder="Describe your specific tutoring needs or timings..." class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white focus:outline-none focus:border-brand-blue"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md">
-                            REGISTER STUDENT & POST REQUEST
+                        <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow">
+                            Register Student
                         </button>
                     </form>
                 </div>
 
-                <!-- Tutor Registration Form Card with Pay via UPI -->
-                <div id="tutorFormCard" class="bg-brand-lightBg rounded-3xl shadow-lg border border-slate-200 p-8 md:p-10 hidden">
-                    <div class="text-center mb-6">
-                        <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Tutor Registration & Payment</h2>
-                        <p class="text-xs text-slate-500 mt-1">Complete registration fee payment via UPI and submit UTR reference.</p>
+                <!-- Tutor Registration Form (with UPI details) -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                    <div class="mb-4 pb-2 border-b border-slate-100">
+                        <span class="text-[10px] font-black bg-amber-50 text-amber-600 px-2.5 py-1 rounded-md uppercase tracking-wider">Form B</span>
+                        <h3 class="text-lg font-black text-slate-900 mt-1">Tutor Registration & UPI</h3>
                     </div>
-
-                    <!-- Pay via UPI Box -->
-                    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-6 text-center">
-                        <h4 class="text-sm font-black text-brand-blue uppercase tracking-wider mb-2"><i class="fa-solid fa-qrcode mr-1"></i> Pay via UPI (₹200 Plan Fees)</h4>
-                        <p class="text-xs text-slate-600 mb-3">Scan QR code using GPay/PhonePe/Paytm or pay directly to UPI ID:</p>
-                        <div class="bg-white inline-block px-4 py-2 rounded-xl border border-blue-200 text-xs font-black text-brand-dark mb-3 select-all">
-                            gurumatch@okhdfcbank
-                        </div>
-                        <div class="text-[11px] text-slate-500 font-medium">After successful payment, enter your 12-digit UPI / Bank UTR reference number below.</div>
-                    </div>
-
-                    <form onsubmit="handleTutorFormSubmit(event)" class="space-y-4">
+                    <form class="space-y-3 text-xs">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Full Name *</label>
-                            <input type="text" id="t_name" required placeholder="Enter tutor name" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                            <label class="block font-bold text-slate-700 uppercase mb-1">Tutor Name *</label>
+                            <input type="text" placeholder="Your full name" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 focus:outline-none focus:border-blue-600">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subject Expertise *</label>
-                            <input type="text" id="t_subject" required placeholder="e.g. Mathematics" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white">
+                            <label class="block font-bold text-slate-700 uppercase mb-1">Expertise Subject *</label>
+                            <input type="text" placeholder="e.g. Physics" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50">
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-xl text-[11px] text-slate-700">
+                            <span class="font-black text-blue-600">UPI Pay (₹200):</span> <span class="select-all font-mono font-bold">gurumatch@okhdfcbank</span>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Payment UTR / Transaction Reference Number *</label>
-                            <input type="text" id="t_utr" required placeholder="Enter 12-digit UTR Number" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm bg-white font-bold text-brand-blue">
+                            <label class="block font-bold text-slate-700 uppercase mb-1">UTR Reference No *</label>
+                            <input type="text" placeholder="12-digit UTR" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 font-bold text-blue-600">
                         </div>
-                        <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-md">
-                            SUBMIT TUTOR APPLICATION
+                        <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow">
+                            Submit Application
                         </button>
                     </form>
                 </div>
-            </div>
-        </section>
+
+                <!-- Learning Requests Section -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="mb-4 pb-2 border-b border-slate-100">
+                            <span class="text-[10px] font-black bg-purple-50 text-purple-600 px-2.5 py-1 rounded-md uppercase tracking-wider">Live Board</span>
+                            <h3 class="text-lg font-black text-slate-900 mt-1">Learning Requests</h3>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                                <div class="flex justify-between font-bold text-slate-800 mb-1">
+                                    <span>Physics & Maths</span>
+                                    <span class="text-purple-600">SYJC</span>
+                                </div>
+                                <p class="text-slate-500 text-[11px]">Looking for experienced home tutor near Bajaj Nagar...</p>
+                            </div>
+                            <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                                <div class="flex justify-between font-bold text-slate-800 mb-1">
+                                    <span>Bookkeeping</span>
+                                    <span class="text-purple-600">FYJC</span>
+                                </div>
+                                <p class="text-slate-500 text-[11px]">Need conceptual doubt solving sessions twice a week...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 text-center">
+                        <span class="text-xs font-bold text-blue-600 hover:underline cursor-pointer">View All Requests →</span>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
     </main>
 
-    <!-- STAFF / ADMIN LOGIN MODAL -->
-    <div id="staffLoginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
-            <button onclick="closeStaffLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center mb-4">
-                <div class="w-12 h-12 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-xl font-black text-brand-dark">Staff / Admin Login</h3>
-            </div>
-            <form onsubmit="handleStaffLogin(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Staff Email *</label>
-                    <input type="email" id="staffEmailInput" required placeholder="admin@gurumatch.com" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
-                    <input type="password" id="staffPassInput" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold bg-white focus:outline-none focus:border-brand-blue">
-                </div>
-                <button type="submit" class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md text-xs tracking-wider">
-                    LOGIN AS STAFF
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- STUDENT LOGIN MODAL -->
-    <div id="loginModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-200 relative">
-            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center mb-4">
-                <h3 class="text-xl font-black text-brand-dark">User Login</h3>
-            </div>
-            <div id="otpStep1" class="space-y-3">
-                <input type="tel" id="loginPhoneInput" placeholder="Mobile Number" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-bold">
-                <button type="button" onclick="sendSimulatedOtp()" class="w-full bg-brand-blue text-white font-bold py-3 rounded-xl text-xs">SEND OTP</button>
-            </div>
-            <div id="otpStep2" class="space-y-3 hidden">
-                <p class="text-xs text-center">OTP: <span id="generatedOtpDisplay" class="font-bold text-brand-blue"></span></p>
-                <input type="text" maxlength="4" id="otpCodeInput" placeholder="Enter OTP" class="w-full border border-slate-300 rounded-xl p-3 text-sm text-center font-black">
-                <button type="button" onclick="verifySimulatedOtp()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl text-xs">VERIFY & LOGIN</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
-    <footer class="bg-brand-dark text-white py-8 text-center text-xs">
+    <footer class="bg-slate-900 text-white py-6 text-center text-xs">
         <p>&copy; GURU MATCH. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Logic -->
-    <script>
-        let students = JSON.parse(localStorage.getItem('gm_students')) || [
-            { id: 1, name: "Aarav Sharma", email: "aarav@gmail.com", phone: "9876543210", std: "SYJC (12th)", stream: "Science", subject: "Physics, Mathematics", requestDesc: "Need experienced tutor for board exam preparation." },
-            { id: 2, name: "Sneha Patil", email: "sneha@gmail.com", phone: "9123456789", std: "FYJC (11th)", stream: "Commerce", subject: "Accountancy", requestDesc: "Looking for weekly conceptual classes." }
-        ];
-
-        let tutors = JSON.parse(localStorage.getItem('gm_tutors')) || [
-            { id: 1, name: "Dr. Ramesh Iyer", subject: "Mathematics", utr: "UTR987654321", planPaid: true, verified: true },
-            { id: 2, name: "Prof. Anjali Deshmukh", subject: "Physics", utr: "UTR123456789", planPaid: true, verified: false }
-        ];
-
-        function saveData() {
-            localStorage.setItem('gm_students', JSON.stringify(students));
-            localStorage.setItem('gm_tutors', JSON.stringify(tutors));
-        }
-
-        // Staff Authentication
-        function handleStaffLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('staffEmailInput').value.trim();
-            const pass = document.getElementById('staffPassInput').value.trim();
-
-            const MY_CUSTOM_EMAIL = "admin@gurumatch.com"; 
-            const MY_CUSTOM_PASSWORD = "admin123";
-
-            if(email === MY_CUSTOM_EMAIL && pass === MY_CUSTOM_PASSWORD) {
-                localStorage.setItem('currentUser', JSON.stringify({ name: "Admin Staff", role: "Staff", email: email }));
-                alert("Staff Login Successful!");
-                closeStaffLoginModal();
-                checkAuthStatus();
-            } else {
-                alert("Invalid Staff Email or Password!");
-            }
-        }
-
-        function switchTab(tab) {
-            document.getElementById('studentFormCard').classList.add('hidden');
-            document.getElementById('tutorFormCard').classList.add('hidden');
-            
-            document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-            document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition text-slate-600 hover:text-brand-dark text-center tracking-wide";
-
-            if(tab === 'student') {
-                document.getElementById('studentFormCard').classList.remove('hidden');
-                document.getElementById('tabStudentBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-            } else if(tab === 'tutor') {
-                document.getElementById('tutorFormCard').classList.remove('hidden');
-                document.getElementById('tabTutorBtn').className = "py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide";
-            }
-        }
-
-        function switchAdminTab(tab) {
-            if(tab === 'students') {
-                document.getElementById('adminStudentsPanel').classList.remove('hidden');
-                document.getElementById('adminTutorsPanel').classList.add('hidden');
-                document.getElementById('adminTabStudentsBtn').className = "bg-brand-blue text-white px-5 py-2.5 rounded-xl text-xs font-bold transition";
-                document.getElementById('adminTabTutorsBtn').className = "bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition hover:bg-slate-200";
-            } else {
-                document.getElementById('adminStudentsPanel').classList.add('hidden');
-                document.getElementById('adminTutorsPanel').classList.remove('hidden');
-                document.getElementById('adminTabStudentsBtn').className = "bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition hover:bg-slate-200";
-                document.getElementById('adminTabTutorsBtn').className = "bg-brand-blue text-white px-5 py-2.5 rounded-xl text-xs font-bold transition";
-            }
-        }
-
-        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
-        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
-        function openStaffLoginModal() { document.getElementById('staffLoginModal').classList.remove('hidden'); }
-        function closeStaffLoginModal() { document.getElementById('staffLoginModal').classList.add('hidden'); }
-
-        let generatedOtp = "";
-        function sendSimulatedOtp() {
-            const phone = document.getElementById('loginPhoneInput').value.trim();
-            if(phone.length < 10) { alert("Please enter valid mobile number"); return; }
-            generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-            document.getElementById('generatedOtpDisplay').innerText = generatedOtp;
-            document.getElementById('otpStep1').classList.add('hidden');
-            document.getElementById('otpStep2').classList.remove('hidden');
-        }
-
-        function verifySimulatedOtp() {
-            const entered = document.getElementById('otpCodeInput').value.trim();
-            if(entered === generatedOtp) {
-                const phone = document.getElementById('loginPhoneInput').value.trim();
-                localStorage.setItem('currentUser', JSON.stringify({ name: "User", role: "Student", phone: phone }));
-                alert("Login Successful!");
-                closeLoginModal();
-                checkAuthStatus();
-            } else {
-                alert("Incorrect OTP!");
-            }
-        }
-
-        function checkAuthStatus() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if(user) {
-                document.getElementById('currentUserBadge').classList.remove('hidden');
-                document.getElementById('navLoginBtn').classList.add('hidden');
-                document.getElementById('navStaffBtn').classList.add('hidden');
-                document.getElementById('navLoggedName').innerText = user.name;
-                document.getElementById('navLoggedRole').innerText = user.role;
-
-                if(user.role === 'Staff') {
-                    document.getElementById('adminDashboardSection').classList.remove('hidden');
-                    renderAdminPanel();
-                }
-            } else {
-                document.getElementById('currentUserBadge').classList.add('hidden');
-                document.getElementById('navLoginBtn').classList.remove('hidden');
-                document.getElementById('navStaffBtn').classList.remove('hidden');
-                document.getElementById('adminDashboardSection').classList.add('hidden');
-            }
-            renderDirectories();
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('currentUser');
-            alert("Logged out successfully!");
-            location.reload();
-        }
-
-        function handleStudentFormSubmit(event) {
-            event.preventDefault();
-            const newStu = {
-                id: Date.now(),
-                name: document.getElementById('stu_name').value.trim(),
-                email: document.getElementById('stu_email').value.trim(),
-                phone: document.getElementById('stu_phone').value.trim(),
-                std: document.getElementById('stu_std').value,
-                stream: document.getElementById('stu_stream').value,
-                subject: document.getElementById('stu_subject').value.trim(),
-                requestDesc: document.getElementById('stu_request_desc').value.trim()
-            };
-            students.push(newStu);
-            saveData();
-            alert("Student Registered & Learning Request Posted Successfully!");
-            event.target.reset();
-            renderDirectories();
-            if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
-        }
-
-        function handleTutorFormSubmit(event) {
-            event.preventDefault();
-            const newTut = {
-                id: Date.now(),
-                name: document.getElementById('t_name').value.trim(),
-                subject: document.getElementById('t_subject').value.trim(),
-                utr: document.getElementById('t_utr').value.trim(),
-                planPaid: true, 
-                verified: false  
-            };
-            tutors.push(newTut);
-            saveData();
-            alert("Tutor Application & UPI UTR Submitted Successfully!");
-            event.target.reset();
-            renderDirectories();
-            if(JSON.parse(localStorage.getItem('currentUser'))?.role === 'Staff') renderAdminPanel();
-        }
-
-        function deleteStudent(id) {
-            if(confirm("Are you sure you want to delete this student?")) {
-                students = students.filter(s => s.id !== id);
-                saveData();
-                renderDirectories();
-                renderAdminPanel();
-            }
-        }
-
-        function toggleTutorVerification(id) {
-            const tutor = tutors.find(t => t.id === id);
-            if(tutor) {
-                tutor.verified = !tutor.verified;
-                saveData();
-                renderDirectories();
-                renderAdminPanel();
-            }
-        }
-
-        function deleteTutor(id) {
-            if(confirm("Are you sure you want to delete this tutor?")) {
-                tutors = tutors.filter(t => t.id !== id);
-                saveData();
-                renderDirectories();
-                renderAdminPanel();
-            }
-        }
-
-        function renderDirectories() {
-            // Tutors public card grid
-            const tutorGrid = document.getElementById('tutorGrid');
-            tutorGrid.innerHTML = tutors.map(t => `
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3 flex-wrap gap-1">
-                            <span class="text-xs font-bold bg-blue-50 text-brand-blue px-3 py-1 rounded-xl">${t.subject}</span>
-                            ${t.verified ? '<span class="text-xs font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-circle-check mr-1"></i> Verified Tutor</span>' : ''}
-                        </div>
-                        <h3 class="text-xl font-black text-brand-dark mb-1">${t.name}</h3>
-                    </div>
-                </div>
-            `).join('');
-
-            // Students directory grid
-            const studentGrid = document.getElementById('studentGridContainer');
-            studentGrid.innerHTML = students.map(s => `
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs font-bold bg-purple-50 text-purple-700 px-3 py-1 rounded-xl">${s.std} - ${s.stream}</span>
-                        </div>
-                        <h3 class="text-xl font-black text-brand-dark mb-1">${s.name}</h3>
-                        <p class="text-xs text-slate-600 mb-2"><i class="fa-solid fa-book mr-1 text-brand-blue"></i> Needs: <strong>${s.subject}</strong></p>
-                        <p class="text-xs text-slate-400">Email: ${s.email}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            // Learning Requests grid
-            const reqGrid = document.getElementById('learningRequestsGrid');
-            reqGrid.innerHTML = students.map(s => `
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs font-bold bg-amber-50 text-amber-700 px-3 py-1 rounded-xl">${s.std} (${s.stream})</span>
-                            <span class="text-[10px] font-bold text-slate-400">By ${s.name}</span>
-                        </div>
-                        <h3 class="text-lg font-black text-brand-dark mb-1">${s.subject}</h3>
-                        <p class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">${s.requestDesc || 'No details provided.'}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderAdminPanel() {
-            const adminStuBody = document.getElementById('adminStudentsTableBody');
-            adminStuBody.innerHTML = students.map(s => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3.5 font-bold">${s.name}</td>
-                    <td class="p-3.5 text-xs text-slate-600">${s.email}<br>${s.phone}</td>
-                    <td class="p-3.5 text-xs">${s.std} (${s.stream})</td>
-                    <td class="p-3.5 text-xs font-bold">${s.subject}</td>
-                    <td class="p-3.5 text-center">
-                        <button onclick="deleteStudent(${s.id})" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-xl text-xs font-bold transition"><i class="fa-solid fa-trash mr-1"></i> Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-
-            const adminTutBody = document.getElementById('adminTutorsTableBody');
-            adminTutBody.innerHTML = tutors.map(t => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3.5 font-bold">${t.name}</td>
-                    <td class="p-3.5 text-xs">${t.subject}</td>
-                    <td class="p-3.5 text-xs font-black text-brand-blue">${t.utr}</td>
-                    <td class="p-3.5 text-xs space-y-1">
-                        <span class="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded inline-block"><i class="fa-solid fa-circle-check"></i> UPI Fees Paid</span><br>
-                        ${t.verified ? '<span class="text-emerald-600 font-bold inline-block"><i class="fa-solid fa-check-double"></i> Verified Tick Granted</span>' : '<span class="text-amber-600 font-bold inline-block">Unverified</span>'}
-                    </td>
-                    <td class="p-3.5 text-center flex items-center justify-center gap-2">
-                        <button onclick="toggleTutorVerification(${t.id})" class="${t.verified ? 'bg-amber-50 text-amber-700' : 'bg-emerald-600 text-white'} px-3 py-1.5 rounded-xl text-xs font-bold transition">
-                            ${t.verified ? 'Revoke Tick' : 'Grant Verified Tick'}
-                        </button>
-                        <button onclick="deleteTutor(${t.id})" class="bg-red-50 text-red-600 p-2 rounded-xl text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        window.onload = function() {
-            checkAuthStatus();
-        }
-    </script>
 </body>
 </html>

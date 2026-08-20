@@ -780,11 +780,13 @@
         let pendingLoginPhone = "";
 
         // 1. Tutors Data Generation (125 Tutors)
+   // 1. Tutors Data Generation (125 Tutors)
         const firstNames = ["Rajesh", "Ananya", "Vikram", "Priya", "Amit", "Neha", "Rahul", "Sneha", "Alok", "Pooja", "Manish", "Divya", "Suresh", "Kirti", "Karan", "Kavita", "Sanjay", "Ritu", "Deepak", "Sunita"];
         const lastNames = ["Sharma", "Iyer", "Malhotra", "Gupta", "Verma", "Mehta", "Sen", "Nair", "Patel", "Reddy", "Choudhury", "Bose", "Joshi", "Deshmukh", "Saxena", "Kapoor", "Mishra", "Aggarwal", "Pillai", "Das"];
         const subjectsList = ["Mathematics", "Physics", "Chemistry", "Biology", "English", "Computer Science", "Economics", "Accountancy"];
 
-        let tutorsData = JSON.parse(localStorage.getItem('saved_tutors_data')) || [];
+        // Changed key to _v2 so it forces a fresh data generation for you
+        let tutorsData = JSON.parse(localStorage.getItem('saved_tutors_data_v2')) || [];
         if (tutorsData.length === 0) {
             for (let i = 1; i <= 125; i++) {
                 const fName = firstNames[(i * 7) % firstNames.length];
@@ -793,7 +795,13 @@
                 const rating = (4.5 + ((i * 3) % 6) * 0.1).toFixed(1);
                 const priceVal = 400 + ((i * 50) % 700);
                 const expYears = 3 + (i % 12);
-                const isVerifiedTutor = (i % 3 === 0 || i % 7 === 0);
+                
+                // NEW LOGIC: Separate Paid and Verified Status
+                let isPaid = (i % 2 !== 0); // 50% tutors default PAID honge (website pe dikhenge)
+                let isVerifiedTutor = (i % 4 === 0); // Har 4th tutor ko hi Verified Tick milega
+                
+                // Agar verified hai toh obviously paid bhi hona chahiye
+                if (isVerifiedTutor) isPaid = true;
 
                 const mockUtr12 = `100000${i.toString().padStart(6, '0')}`;
 
@@ -805,7 +813,7 @@
                     rating: rating > 5.0 ? "5.0" : rating,
                     price: `₹${priceVal}/hr`,
                     verified: isVerifiedTutor,
-                    paidStatus: isVerifiedTutor ? "PAID" : "PENDING",
+                    paidStatus: isPaid ? "PAID" : "PENDING",
                     utr: mockUtr12,
                     phone: `98000000${i.toString().padStart(2, '0')}`,
                     isDummy: true
@@ -815,7 +823,7 @@
         }
 
         function saveTutorsStorage() {
-            localStorage.setItem('saved_tutors_data', JSON.stringify(tutorsData));
+            localStorage.setItem('saved_tutors_data_v2', JSON.stringify(tutorsData));
         }
 
         // Students Data Storage

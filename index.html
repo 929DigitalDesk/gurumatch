@@ -46,8 +46,8 @@
             </div>
             <nav class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
                 <a href="#home" class="hover:text-brand-blue transition">HOME</a>
-                <a href="#tutors" class="hover:text-brand-blue transition">TUTOR DIRECTORY</a>
-                <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS DIRECTORY</a>
+                <a href="#tutors" class="hover:text-brand-blue transition">TUTORS</a>
+                <a href="#studentsDirectory" class="hover:text-brand-blue transition">STUDENTS</a>
                 <a href="#learningRequestsSection" class="hover:text-brand-blue transition">LEARNING REQUESTS</a>
                 <a href="#registrationSection" class="hover:text-brand-blue transition">REGISTER</a>
             </nav>
@@ -89,13 +89,12 @@
         </section>
 
         <!-- ADMIN DASHBOARD SECTION (Staff Only) -->
-        <section id="adminDashboardSection" class="max-w-7xl mx-auto px-4 py-16 hidden">
+        <section id="adminDashboardSection" class="max-w-7xl mx-auto px-4 py-12 hidden">
             <div class="bg-white border border-slate-200 rounded-3xl shadow-xl p-6 md:p-8">
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-4 border-b border-slate-200 gap-4">
                     <div>
                         <span class="bg-purple-100 text-purple-700 font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest">Admin Panel</span>
                         <h2 class="text-3xl font-black text-brand-dark mt-2 tracking-tight">Staff Control & Verification Center</h2>
-                        <p class="text-slate-500 text-sm">Review student registrations, verify UTR payments, and grant verified ticks.</p>
                     </div>
                 </div>
 
@@ -140,7 +139,7 @@
             </div>
         </section>
 
-        <!-- TUTOR DIRECTORY SECTION (Home Page) -->
+        <!-- 1. TUTOR DIRECTORY SECTION (Home Page) -->
         <section id="tutors" class="max-w-7xl mx-auto px-4 py-16 w-full">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-4">
                 <div>
@@ -151,7 +150,7 @@
             <div id="tutorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- STUDENTS DIRECTORY SECTION (Home Page) -->
+        <!-- 2. STUDENTS DIRECTORY SECTION (Home Page) -->
         <section id="studentsDirectory" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
             <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                 <div>
@@ -162,7 +161,7 @@
             <div id="studentGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- LEARNING REQUESTS SECTION (Home Page) -->
+        <!-- 3. LEARNING REQUESTS SECTION (Home Page) -->
         <section id="learningRequestsSection" class="max-w-7xl mx-auto px-4 py-16 border-t border-slate-200 w-full">
             <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                 <div>
@@ -173,9 +172,10 @@
             <div id="learningRequestsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- REGISTRATION SECTION (Students & Tutors Forms with UPI Option) -->
+        <!-- 4. REGISTRATION SECTION (Student & Tutor Forms with Pay via UPI) -->
         <section id="registrationSection" class="py-16 bg-white border-t border-slate-200">
             <div class="max-w-3xl mx-auto px-4">
+                <!-- Tab Switching Buttons -->
                 <div class="grid grid-cols-2 bg-slate-100 p-1.5 rounded-2xl shadow-inner mb-8 border border-slate-200 gap-1">
                     <button id="tabStudentBtn" onclick="switchTab('student')" class="py-3 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow text-center tracking-wide">
                         <i class="fa-solid fa-user-graduate mr-1"></i>STUDENT REGISTRATION
